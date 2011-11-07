@@ -21,7 +21,7 @@
  * @author olendorf
  * 
  */
-class InformationPackageMap {
+class InformationPackageMap extends aXMLElement{
   protected $abstractContentUnit;
   protected $id;
   protected $packageType;

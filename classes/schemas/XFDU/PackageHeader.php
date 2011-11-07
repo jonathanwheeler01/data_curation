@@ -1,9 +1,5 @@
 <?php
 /* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-/* 
  *    This file is part of data_curation.
 
  *    data_curation is free software: you can redistribute it and/or modify
@@ -25,15 +21,7 @@
  *
  */
 
-
-
-/**
- * Description of PackageHeader
- *
- * @author olendorf
- * 
- */
-class PackageHeader {
+class PackageHeader extends aXMLElement{
   /**
    *
    * @var VolumeInfo

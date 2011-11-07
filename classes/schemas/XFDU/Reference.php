@@ -33,6 +33,149 @@
  * @author olendorf
  * 
  */
-class Reference {
+class Reference extends aXMLElement{
+  protected $href;
+  protected $id;
+  protected $locator;
+  protected $locatorType;
+  protected $otherLocatorType;
+  protected $textInfo;
+  
+  /**
+   *
+   * @param string $href 
+   */
+  public function set_href($href) {
+    $this->href = $href;
+  }
+  
+  /**
+   *
+   * @return string 
+   */
+  public function get_href() {
+    return $this->href;
+  }
+  
+  /**
+   *
+   * @return boolean 
+   */
+  public function isset_href() {
+    return (isset($this->href) && !empty($this->href));
+  }
+  
+  /**
+   *
+   * @param string $id
+   */
+  public function set_id($id) {
+    $this->id = $id;
+  }
+  
+  /**
+   *
+   * @return string
+   */
+  public function get_id() {
+    return $this->id;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_id() {
+    return (isset($this->id) && !empty($this->id));
+  }
+  
+  /**
+   *
+   * @param string $locator 
+   */
+  public function set_locator($locator) {
+    $this->locator = $locator;
+  }
+  
+  /**
+   *
+   * @return string
+   */
+  public function get_locator() {
+    return $this->locator;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_locator() {
+    return (isset($this->locator) && !empty($this->locator));
+  }
+  
+  /**
+   * Will only accept one of the constants from the Locator class.
+   * @param enum $locatorType 
+   */
+  public function set_locatorType($locatorType) {
+    if(array_search($locatorType, Locator::get_constants())) {
+      $this->locatorType = $locatorType;
+    }
+    else {
+      throw new XFDUException('Unknown locator type: '.$locatorType, 0);
+    }
+  }
+  
+  /**
+   *
+   * @return string 
+   */
+  public function get_locatorType() {
+    return $this->locatorType;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_locatorType() {
+    return (isset($this->locatorType) && !empty($this->locatorType));
+  }
+  
+  /**
+   *
+   * @param string $otherLocatorType 
+   */
+  public function set_otherLocatorType($otherLocatorType) {
+    $this->otherLocatorType = $otherLocatorType;
+  }
+  
+  /**
+   *
+   * @return string 
+   */
+  public function get_otherLocatorType() {
+    return $this->otherLocatorType;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_otherLocatorType() {
+    return (isset($this->otherLocatorType) && !empty($this->otherLocatorType));
+  }
+  
+  public function set_textInfo($textInfo) {
+    $this->textInfo = $textInfo;
+  }
+  
+  public function get_textInfo() {
+    return $this->textInfo;
+  }
+  
+  public function isset_textInfo() {
+    return (isset($this->textInfo) && !empty($this->textInfo));
+  }
 }
 ?>

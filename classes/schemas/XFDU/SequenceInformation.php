@@ -21,7 +21,7 @@
  * @author olendorf
  *
  */
-class SequenceInformation {
+class SequenceInformation extends aXMLElement{
   /**
    * The XFDU's position in the sequence. The value should be zero if unknown.
    * @var <integer>

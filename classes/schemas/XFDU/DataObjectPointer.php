@@ -20,8 +20,60 @@
  * @author olendorf
  *
  */
-class DataObjectPointer {
-  public $dataObjectID;
-  public $id;
+class DataObjectPointer extends aXMLElement{
+  /**
+   *
+   * @var type 
+   */
+  protected $dataObjectID;
+  protected $id;
+  
+  /**
+   *
+   * @param string $dataObjectID 
+   */
+  public function set_dataObjectID($dataObjectID) {
+    $this->dataObjectID = $dataObjectID;
+  }
+  
+  /**
+   *
+   * @return string
+   */
+  public function get_dataObjectID() {
+    return $this->dataObjectID;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_dataObjectID() {
+    return (isset($this->dataObjectID) && !empty($this->dataObjectID));
+  }
+  
+  /**
+   *
+   * @param string $id 
+   */
+  public function set_id($id) {
+    $this->id = $id;
+  }
+  
+  /**
+   *
+   * @return string
+   */
+  public function get_id() {
+    return $this->id;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_id() {
+    return(isset($this->id) && !empty($this->id));
+  }
 }
 ?>

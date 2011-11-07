@@ -21,7 +21,7 @@
  * @author olendorf
  *
  */
-class VolumeInfo {
+class VolumeInfo extends aXMLElement{
   /**
    * Storoes a SequenceInformation object that specifies the XFDU's position
    * in a series of XFDU packages.

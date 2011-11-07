@@ -24,15 +24,7 @@
  *
  */
 
-
-
-/**
- * Description of EnvironmentInfo
- *
- * @author olendorf
- * 
- */
-class EnvironmentInfo {
+class EnvironmentInfo extends aXMLElement{
   /**
    * Allows application specific extensions of the xfdu
    * @var any

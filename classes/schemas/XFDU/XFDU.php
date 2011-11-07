@@ -20,7 +20,7 @@
  * 
  */
 
-class XFDU {
+class XFDU extends aXMLElement{
   /**
    * Id for the package
    * @var string

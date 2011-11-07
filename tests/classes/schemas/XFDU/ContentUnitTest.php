@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../../classes/schemas/XFDU/ContentUnit.php';
+require_once dirname(__FILE__) . '/../../../../curation_tool.inc';
 
 /**
  * Test class for ContentUnit.
@@ -37,6 +37,9 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     $this->assertEmpty($this->object->get_abstractContentUnit());
   }
 
+  /**
+   * 
+   */
   public function testAnyMdID() {
     $this->assertFalse($this->object->isset_anyMdID());
 
@@ -44,6 +47,122 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     $this->object->set_anyMdID($anyMdID);
     $this->assertTrue($this->object->isset_anyMdID());
     $this->assertEquals($anyMdID, $this->object->get_anyMdID());
+  }
+  
+  /**
+   * 
+   */
+  public function testBehaviorID() {
+    $this->assertFalse($this->object->isset_behaviorID());
+    
+    $behaviorID = 'test';
+    $this->object->set_behaviorID($behaviorID);
+    $this->assertTrue($this->object->isset_behaviorID());
+    $this->assertEquals($behaviorID, $this->object->get_behaviorID());
+  }
+  
+  /**
+   * 
+   */
+  public function testDataObjectPointer() {
+    $this->assertFalse($this->object->isset_dataObjectPointer());
+    
+    $dataObjectPointer = new DataObjectPointer();
+    $this->object->set_dataObjectPointer($dataObjectPointer);
+    $this->assertTrue($this->object->isset_dataObjectPointer());
+    $this->assertEquals('DataObjectPointer', get_class($this->object->get_dataObjectPointer()));
+  }
+  
+  /**
+   * 
+   */
+  public function testDmdID() {
+    $this->assertFalse($this->object->isset_dmdID());
+    
+    $dmdID = 'test';
+    $this->object->set_dmdID($dmdID);
+    $this->assertTrue($this->object->isset_dmdID());
+    $this->assertEquals($dmdID, $this->object->get_dmdID());
+  }
+  
+  /**
+   * 
+   */
+  public function testExtension() {
+    $this->assertFalse($this->object->isset_extension());
+    
+    $dmdID = 'test';
+    $this->object->set_extension($dmdID);
+    $this->assertTrue($this->object->isset_extension());
+    $this->assertEquals($dmdID, $this->object->get_extension());
+  }
+  
+  /**
+   * 
+   */
+  public function testID() {
+    $this->assertFalse($this->object->isset_id());
+    
+    $id = 'test';
+    $this->object->set_id($id);
+    $this->assertTrue($this->object->isset_id());
+    $this->assertEquals($id, $this->object->get_id());
+  }
+  
+  /**
+   * 
+   */
+  public function testOrder() {
+    $this->assertFalse($this->object->isset_order());
+    
+    $order = 'test';
+    $this->object->set_order($order);
+    $this->assertTrue($this->object->isset_order());
+    $this->assertEquals($order, $this->object->get_order());
+  }
+  
+  /**
+   * 
+   */
+  public function testPdiID() {
+    $this->assertFalse($this->object->isset_pdiID());
+    
+    $pdiID = 'test';
+    $this->object->set_pdiID($pdiID);
+    $this->assertTrue($this->object->isset_pdiID());
+    $this->assertEquals($pdiID, $this->object->get_pdiID());
+  }
+  
+  /**
+   * 
+   */
+  public function testRepID() {
+    $this->assertFalse($this->object->isset_repID());
+    
+    $repID = 'test';
+    $this->object->set_repID($repID);
+    $this->assertTrue($this->object->isset_repID());
+    $this->assertEquals($repID, $this->object->get_repID());
+  }
+  
+  /**
+   * 
+   */
+  public function testTextInfo() {
+    $this->assertFalse($this->object->isset_textInfo());
+    
+    $textInfo = 'test';
+    $this->object->set_textInfo($textInfo);
+    $this->assertTrue($this->object->isset_textInfo());
+    $this->assertEquals($textInfo, $this->object->get_textInfo());
+  }
+  
+  public function testXfduPointer() {
+    $this->assertFalse($this->object->isset_xfduPointer());
+    
+    $value = new Reference();
+    $this->object->set_xfduPointer($value);
+    $this->assertEquals('Reference', get_class($this->object->get_xfduPointer()));
   }
 
 }

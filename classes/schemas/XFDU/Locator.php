@@ -1,9 +1,5 @@
 <?php
 /* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-/* 
  *    This file is part of data_curation.
 
  *    data_curation is free software: you can redistribute it and/or modify
@@ -24,17 +20,12 @@
  * @author olendorf
  *
  */
-
-
-
-/**
- * Description of Locator
- *
- * @author olendorf
- * 
- */
-class Locator {
+abstract class Locator extends aXMLElement{
   const URL = 'URL';
   const OTHER = 'OTHER';
+  
+  static public function get_constants() {
+    return array(self::OTHER, self::URL);
+  }
 }
 ?>
