@@ -148,6 +148,18 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
   /**
    * 
    */
+  public function testUnitType() {
+    $this->assertFalse($this->object->isset_unitType());
+    
+    $value = 'test';
+    $this->object->set_unitType($value);
+    $this->assertTrue($this->object->isset_unitType());
+    $this->assertEquals($value, $this->object->get_unitType());
+  }
+  
+  /**
+   * 
+   */
   public function testTextInfo() {
     $this->assertFalse($this->object->isset_textInfo());
     
@@ -162,7 +174,7 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     
     $value = new Reference();
     $this->object->set_xfduPointer($value);
-    $this->assertEquals('Reference', get_class($this->object->get_xfduPointer()));
+    $this->assertEquals('Reference', get_class($this->object->get_xfduPointer()), 'Class '.get_class($this->object->get_xfduPointer()).' found.');
   }
 
 }

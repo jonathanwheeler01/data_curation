@@ -213,5 +213,10 @@ class XFDU extends aXMLElement{
   public function isset_informationPackageMap() {
     return (isset($this->informationPackageMap) && !empty($this->informationPackageMap));
   }
+  
+  /**
+   * @todo dataObjectSection
+   * @todo behaviorSection
+   */
 }
 ?>

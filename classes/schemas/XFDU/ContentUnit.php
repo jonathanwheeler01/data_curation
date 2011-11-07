@@ -329,7 +329,7 @@ class ContentUnit extends aXMLElement{
   }
   
   public function set_xfduPointer (Reference $xfduPointer) {
-    $this->xfduPointer;
+    $this->xfduPointer = $xfduPointer;
   }
   
   public function get_xfduPointer() {
@@ -339,10 +339,5 @@ class ContentUnit extends aXMLElement{
   public function isset_xfduPointer() {
     return (isset($this->xfduPointer) && !empty($this->xfduPointer));
   }
-  
-  
-  /**
-   * @todo xfduPointer
-   */
 }
 ?>

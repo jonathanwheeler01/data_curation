@@ -51,7 +51,7 @@ abstract class MetadataClassification {
   }
 }
 
-class MetadataObject {
+class MetadataObject extends aXMLElement{
   /**
    * Should be defined from the MetadataCategory Object.
    * @var string
@@ -102,8 +102,6 @@ class MetadataObject {
   protected $otherClass;
   
   /**
-   * @todo id
-   * @todo metaDataReference
    * @todo metadataWrap
    */
   
@@ -214,16 +212,64 @@ class MetadataObject {
     return (isset($this->otherClass) && !empty($this->otherClass));
   }
   
+  /**
+   *
+   * @param DataObjectPointer $dataObjectPointer 
+   */
   public function set_dataObjectPointer(DataObjectPointer $dataObjectPointer) {
     $this->dataObjectPointer = $dataObjectPointer;
   }
   
+  /**
+   *
+   * @return DataObjectPointer 
+   */
   public function get_dataObjectPointer() {
     return $this->dataObjectPointer;
   }
   
+  /**
+   *
+   * @return boolean
+   */
   public function isset_dataObjectPointer() {
     return (isset($this->dataObjectPointer) && !empty($this->dataObjectPointer));
+  }
+  
+  /**
+   *
+   * @param string $id 
+   */
+  public function set_id($id) {
+    $this->id = $id;
+  }
+  
+  /**
+   *
+   * @return string
+   */
+  public function get_id() {
+    return $this->id;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_id() {
+    return (isset($this->id) && !empty($this->id));
+  }
+  
+  public function set_metadataWrap(MetadataWrap $metadataWrap) {
+    $this->metadataWrap = $metadataWrap;
+  }
+  
+  public function get_metadataWrap() {
+    return $this->metadataWrap;
+  }
+  
+  public function isset_metadataWrap() {
+    return (isset($this->metadataWrap) && !empty($this->metadataWrap));
   }
 }
 

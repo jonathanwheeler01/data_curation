@@ -58,19 +58,21 @@ class ReferenceTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testLocatorType() {
-    $this->assertFalse($this->object->isset_locator());
+    $this->assertFalse($this->object->isset_locatorType());
     
     $value = Locator::URL;
-    $this->object->set_locator($value);
-    $this->assertTrue($this->object->isset_locator());
-    $this->assertEquals($value, $this->object->get_locator());
+    $this->object->set_locatorType($value);
+    $this->assertTrue($this->object->isset_locatorType());
+    $this->assertEquals($value, $this->object->get_locatorType());
   }
   
-  /**
-   * @expectedException XFDUException
-   */
+  
   public function testBadLocatorType() {
     $this->object->set_locatorType('bad');
+    $this->assertTrue($this->object->isset_locatorType());
+    $this->assertEquals(Locator::OTHER, $this->object->get_locatorType());
+    $this->assertTrue($this->object->isset_otherLocatorType());
+    $this->assertEquals('bad', $this->object->get_otherLocatorType());
   }
   
   public function testOtherLocatorType() {

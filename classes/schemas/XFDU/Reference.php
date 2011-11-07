@@ -1,9 +1,5 @@
 <?php
 /* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-/* 
  *    This file is part of data_curation.
 
  *    data_curation is free software: you can redistribute it and/or modify
@@ -23,15 +19,6 @@
  *
  * @author olendorf
  *
- */
-
-
-
-/**
- * Description of Reference
- *
- * @author olendorf
- * 
  */
 class Reference extends aXMLElement{
   protected $href;
@@ -114,15 +101,16 @@ class Reference extends aXMLElement{
   }
   
   /**
-   * Will only accept one of the constants from the Locator class.
+   * If a specified locator type is not given, other locator type is used.
    * @param enum $locatorType 
    */
   public function set_locatorType($locatorType) {
-    if(array_search($locatorType, Locator::get_constants())) {
+    if(array_search($locatorType, Locator::values())) {
       $this->locatorType = $locatorType;
     }
     else {
-      throw new XFDUException('Unknown locator type: '.$locatorType, 0);
+      $this->locatorType = Locator::OTHER;
+      $this->otherLocatorType = $locatorType;
     }
   }
   

@@ -110,6 +110,28 @@ class MetadataObjectTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_dataObjectPointer());
     $this->assertEquals(get_class($value), get_class($this->object->get_dataObjectPointer()));
   }
+  
+  
+  /**
+   * 
+   */
+  public function testID() {
+    $this->assertFalse($this->object->isset_id());
+    
+    $value = 'test';
+    $this->object->set_id($value);
+    $this->assertTrue($this->object->isset_id());
+    $this->assertEquals($value, $this->object->get_id());
+  }
+  
+  public function testMetadataWrap() {
+    $this->assertFalse($this->object->isset_metadataWrap());
+    
+    $value = new MetadataWrap();
+    $this->object->set_metadataWrap($value);
+    $this->assertTrue($this->object->isset_metadataWrap());
+    $this->assertEquals(get_class($value), get_class($this->object->get_metadataWrap()));
+  }
 
 }
 

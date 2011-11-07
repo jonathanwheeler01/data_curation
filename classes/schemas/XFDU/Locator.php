@@ -24,7 +24,7 @@ abstract class Locator extends aXMLElement{
   const URL = 'URL';
   const OTHER = 'OTHER';
   
-  static public function get_constants() {
+  static public function values() {
     return array(self::OTHER, self::URL);
   }
 }

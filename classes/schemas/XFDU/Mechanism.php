@@ -6,15 +6,10 @@
  */
 
 /**
- * Description of FileContentType
+ * Description of Mechanism
  *
  * @author Rob
  */
-class FileContentType {
-  //put your code here
-  /**
-   * @todo implement FileContentType
-   */
-}
+class Mechanism extends Reference{}
 
 ?>
