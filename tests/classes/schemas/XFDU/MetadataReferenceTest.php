@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../../classes/schemas/XFDU/MetadataReference.php';
+require_once dirname(__FILE__) . '/../../../../curation_tool.inc';
 
 /**
  * Test class for MetadataReference.

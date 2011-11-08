@@ -11,7 +11,7 @@
  * @author Rob
  */
 
-abstract class MetadataCategory {
+abstract class MetadataCategory implements Enum{
   protected $category;
   
   const OTHER = 'OTHER';
@@ -100,10 +100,6 @@ class MetadataObject extends aXMLElement{
    * @var string
    */
   protected $otherClass;
-  
-  /**
-   * @todo metadataWrap
-   */
   
   /**
    * Should be derived from the metadata category class. Otherwise sets "other category" instead.

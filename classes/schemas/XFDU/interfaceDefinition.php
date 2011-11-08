@@ -10,7 +10,7 @@
  *
  * @author Rob
  */
-class interfaceDefinition extends aXMLElement{
+class InterfaceDefinition extends aXMLElement{
   protected $inputParameters;
   
   /**

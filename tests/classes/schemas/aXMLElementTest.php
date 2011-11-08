@@ -26,7 +26,17 @@ class aXMLElementTest extends PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-    
+  }
+  
+  /**
+   * 
+   */
+  public function testValidID() {
+    $this->assertTrue($this->object->validate_id('validID'));
+  }
+  
+  public function testInvalidID() {
+    $this->assertFalse($this->object->validate_id('0badID'));
   }
 
 }

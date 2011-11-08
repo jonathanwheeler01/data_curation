@@ -89,6 +89,9 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals('PackageHeader', get_class($this->object->get_packageHeader()));
   }
 
+  /**
+   * 
+   */
   public function testInformationPackageMap() {
     $this->assertFalse($this->object->isset_informationPackageMap());
 
@@ -96,6 +99,42 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     $this->object->set_informationPackageMap($informationPackageMap);
     $this->assertTrue($this->object->isset_informationPackageMap());
     $this->assertEquals('InformationPackageMap', get_class($this->object->get_informationPackageMap()));
+  }
+  
+  /**
+   * 
+   */
+  public function testMetadataSection() {
+    $this->assertFalse($this->object->isset_metadataSection());
+
+    $value = new MetaDataSection();
+    $this->object->set_metadataSection($value);
+    $this->assertTrue($this->object->isset_metadataSection());
+    $this->assertEquals(get_class($value), get_class($this->object->get_metadataSection()));
+  }
+  
+  /**
+   * 
+   */
+  public function testDataObjectSection() {
+    $this->assertFalse($this->object->isset_dataObjectSection());
+
+    $value = new DataObjectSection();
+    $this->object->set_dataObjectSection($value);
+    $this->assertTrue($this->object->isset_dataObjectSection());
+    $this->assertEquals(get_class($value), get_class($this->object->get_dataObjectSection()));
+  }
+  
+  /**
+   * 
+   */
+  public function testBehaviorSection() {
+    $this->assertFalse($this->object->isset_behaviorSection());
+
+    $value = new BehaviorSection();
+    $this->object->set_behaviorSection($value);
+    $this->assertTrue($this->object->isset_behaviorSection());
+    $this->assertEquals(get_class($value), get_class($this->object->get_behaviorSection()));
   }
 }
 

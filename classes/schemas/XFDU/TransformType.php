@@ -10,7 +10,7 @@
  *
  * @author Rob
  */
-class TransformType {
+class TransformType implements Enum{
   const AUTHENICATION = 'AUTHENICATION';
   const COMPRESSION = 'COMPRESSION';
   const ENCRYPTION = 'ENCRYPTION';

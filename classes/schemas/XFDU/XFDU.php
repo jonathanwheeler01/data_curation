@@ -73,7 +73,7 @@ class XFDU extends aXMLElement{
    *
    * @var DataObjectSection
    */
-  protected $behaviorSections;
+  protected $behaviorSection;
 
   /**
    * Sets default version to the most recent XFDU version
@@ -202,21 +202,100 @@ class XFDU extends aXMLElement{
     return (isset($this->packageHeader) && !empty($this->packageHeader));
   }
 
+  /**
+   *
+   * @param InformationPackageMap $informationPackageMap 
+   */
   public function set_informationPackageMap(InformationPackageMap $informationPackageMap) {
     $this->informationPackageMap = $informationPackageMap;
   }
 
+  /**
+   *
+   * @return InformationPackageMap
+   */
   public function get_informationPackageMap() {
     return $this->informationPackageMap;
   }
 
+  /**
+   *
+   * @return boolean
+   */
   public function isset_informationPackageMap() {
     return (isset($this->informationPackageMap) && !empty($this->informationPackageMap));
   }
   
   /**
-   * @todo dataObjectSection
-   * @todo behaviorSection
+   *
+   * @param MetaDataSection $metadataSection 
    */
+  public function set_metadataSection(MetaDataSection $metadataSection) {
+    $this->metadataSection = $metadataSection;
+  }
+  
+  /**
+   *
+   * @return MetadataSection
+   */
+  public function get_metadataSection() {
+    return $this->metadataSection;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_metadataSection() {
+    return (isset($this->metadataSection) && !empty($this->metadataSection));
+  }
+  
+  /**
+   *
+   * @param DataObjectSection $dataObjectSection 
+   */
+  public function set_dataObjectSection(DataObjectSection $dataObjectSection) {
+    $this->dataObjectSection = $dataObjectSection;
+  }
+  
+  /**
+   *
+   * @return DataObjectSection
+   */
+  public function get_dataObjectSection() {
+    return $this->dataObjectSection;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_dataObjectSection() {
+    return (isset($this->dataObjectSection) && !empty($this->dataObjectSection));
+  }
+  
+  /**
+   *
+   * @param BehaviorSection $behaviorSection 
+   */
+  public function set_behaviorSection(BehaviorSection $behaviorSection) {
+    $this->behaviorSection = $behaviorSection;
+  }
+  
+  /**
+   *
+   * @return BehaviorSection
+   */
+  public function get_behaviorSection() {
+    return $this->behaviorSection;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_behaviorSection() {
+    return (isset($this->behaviorSection) && !empty($this->behaviorSection));
+  }
 }
 ?>

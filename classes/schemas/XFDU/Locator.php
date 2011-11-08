@@ -20,7 +20,7 @@
  * @author olendorf
  *
  */
-abstract class Locator extends aXMLElement{
+abstract class Locator implements Enum{
   const URL = 'URL';
   const OTHER = 'OTHER';
   

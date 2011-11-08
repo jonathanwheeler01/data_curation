@@ -24,6 +24,7 @@ class CurationAutoLoad {
   public static function autoload($className) {
     // The @ symbol suppresses the warnings so we can just try each subdirectory
     // as needed. Seems a bit cludgey, but it does work.
+    
     @include_once 'classes'.DIRECTORY_SEPARATOR.
                   'curation_tool'.DIRECTORY_SEPARATOR.
                   $className.'.php';
@@ -57,7 +58,7 @@ class CurationAutoLoad {
     }
   }
 }
-
+@include_once 'classes'.DIRECTORY_SEPARATOR.'Enum.php';
 /**
  * Register the autoloader.
  */

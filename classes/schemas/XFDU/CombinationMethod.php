@@ -4,7 +4,7 @@
  *
  * @author Rob
  */
-class CombinationMethod {
+class CombinationMethod implements Enum{
   const CONCAT = 'concat';
   
   public function values() {

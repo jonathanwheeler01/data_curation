@@ -10,7 +10,7 @@
  *
  * @author Rob
  */
-class XMLData {
+class XMLData extends aXMLElement{
   /**
    * Freeform or structured XML, stored here as a string to allow for different
    * implementation methods of XML, ie. DOM or Simple in PHP
