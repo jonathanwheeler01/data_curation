@@ -120,7 +120,7 @@ class CurationTool {
   }
 
   /**
-   * @todo Implement this function
+   * @todo Implement handle file function
    * @param <string> $path
    */
   protected function handle_file($path) {
@@ -128,7 +128,7 @@ class CurationTool {
   }
 
   /**
-   * @todo Implement this function
+   * @todo Implement handle directory function
    * @param <type> $path
    */
   protected function handle_directory($path) {

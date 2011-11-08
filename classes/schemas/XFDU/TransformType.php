@@ -10,12 +10,14 @@
  *
  * @author Rob
  */
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 class TransformType implements Enum{
-  const AUTHENICATION = 'AUTHENICATION';
-  const COMPRESSION = 'COMPRESSION';
-  const ENCRYPTION = 'ENCRYPTION';
+  const AUTHENICATION = "AUTHENICATION";
+  const COMPRESSION = "COMPRESSION";
+  const ENCRYPTION = "ENCRYPTION";
   
-  public function values() {
+  static public function values() {
     return array(self::AUTHENICATION, self::COMPRESSION, self::ENCRYPTION);
   }
 }

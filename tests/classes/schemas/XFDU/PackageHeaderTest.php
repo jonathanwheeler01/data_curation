@@ -58,7 +58,7 @@ class PackageHeaderTest extends PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @todo Implement testSet_id().
+   * 
    */
   public function testId() {
     $this->assertFalse($this->object->isset_id());

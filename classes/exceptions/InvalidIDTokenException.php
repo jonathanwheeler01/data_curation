@@ -1,5 +1,9 @@
 <?php
 /* 
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/* 
  *    This file is part of data_curation.
 
  *    data_curation is free software: you can redistribute it and/or modify
@@ -14,18 +18,18 @@
  *    along with data_curation.  If not, see <http://www.apache.org/licenses/LICENSE-2.0.html>.
  */
 
+
 /**
- * Description of Locator
+ * Description of InvalidIDTokenException
  *
  * @author olendorf
- *
+ * 
  */
-abstract class Locator implements Enum{
-  const URL = 'URL';
-  const OTHER = 'OTHER';
-  
-  static public function values() {
-    return array(self::OTHER, self::URL);
+class InvalidIDTokenException extends XFDUException{
+    public function  __construct($token) {
+    $message = 'Invalid ID token "'.$token.'" provided. IDs must be alphanumeric'.
+      ' and begin with a letter or underscore.';
+    parent::__construct($message, 0);
   }
 }
 ?>

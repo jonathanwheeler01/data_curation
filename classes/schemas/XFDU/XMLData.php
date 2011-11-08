@@ -1,15 +1,13 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of XMLData
+ * A wrapper to contain arbitrary XML content.
  *
  * @author Rob
  */
+
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 class XMLData extends aXMLElement{
   /**
    * Freeform or structured XML, stored here as a string to allow for different

@@ -1,9 +1,13 @@
 <?php
 require_once 'curation_tool.inc';
 
-$tool = new CurationTool();
-$xfdu = new XFDU();
-$factory = new PackageFactory();
+abstract class MyClass{
+  public  $constant = 'some value';
+}
 
-$package = $factory->factory('XFDU');
+print (TransformType::AUTHENICATION);
+
+print Locator::OTHER;
+
+php_v
 ?>

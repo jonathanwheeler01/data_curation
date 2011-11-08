@@ -10,8 +10,11 @@
  *
  * @author Rob
  */
-class VariableTypeException extends Exception{
-  //put your code here
+class VariableTypeException extends XFDUException{
+  public function  __construct($expected) {
+    $message = 'Invalid variable type. Expected '.$expected;
+    parent::__construct($message, 0);
+  }
 }
 
 ?>

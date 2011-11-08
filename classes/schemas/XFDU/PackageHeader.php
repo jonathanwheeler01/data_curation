@@ -1,25 +1,17 @@
 <?php
-/* 
- *    This file is part of data_curation.
-
- *    data_curation is free software: you can redistribute it and/or modify
- *    it under the terms of the Apache License, Version 2.0 (See License at the
- *    top of the directory).
-
- *    data_curation is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
- *    You should have received a copy of the Apache License, Version 2.0
- *    along with data_curation.  If not, see <http://www.apache.org/licenses/LICENSE-2.0.html>.
- */
 
 /**
- * Description of PackageHeader
+ * Complex Type for metadata about the mapping of the logical packages to the 
+ * physical structures. The package header type has two elements: -volumeInfo ? 
+ * contains XFDU volume related metadata (.i.e., XFDU specification version and 
+ * sequence information - environmentInfo contains application specific 
+ * information either defined by an extension of the XFDU Schema or by 
+ * freeform XML. packageHeaderType has a single attribute, ID: an XML ID.
  *
  * @author olendorf
  *
  */
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 class PackageHeader extends aXMLElement{
   /**

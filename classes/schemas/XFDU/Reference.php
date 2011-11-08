@@ -1,27 +1,25 @@
 <?php
-/* 
- *    This file is part of data_curation.
-
- *    data_curation is free software: you can redistribute it and/or modify
- *    it under the terms of the Apache License, Version 2.0 (See License at the
- *    top of the directory).
-
- *    data_curation is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
- *    You should have received a copy of the Apache License, Version 2.0
- *    along with data_curation.  If not, see <http://www.apache.org/licenses/LICENSE-2.0.html>.
- */
-
 /**
- * Description of Reference
+ * HTML type references. locator attribute allows finer granularity within location specified in href
+
+
  *
  * @author olendorf
  *
  */
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 class Reference extends aXMLElement{
+  /**
+   * Typically the HTTP URL
+   * @var string
+   */
   protected $href;
+  
+  /**
+   *
+   * @var string
+   */
   protected $id;
   protected $locator;
   protected $locatorType;
@@ -29,7 +27,7 @@ class Reference extends aXMLElement{
   protected $textInfo;
   
   /**
-   *
+   * 
    * @param string $href 
    */
   public function set_href($href) {
@@ -57,7 +55,12 @@ class Reference extends aXMLElement{
    * @param string $id
    */
   public function set_id($id) {
-    $this->id = $id;
+    if($this->validate_id($id)) {
+      $this->id = $id;
+    }
+    else {
+      throw new InvalidIDTokenException($id);
+    }
   }
   
   /**
@@ -105,13 +108,7 @@ class Reference extends aXMLElement{
    * @param enum $locatorType 
    */
   public function set_locatorType($locatorType) {
-    if(array_search($locatorType, Locator::values())) {
-      $this->locatorType = $locatorType;
-    }
-    else {
-      $this->locatorType = Locator::OTHER;
-      $this->otherLocatorType = $locatorType;
-    }
+    $this->locatorType = $locatorType;
   }
   
   /**

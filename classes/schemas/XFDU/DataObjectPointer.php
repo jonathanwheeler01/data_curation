@@ -13,7 +13,7 @@
  *    You should have received a copy of the Apache License, Version 2.0
  *    along with data_curation.  If not, see <http://www.apache.org/licenses/LICENSE-2.0.html>.
  */
-
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 /**
  * Description of DataObjectPointer
  *

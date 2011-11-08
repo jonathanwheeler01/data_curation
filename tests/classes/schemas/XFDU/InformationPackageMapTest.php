@@ -69,8 +69,8 @@ class InformationPackageMapTest extends PHPUnit_Framework_TestCase {
    * Tests setters, getters and isset methods
    */
   public function testAabstractContentUnit() {
-    $this->assertFalse($this->object->isset_abstractContentUnit());
-    $this->assertEmpty($this->object->get_abstractContentUnit());
+    $this->assertFalse($this->object->isset_contentUnits());
+    $this->assertEmpty($this->object->get_ContentUnits());
   }
 }
 

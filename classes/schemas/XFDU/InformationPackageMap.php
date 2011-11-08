@@ -1,56 +1,95 @@
 <?php
-
-/* 
- *    This file is part of data_curation.
-
- *    data_curation is free software: you can redistribute it and/or modify
- *    it under the terms of the Apache License, Version 2.0 (See License at the
- *    top of the directory).
-
- *    data_curation is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
- *    You should have received a copy of the Apache License, Version 2.0
- *    along with data_curation.  If not, see <http://www.apache.org/licenses/LICENSE-2.0.html>.
- */
-
 /**
- * Description of InformationPackageMap
+ * The Information Package Map outlines a hierarchical structure for the 
+ * original object being encoded, using a series of nested contentUnit elements. 
+ * An element of informationPackageMapType has the following attributes: 
+ * 1. ID: an XML ID for the element; 2. packageType: a type for the object. 
+ * Typical values will be "AIP" for a map which describes a complete AIP obeying 
+ * all constraints and cardinalities in the OAIS reference model. "SIP" for a 
+ * map which describes a Submission Information Package. 3. textInfo: a string 
+ * to describe the informationPackageMap to users. 4. anyAttribute - wild-carded 
+ * attribute extension point Concrete implementations of abstractContentUnit 
+ * (contentUnit etc.) must be used in the instance document.
  *
- * @author olendorf
+ * @author Rob Olendorf
  * 
  */
 class InformationPackageMap extends aXMLElement{
-  protected $abstractContentUnit;
+  /**
+   *
+   * @var array<ContentUnit>
+   */
+  protected $contentUnits;
+  
+  /**
+   *
+   * @var string
+   */
   protected $id;
+  
+  /**
+   *
+   * @var string
+   */
   protected $packageType;
+  
+  /**
+   * 
+   * @var string
+   */
   protected $textInfo;
 
+  /**
+   * 
+   */
   public function  __construct() {
-    $this->abstractContentUnit = array();
+    $this->contentUnits = array();
   }
 
+  /**
+   *
+   * @param string $id 
+   */
   public function set_id($id) {
     $this->id = $id;
   }
 
+  /**
+   *
+   * @return string
+   */
   public function get_id() {
     return $this->id;
   }
 
+  /**
+   *
+   * @return boolean 
+   */
   public function isset_id() {
     return (isset($this->id) && !empty($this->id));
   }
 
+  /**
+   *
+   * @param string $packageType 
+   */
   public function set_packageType($packageType) {
     $this->packageType = $packageType;
   }
 
+  /**
+   *
+   * @return string 
+   */
   public function get_packageType() {
     return $this->packageType;
   }
 
+  /**
+   *
+   * @return boolean
+   */
   public function isset_packageType() {
     return (isset($this->packageType) && !empty($this->packageType));
   }
@@ -79,12 +118,24 @@ class InformationPackageMap extends aXMLElement{
     return (isset($this->textInfo) && !empty($this->textInfo));
   }
 
-  public function get_abstractContentUnit() {
-    return $this->abstractContentUnit;
+  /**
+   * @todo add_contentUnit
+   * @todo unset_contentUnits
+   */
+  /**
+   *
+   * @return array<ContentUnit> 
+   */
+  public function get_ContentUnits() {
+    return $this->contentUnits;
   }
 
-  public function isset_abstractContentUnit() {
-    return (isset($this->abstractContentUnit) && !empty($this->abstractContentUnit));
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_contentUnits() {
+    return (isset($this->contentUnits) && !empty($this->contentUnits));
   }
 }
 ?>

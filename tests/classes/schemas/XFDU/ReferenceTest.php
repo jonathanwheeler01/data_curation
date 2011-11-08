@@ -30,6 +30,9 @@ class ReferenceTest extends PHPUnit_Framework_TestCase {
     
   }
   
+  /**
+   * 
+   */
   public function testHref() {
     $this->assertFalse($this->object->isset_href());
     
@@ -39,6 +42,9 @@ class ReferenceTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($value, $this->object->get_href());
   }
   
+  /**
+   * 
+   */
   public function testid() {
     $this->assertFalse($this->object->isset_id());
     
@@ -48,6 +54,16 @@ class ReferenceTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($value, $this->object->get_id());
   }
   
+  /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testBadID() {
+    $this->object->set_id('0bad');
+  }
+  
+  /**
+   * 
+   */
   public function testLocator() {
     $this->assertFalse($this->object->isset_locator());
     
@@ -57,24 +73,21 @@ class ReferenceTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($value, $this->object->get_locator());
   }
   
+  /**
+   * 
+   */
   public function testLocatorType() {
     $this->assertFalse($this->object->isset_locatorType());
     
-    $value = Locator::URL;
+    $value = 'URL';
     $this->object->set_locatorType($value);
     $this->assertTrue($this->object->isset_locatorType());
     $this->assertEquals($value, $this->object->get_locatorType());
   }
   
-  
-  public function testBadLocatorType() {
-    $this->object->set_locatorType('bad');
-    $this->assertTrue($this->object->isset_locatorType());
-    $this->assertEquals(Locator::OTHER, $this->object->get_locatorType());
-    $this->assertTrue($this->object->isset_otherLocatorType());
-    $this->assertEquals('bad', $this->object->get_otherLocatorType());
-  }
-  
+  /**
+   * 
+   */
   public function testOtherLocatorType() {
     $this->assertFalse($this->object->isset_otherLocatorType());
     
@@ -84,8 +97,9 @@ class ReferenceTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($value, $this->object->get_otherLocatorType());
   }
   
-  
-  
+  /**
+   * 
+   */
   public function testTextInfo() {
     $this->assertFalse($this->object->isset_textInfo());
     

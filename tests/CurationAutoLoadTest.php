@@ -30,7 +30,7 @@ class CurationAutoLoadTest extends PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @todo Implement testAutoload().
+   * 
    */
   public function testAutoload() {
     $ctool = new CurationTool();

@@ -2,9 +2,15 @@
 
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 /**
- * Description of MetadataWrap
+ * An element of metadataWrapType is a generic element used throughout the XFDU 
+ * schema to allow the encoder to place arbitrary metadata conforming to other 
+ * standards/schema within a XFDU document. The metadataWrapType can have the 
+ * following attributes: 1. ID: an XML ID for this element; 2. mimeType: the 
+ * MIME type for the metadata contained in the element; 3. vocabularyName: the 
+ * type of metadata contained (e.g., MARC, EAD, etc.); 4. textInfo: a label to 
+ * display to the viewer of the XFDU document identifying the metadata.
  *
- * @author Rob
+ * @author Rob Olendorf
  */
 class MetadataWrap extends FileContent{
   /**
