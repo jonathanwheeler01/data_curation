@@ -155,7 +155,12 @@ class DataObject extends aXMLElement{
    * @param string $id 
    */
   public function set_id($id) {
-    $this->id = $id;
+    if($this->validate_id($id)) {
+      $this->id = $id;
+    }
+    else {
+      throw new XFDUException('Invalid ID token specified.', 0);
+    }
   }
   
   /**
@@ -251,7 +256,12 @@ class DataObject extends aXMLElement{
    * @param string $repId 
    */
   public function set_repID($repId) {
-    $this->repId = $repId;
+    if($this->validate_id($repId)) {
+      $this->id = $repId;
+    }
+    else {
+      throw new XFDUException('Invalid ID token specified.', 0);
+    }
   }
   
   /**
@@ -275,10 +285,12 @@ class DataObject extends aXMLElement{
    * @param long $size 
    */
   public function set_size($size) {
-    /**
-     * @todo consider type checking here.
-     */
-    $this->size = $size;
+    if(is_int($size)) {
+      $this->size = $size;
+    }
+    else {
+      throw new XFDUException('Invalid size specified. Expected int or long.', $code, $previous);
+    }
   }
   
   /**
