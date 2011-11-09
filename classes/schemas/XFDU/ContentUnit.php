@@ -150,11 +150,16 @@ class ContentUnit extends aXMLElement{
   }
 
   /**
-   * @todo validate anyMdID
+   * 
    * @param string $anyMdID
    */
   public function set_anyMdID($anyMdID) {
-    $this->anyMdID = $anyMdID;
+    if($this->validate_id($anyMdID)) {
+      $this->anyMdID = $anyMdID;
+    }
+    else {
+      throw new InvalidIDTokenException($anyMdID);
+    }
   }
 
   /**
@@ -174,11 +179,16 @@ class ContentUnit extends aXMLElement{
   }
 
   /**
-   * @todo validate behaviorID
+   * 
    * @param string $behaviorID 
    */
   public function set_behaviorID($behaviorID) {
-    $this->behaviorID = $behaviorID;
+    if($this->validate_id($behaviorID)) {
+      $this->behaviorID = $behaviorID;
+    }
+    else {
+      throw new InvalidIDTokenException($behaviorID);
+    }
   }
 
   /**
@@ -222,11 +232,16 @@ class ContentUnit extends aXMLElement{
   }
   
   /**
-   * @todo validate dmdID
+   * 
    * @param string $dmdID 
    */
   public function set_dmdID($dmdID) {
-    $this->dmdID = $dmdID;
+    if($this->validate_id($dmdID)) {
+      $this->dmdID = $dmdID;
+    }
+    else {
+      throw new InvalidIDTokenException($dmdID);
+    }
   }
   
   /**

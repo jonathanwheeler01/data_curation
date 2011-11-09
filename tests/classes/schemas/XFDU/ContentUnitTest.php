@@ -62,6 +62,13 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidAnyMdID() {
+    $this->object->set_anyMdID('0invalid');
+  }
+  
+  /**
    * 
    */
   public function testBehaviorID() {
@@ -71,6 +78,13 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     $this->object->set_behaviorID($behaviorID);
     $this->assertTrue($this->object->isset_behaviorID());
     $this->assertEquals($behaviorID, $this->object->get_behaviorID());
+  }
+  
+  /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidBehaviorID() {
+    $this->object->set_behaviorID('0invalid');
   }
   
   /**
@@ -95,6 +109,13 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     $this->object->set_dmdID($dmdID);
     $this->assertTrue($this->object->isset_dmdID());
     $this->assertEquals($dmdID, $this->object->get_dmdID());
+  }
+  
+  /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidDmdID() {
+    $this->object->set_dmdID('0invalid');
   }
   
   /**
