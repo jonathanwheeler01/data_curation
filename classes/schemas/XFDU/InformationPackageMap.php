@@ -49,7 +49,7 @@ class InformationPackageMap extends aXMLElement{
   }
 
   /**
-   *
+   * @todo add id validation for InformationPackageMap
    * @param string $id 
    */
   public function set_id($id) {

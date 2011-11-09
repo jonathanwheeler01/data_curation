@@ -1,6 +1,8 @@
 <?php
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
-
+/**
+ * @todo enum for locatorType;
+ */
 /**
  * HTML type references. locator attribute allows finer granularity within location specified in href
  *

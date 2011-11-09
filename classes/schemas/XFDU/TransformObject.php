@@ -47,38 +47,72 @@ class TransformObject extends aXMLElement{
    */
   protected $transformType;
 
+  /**
+   * 
+   */
   public function  __construct() {
     $this->keyDerivations = array();
   }
 
+  /**
+   *
+   * @param KeyDerivation $keyDerivation 
+   */
   public function add_keyDerivation(KeyDerivation $keyDerivation) {
     $this->keyDerivations[] = $keyDerivation;
   }
 
+  /**
+   *
+   * @return array<KeyDerivation>
+   */
   public function get_keyDerivations() {
     return $this->keyDerivations;
   }
 
+  /**
+   *
+   * @return boolean
+   */
   public function isset_keyDerivations() {
     return (isset($this->keyDerivations) && !empty($this->keyDerivations));
   }
 
+  /**
+   * 
+   */
   public function unset_keyDerivations() {
     $this->keyDerivations = array();
   }
 
+  /**
+   *
+   * @param string $algorithm 
+   */
   public function set_algorithm($algorithm) {
     $this->algorithm = $algorithm;
   }
 
+  /**
+   *
+   * @return string 
+   */
   public function get_algorithm() {
     return $this->algorithm;
   }
 
+  /**
+   *
+   * @return boolean 
+   */
   public function isset_algorithm() {
     return (isset($this->algorithm) && !empty($this->algorithm));
   }
 
+  /**
+   *
+   * @param string $id 
+   */
   public function set_id($id) {
     if($this->validate_id($id)) {
       $this->id = $id;
@@ -88,34 +122,66 @@ class TransformObject extends aXMLElement{
     }
   }
 
+  /**
+   *
+   * @return string
+   */
   public function get_id() {
     return $this->id;
   }
 
+  /**
+   *
+   * @return boolean 
+   */
   public function isset_id() {
     return (isset($this->id) && !empty($this->id));
   }
 
+  /**
+   *
+   * @param string $order 
+   */
   public function set_order($order) {
     $this->order = $order;
   }
 
+  /**
+   *
+   * @return string
+   */
   public function get_order() {
     return $this->order;
   }
 
+  /**
+   *
+   * @return boolean
+   */
   public function isset_order() {
     return (isset($this->order) && !empty($this->order));
   }
 
+  /**
+   * @todo enum for transform type
+   * @param type $transformType 
+   */
   public function set_transformType($transformType) {
     $this->transformType = $transformType;
   }
 
+  /**
+   *
+   * @return string 
+   */
   public function get_transformType() {
     return $this->transformType;
   }
 
+  /**
+   *
+   * @return boolean 
+   */
   public function isset_transformType() {
     return (isset($this->transformType) && !empty($this->transformType));
   }

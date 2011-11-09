@@ -77,7 +77,7 @@ class FileContent extends aXMLElement{
   }
   
   /**
-   *
+   * 
    * @param XMLData $xmlData 
    */
   public function set_XMLData(XMLData $xmlData) {

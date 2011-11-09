@@ -1,5 +1,8 @@
 <?php
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+/**
+ * @todo consider better XML handling...or not
+ */
 
 /**
  * A wrapper to contain arbitrary XML content.

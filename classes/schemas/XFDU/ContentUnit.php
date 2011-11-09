@@ -150,7 +150,7 @@ class ContentUnit extends aXMLElement{
   }
 
   /**
-   *
+   * @todo validate anyMdID
    * @param string $anyMdID
    */
   public function set_anyMdID($anyMdID) {
@@ -174,7 +174,7 @@ class ContentUnit extends aXMLElement{
   }
 
   /**
-   *
+   * @todo validate behaviorID
    * @param string $behaviorID 
    */
   public function set_behaviorID($behaviorID) {
@@ -222,7 +222,7 @@ class ContentUnit extends aXMLElement{
   }
   
   /**
-   *
+   * @todo validate dmdID
    * @param string $dmdID 
    */
   public function set_dmdID($dmdID) {
@@ -270,7 +270,7 @@ class ContentUnit extends aXMLElement{
   }
   
   /**
-   *
+   * @todo validate id for content unit
    * @param string $id 
    */
   public function set_id($id) {
@@ -318,7 +318,7 @@ class ContentUnit extends aXMLElement{
   }
   
   /**
-   *
+   * @todo validate pdiID
    * @param string $pdiID 
    */
   public function set_pdiID($pdiID) {
@@ -342,7 +342,7 @@ class ContentUnit extends aXMLElement{
   }
   
   /**
-   *
+   * @todo validate repID
    * @param string $repID 
    */
   public function set_repID($repID) {

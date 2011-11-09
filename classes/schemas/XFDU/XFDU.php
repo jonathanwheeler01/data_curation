@@ -2,6 +2,9 @@
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
+ * @todo add validation of IDs
+ */
+/**
  * XFDUType Complex Type. A XFDU document consists of five possible subsidiary 
  * sections: packageHeader (XFDU document header), informationPackageMap 
  * (content unit section), metadataSection (container for metadata objects), 

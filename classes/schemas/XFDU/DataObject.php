@@ -147,7 +147,7 @@ class DataObject extends aXMLElement{
   }
   
   /**
-   * Should be drawn from the CombinationMethod enum class
+   * @todo use combinationMethodEnum
    * @param string $combinationName 
    */
   public function set_combinationName($combinationName) {

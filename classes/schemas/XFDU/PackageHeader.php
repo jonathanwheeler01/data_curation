@@ -83,7 +83,7 @@ class PackageHeader extends aXMLElement{
   }
 
   /**
-   *
+   * @todo add id validation to pachageHeader ID
    * @param string $id
    */
   public function set_id($id) {
