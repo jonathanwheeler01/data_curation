@@ -28,6 +28,32 @@ class EnvironmentInfoTest extends PHPUnit_Framework_TestCase {
   protected function tearDown() {
     
   }
+  
+  /**
+   * 
+   */
+  public function testExtension() {
+    $this->assertFalse($this->object->isset_extension());
+    
+    $value = 'test';
+    $this->object->set_extension($value);
+    
+    $this->assertTrue($this->object->isset_extension());
+    $this->assertEquals($value, $this->object->get_extension());
+  }
+  
+  /**
+   * 
+   */
+  public function testXMLData() {
+    $this->assertFalse($this->object->isset_xmlData());
+    
+    $value = 'test';
+    $this->object->set_xmlData($value);
+    
+    $this->assertTrue($this->object->isset_xmlData());
+    $this->assertEquals($value, $this->object->get_xmlData());
+  }
 
 }
 

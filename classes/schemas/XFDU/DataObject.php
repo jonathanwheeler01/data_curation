@@ -116,8 +116,11 @@ class DataObject extends aXMLElement{
   }
   
   /**
-   * @todo unset_bytestreams
+   * 
    */
+  public function unset_bytestreams() {
+    $this->byteStreams = array();
+  }
   
   /**
    *

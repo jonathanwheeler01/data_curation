@@ -37,7 +37,7 @@ class ContentUnit extends aXMLElement{
    * An array of the content units held in this contentn unit.
    * @var array
    */
-  protected $abstractContentUnit;
+  protected $contentUnits;
 
   /**
    * Catch all metadata reference.
@@ -116,32 +116,38 @@ class ContentUnit extends aXMLElement{
    * 
    */
   public function  __construct() {
-    $this->abstractContentUnit = array();
+    $this->contentUnits = array();
   }
-
-  /**
-   * @todo rename abstarctContentUnit
-   * @todo add_ContentUnit
-   */
+  
   /**
    *
-   * @return array
+   * @param ContentUnit $contentUnit 
    */
-  public function get_abstractContentUnit() {
-    return $this->abstractContentUnit;
+  public function add_contentUnit(ContentUnit $contentUnit) {
+    $this->contentUnits[] = $contentUnit;
+  }
+  /**
+   *
+   * @return array<ContentUnit>
+   */
+  public function get_contentUnits() {
+    return $this->contentUnits;
+  }
+  
+  /**
+   * 
+   */
+  public function unset_contentUnits() {
+    $this->contentUnits = array();
   }
 
   /**
    *
    * @return boolean
    */
-  public function isset_abstractContentUnit() {
-    return (isset($this->abstractContentUnit) && !empty($this->abstractContentUnit));
+  public function isset_contentUnits() {
+    return (isset($this->contentUnits) && !empty($this->contentUnits));
   }
-  
-  /**
-   * @todo unset_contentUnits
-   */
 
   /**
    *

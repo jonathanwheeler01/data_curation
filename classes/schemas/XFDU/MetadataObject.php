@@ -7,46 +7,6 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * @author Rob
  */
 
-abstract class MetadataCategory implements Enum{
-  protected $category;
-  
-  const OTHER = 'OTHER';
-  const ANY = 'ANY';
-  const DMD = 'DMD';
-  const PDI = 'PDI';
-  const REP = 'REP';
-  
-  static public function values() {
-    return array(self::ANY, self::DMD, self::OTHER, self::PDI, self::REP);
-  }
-}
-
-abstract class MetadataClassification implements Enum{
-  protected $classification; 
-
-
-  const OTHER = 'OTHER';
-  const CONTEXT = 'CONTEXT';
-  const DED = 'DED';
-  const DESCRIPTION = 'DESCRIPTOIN';
-  const FIXITY = 'FIXITY';
-  const PROVENANCE = 'PROVENANCE';
-  const REFERENCE = 'REFERENCE';
-  const SYNTAX = 'SYNTAX';
-  
-  static public function values() {
-    return array(self::CONTEXT,
-        self::DED,
-        self::DESCRIPTION,
-        self::FIXITY,
-        self::OTHER,
-        self::PROVENANCE,
-        self::REFERENCE,
-        self::SYNTAX,
-        );
-  }
-}
-
 /**
  * A generic framework for pointing to/including metadata within a XFDU 
  * document, a la Warwick Framework. An metadataObject element may have the 
@@ -112,12 +72,7 @@ class MetadataObject extends aXMLElement{
    * @param string $category 
    */
   public function set_category($category) {
-    if(array_search($category, MetadataCategory::values())) {
-      $this->category = $category;
-    }
-    else {
-      $this->otherCategory = $category;
-    }
+    $this->category = $category;
   }
   
   /**
@@ -142,12 +97,7 @@ class MetadataObject extends aXMLElement{
    * @param string $classification 
    */
   public function set_classification($classification) {
-    if(array_search($classification, MetadataClassification::values())) {
-      $this->classification = $classification;
-    }
-    else {
-      $this->otherClass = $classification;
-    }
+    $this->classification = $classification;
   }
   
   /**
@@ -243,7 +193,12 @@ class MetadataObject extends aXMLElement{
    * @param string $id 
    */
   public function set_id($id) {
-    $this->id = $id;
+    if($this->validate_id($id)) {
+      $this->id = $id;
+    }
+    else {
+      throw new InvalidIDTokenException($id);
+    }
   }
   
   /**

@@ -70,7 +70,19 @@ class InformationPackageMapTest extends PHPUnit_Framework_TestCase {
    */
   public function testAabstractContentUnit() {
     $this->assertFalse($this->object->isset_contentUnits());
-    $this->assertEmpty($this->object->get_ContentUnits());
+    
+    $value = new ContentUnit();
+    $this->object->add_contentUnit($value);
+    $this->object->add_contentUnit($value);
+    $objs = $this->object->get_ContentUnits();
+    
+    $this->assertTrue($this->object->isset_contentUnits());
+    $this->assertEquals(2, sizeof($objs));
+    $this->assertEquals(get_class($value), get_class($objs[0]));
+    
+    $this->object->unset_contentUnits();
+    
+    $this->assertFalse($this->object->isset_contentUnits());
   }
 }
 

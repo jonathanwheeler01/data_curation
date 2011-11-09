@@ -121,9 +121,13 @@ class InformationPackageMap extends aXMLElement{
   }
 
   /**
-   * @todo add_contentUnit
-   * @todo unset_contentUnits
+   *
+   * @param ContentUnit $contentUnit 
    */
+  public function add_contentUnit(ContentUnit $contentUnit) {
+    $this->contentUnits[] = $contentUnit;
+  }
+  
   /**
    *
    * @return array<ContentUnit> 
@@ -138,6 +142,13 @@ class InformationPackageMap extends aXMLElement{
    */
   public function isset_contentUnits() {
     return (isset($this->contentUnits) && !empty($this->contentUnits));
+  }
+  
+  /**
+   * 
+   */
+  public function unset_contentUnits() {
+    $this->contentUnits = array();
   }
 }
 ?>

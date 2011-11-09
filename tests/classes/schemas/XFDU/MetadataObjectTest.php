@@ -35,21 +35,10 @@ class MetadataObjectTest extends PHPUnit_Framework_TestCase {
   public function testCategory() {
     $this->assertFalse($this->object->isset_category());
     
-    $value = MetadataCategory::DMD;
+    $value = 'test';
     $this->object->set_category($value);
     $this->assertTrue($this->object->isset_category());
     $this->assertEquals($value, $this->object->get_category());
-  }
-  
-  /**
-   * 
-   */
-  public function testBadCategory() {
-    $value = 'bad';
-    $this->object->set_category($value);
-    $this->assertFalse($this->object->isset_category());
-    $this->assertTrue($this->object->isset_otherCategory());
-    $this->assertEquals($value, $this->object->get_otherCategory());
   }
   
   /**
@@ -70,21 +59,10 @@ class MetadataObjectTest extends PHPUnit_Framework_TestCase {
   public function testClassification() {
     $this->assertFalse($this->object->isset_classification());
     
-    $value = MetadataClassification::FIXITY;
+    $value = 'test';
     $this->object->set_classification($value);
     $this->assertTrue($this->object->isset_classification());
     $this->assertEquals($value, $this->object->get_classification());
-  }
-  
-  /**
-   * 
-   */
-  public function testBadClassification() {
-    $value = 'bad';
-    $this->object->set_classification($value);
-    $this->assertFalse($this->object->isset_classification());
-    $this->assertTrue($this->object->isset_otherClass());
-    $this->assertEquals($value, $this->object->get_otherClass());
   }
   
   /**
@@ -124,6 +102,16 @@ class MetadataObjectTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($value, $this->object->get_id());
   }
   
+  /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidID() {
+    $this->object->set_id('0Invalid');
+  }
+  
+  /**
+   * 
+   */
   public function testMetadataWrap() {
     $this->assertFalse($this->object->isset_metadataWrap());
     

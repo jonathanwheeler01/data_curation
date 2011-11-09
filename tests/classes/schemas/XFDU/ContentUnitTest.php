@@ -32,9 +32,21 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
   /**
    * 
    */
-  public function testAbstractContentUnit() {
-    $this->assertFalse($this->object->isset_abstractContentUnit());
-    $this->assertEmpty($this->object->get_abstractContentUnit());
+  public function testContentUnit() {
+    $this->assertFalse($this->object->isset_contentUnits());
+    
+    $value = new ContentUnit();
+    $this->object->add_contentUnit($value);
+    $this->object->add_contentUnit($value);
+    $objs = $this->object->get_contentUnits();
+    
+    $this->assertTrue($this->object->isset_contentUnits());
+    $this->assertEquals(2, sizeof($objs));
+    $this->assertEquals(get_class($value), get_class($objs[0]));
+    
+    $this->object->unset_contentUnits();
+    
+    $this->assertFalse($this->object->isset_contentUnits());
   }
 
   /**

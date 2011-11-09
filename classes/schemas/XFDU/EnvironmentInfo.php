@@ -1,7 +1,4 @@
 <?php
-/**
- * @todo reimplement environmentInfo with setters getters etc.
- */
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
@@ -20,12 +17,60 @@ class EnvironmentInfo extends aXMLElement{
    * Allows application specific extensions of the xfdu
    * @var any
    */
-  public $extension;
+  protected $extension;
 
   /**
    * Freeform XML
-   * @var anyXML
+   * array<Object>
    */
-  public  $xmlData;
+  protected  $xmlData;
+
+  /**
+   *
+   * @param mixed $extension 
+   */
+  public function set_extension($extension) {
+    $this->extension = $extension;
+  }
+  
+  /**
+   *
+   * @return mixed
+   */
+  public function get_extension() {
+    return $this->extension;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_extension() {
+    return (isset($this->extension) && !empty($this->extension));
+  }
+  
+  /**
+   *
+   * @param XML $xmlData 
+   */
+  public function set_xmlData($xmlData) {
+    $this->xmlData = $xmlData;
+  }
+  
+  /**
+   * 
+   * @return XML 
+   */
+  public function get_xmlData() {
+    return $this->xmlData;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_xmlData() {
+    return (isset($this->xmlData) && !empty($this->xmlData));
+  }
 }
 ?>

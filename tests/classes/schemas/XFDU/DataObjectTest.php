@@ -43,6 +43,10 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals(2, sizeof($bytestreams));
     $this->assertTrue($this->object->isset_bytestreams());
     $this->assertEquals(get_class($value), get_class($bytestreams[0]));
+    
+    $this->object->unset_bytestreams();
+    
+    $this->assertFalse($this->object->isset_bytestreams());
   }
 
   /**
