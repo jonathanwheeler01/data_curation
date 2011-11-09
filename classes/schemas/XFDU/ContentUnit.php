@@ -367,7 +367,7 @@ class ContentUnit extends aXMLElement{
   }
   
   /**
-   * @todo validate repID
+   * 
    * @param string $repID 
    */
   public function set_repID($repID) {

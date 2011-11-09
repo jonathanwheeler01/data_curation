@@ -30,27 +30,16 @@ class FileContentTest extends PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @todo Implement testSet_binaryData().
+   * 
    */
   public function testBinaryData() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
-  }
-  
-  /**
-   * @expectedException UnimplementedMethodException
-   */
-  public function testUnimplementedSetBinary() {
-    $this->object->set_binaryData('test');
-  }
-  
-  /**
-   * @expectedException UnimplementedMethodException
-   */
-  public function testUnimplementedGetBinary() {
-    $this->object->get_binaryData();
+    $this->assertFalse($this->object->isset_binaryData());
+    
+    $value = 'test';
+    $this->object->set_binaryData($value);
+    
+    $this->assertTrue($this->object->isset_binaryData());
+    $this->assertEquals($value, $this->object->get_binaryData());
   }
 
   /**

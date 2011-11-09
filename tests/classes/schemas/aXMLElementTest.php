@@ -39,11 +39,6 @@ class aXMLElementTest extends PHPUnit_Framework_TestCase {
     $this->assertFalse($this->object->validate_id('0badID'));
   }
 
-  public function testValidEnum() {
-    $value = TransformType::AUTHENICATION;
-    $this->assertTrue($this->object->validate_enum('TransformType', $value));
-  }
-
 }
 
 ?>

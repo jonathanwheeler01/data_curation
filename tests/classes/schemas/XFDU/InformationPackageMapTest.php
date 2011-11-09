@@ -40,6 +40,13 @@ class InformationPackageMapTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($id, $this->object->get_id());
     $this->assertTrue($this->object->isset_id());
   }
+  
+  /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidID() {
+    $this->object->set_id('0invalid');
+  }
 
   /**
    * Tests setters, getters and isset methods

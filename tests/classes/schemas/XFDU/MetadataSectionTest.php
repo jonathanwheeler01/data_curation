@@ -30,7 +30,7 @@ class MetadataSectionTest extends PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @todo Implement testAdd_metadataObject().
+   * 
    */
   public function testMetadataObject() {
     $this->assertFalse($this->object->isset_metadataObjects());

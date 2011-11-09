@@ -8,7 +8,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  */
 class FileContent extends aXMLElement{  
   /**
-   * @todo yet to be implemented. Need to write a file stream wrapper 
+   * 
    * @var binary data
    */
   protected $binaryData;
@@ -26,17 +26,17 @@ class FileContent extends aXMLElement{
   protected $xmlData;
   
   /**
-   * @todo set_binaryData()
+   * 
    */
-  public function set_binaryData() {
-    throw new UnimplementedMethodException(__METHOD__.' has not been implemented yet.', 0);
+  public function set_binaryData($binaryData) {
+    $this->binaryData = $binaryData;
   }
   
   /**
-   * @todo get_binaryData() 
+   * 
    */
   public function get_binaryData() {
-    throw new UnimplementedMethodException(__METHOD__.' has not been implemented yet.', 0);
+    return $this->binaryData;
   }
   
   /**
@@ -44,7 +44,7 @@ class FileContent extends aXMLElement{
    * @return boolean 
    */
   public function isset_binaryData() {
-    return (isset($this->xmlData) && !empty($this->xmlData));
+    return (isset($this->binaryData) && !empty($this->binaryData));
   }
   
   /**

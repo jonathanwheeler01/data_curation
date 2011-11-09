@@ -3,7 +3,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
  * Description of MetadataObject
- * @todo Figure out why MetdataObject isn't testing.
+ * 
  * @author Rob Olendorf
  */
 
@@ -19,7 +19,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  */
 class MetadataObject extends aXMLElement{
   /**
-   * @todo for category
+   * @todo enum for category
    * Should be defined from the MetadataCategory Object.
    * @var string
    */

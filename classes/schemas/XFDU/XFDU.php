@@ -2,9 +2,6 @@
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
- * @todo add validation of IDs
- */
-/**
  * XFDUType Complex Type. A XFDU document consists of five possible subsidiary 
  * sections: packageHeader (XFDU document header), informationPackageMap 
  * (content unit section), metadataSection (container for metadata objects), 
@@ -84,7 +81,12 @@ class XFDU extends aXMLElement{
    * @param string $id
    */
   public function set_id($id) {
-    $this->id = $id;
+    if($this->validate_id($id)) {
+      $this->id = $id;
+    }
+    else {
+      throw new InvalidIDTokenException($id);
+    }
   }
 
   /**

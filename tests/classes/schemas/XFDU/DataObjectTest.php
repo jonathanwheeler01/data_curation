@@ -67,10 +67,10 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
   public function testCombinationName() {
     $this->assertFalse($this->object->isset_combinationName());
     
-    $value = new CombinationMethod();
+    $value = 'test';
     $this->object->set_combinationName($value);
     $this->assertTrue($this->object->isset_combinationName());
-    $this->assertEquals(get_class($value), get_class($this->object->get_combinationName()));
+    $this->assertEquals($value, $this->object->get_combinationName());
   }
   
 

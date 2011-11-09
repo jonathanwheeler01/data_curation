@@ -40,6 +40,13 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_id());
     $this->assertEquals($id, $this->object->get_id());
   }
+  
+  /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidID() {
+    $this->object->set_id('0invalid');
+  }
 
   /**
    * 

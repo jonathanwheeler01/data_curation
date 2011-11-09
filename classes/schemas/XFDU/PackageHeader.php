@@ -83,11 +83,16 @@ class PackageHeader extends aXMLElement{
   }
 
   /**
-   * @todo add id validation to pachageHeader ID
+   * 
    * @param string $id
    */
   public function set_id($id) {
-    $this->id = $id;
+    if($this->validate_id($id)) {
+      $this->id = $id;
+    }
+    else {
+      throw new InvalidIDTokenException($id);
+    }
   }
 
   /**
