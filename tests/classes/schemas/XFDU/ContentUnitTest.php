@@ -143,6 +143,13 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidID() {
+    $this->object->set_id('0invalid');
+  }
+  
+  /**
    * 
    */
   public function testOrder() {
@@ -167,6 +174,13 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidPdiID() {
+    $this->object->set_pdiID('0invalid');
+  }
+  
+  /**
    * 
    */
   public function testRepID() {
@@ -176,6 +190,13 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     $this->object->set_repID($repID);
     $this->assertTrue($this->object->isset_repID());
     $this->assertEquals($repID, $this->object->get_repID());
+  }
+  
+  /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidRepID() {
+    $this->object->set_repID('0Invalid');
   }
   
   /**

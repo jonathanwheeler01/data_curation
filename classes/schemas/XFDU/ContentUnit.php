@@ -285,11 +285,16 @@ class ContentUnit extends aXMLElement{
   }
   
   /**
-   * @todo validate id for content unit
+   * 
    * @param string $id 
    */
   public function set_id($id) {
-    $this->id = $id;
+    if($this->validate_id($id)) {
+      $this->id = $id;
+    }
+    else {
+      throw new InvalidIDTokenException($id);
+    }
   }
   
   /**
@@ -333,11 +338,16 @@ class ContentUnit extends aXMLElement{
   }
   
   /**
-   * @todo validate pdiID
+   * 
    * @param string $pdiID 
    */
   public function set_pdiID($pdiID) {
-    $this->pdiMD = $pdiID;
+    if($this->validate_id($pdiID)) {
+      $this->pdiMD = $pdiID;
+    }
+    else {
+      throw new InvalidIDTokenException($pdiID);
+    }
   }
   
   /**
@@ -361,7 +371,12 @@ class ContentUnit extends aXMLElement{
    * @param string $repID 
    */
   public function set_repID($repID) {
-    $this->repID = $repID;
+    if($this->validate_id($repID)) {
+      $this->repID = $repID;
+    }
+    else {
+      throw new InvalidIDTokenException($repID);
+    }
   }
   
   /**
