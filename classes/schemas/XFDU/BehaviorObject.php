@@ -1,29 +1,76 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 /**
  * Description of BehaviorObject
  *
- * @author Rob
+ * @author Rob Olendorf
  */
 class BehaviorObject extends aXMLElement{
   /**
-   * An element of mechanismType contains a pointer to an executable code module that 
-   * implements a set of behaviors defined by an interface definition
-   * @var array<Mechanism>
+   * Complex Type for Behaviors. A behavior object can be used to associate 
+   * executable behaviors with content in the XFDU object. A behavior object 
+   * has an interface definition element that represents an abstract definition 
+   * of the set of behaviors represented by a particular behavior object. An 
+   * behavior object may have the following attributes: 1. ID: an XML ID for the 
+   * element 2. structID: IDREF Enables Behavior to point to Content Units or 
+   * other Manifest types 3. behaviorType: a behavior type identifier for a 
+   * given set of related behaviors. 4. created: date this behavior object of 
+   * the XFDU object was created. 5. textInfo: a description of the type of 
+   * behaviors this object represents. 6. groupID: an identifier that establishes 
+   * a correspondence between this behavior object and other behavior Behavior 
+   * object may also include another behavior object for chaining of behaviors. 
+   * Concrete implementation of mechanism have to be used in the instance 
+   * document.
    */
   protected $mechanisms;
+  
+  /**
+   *
+   * @var array<BehaviorObject>
+   */
   protected $behaviorObjects;
+  
+  /**
+   *
+   * @var string 
+   */
   protected $behaviorType;
+  
+  /**
+   *
+   * @var string 
+   */
   protected $contentUnitID;
+  
+  /**
+   * Can be either a date, datetime, or integer representing a Unix time
+   * @var mixed 
+   */
   protected $created;
+  
+  /**
+   *
+   * @var string
+   */
   protected $groupID;
+  
+  /**
+   *
+   * @var string
+   */
   protected $id;
+  
+  /**
+   *
+   * @var InterfaceDefinition 
+   */
   protected $interfaceDefinition;
+  
+  /**
+   *
+   * @var string
+   */
   protected $textInfo;
   
   /**
@@ -129,7 +176,7 @@ class BehaviorObject extends aXMLElement{
       $this->contentUnitID = $contentUnitID;
     }
     else {
-      throw new XFDUException('Invalid ID token specified', 0);
+      throw new InvalidIDTokenException($contentUnitID);
     }
   }
   
@@ -158,7 +205,7 @@ class BehaviorObject extends aXMLElement{
       $this->groupID = $groupID;
     }
     else {
-      throw new XFDUException('Invalid ID token specified', 0);
+      throw new InvalidIDTokenException($groupID);
     }
   }
   
@@ -187,7 +234,7 @@ class BehaviorObject extends aXMLElement{
       $this->id = $id;
     }
     else {
-      throw new XFDUException('Invalid ID token specified', 0);
+      throw new InvalidIDTokenException($id);
     }
   }
   

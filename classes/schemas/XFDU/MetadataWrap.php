@@ -1,6 +1,6 @@
 <?php
-
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 /**
  * An element of metadataWrapType is a generic element used throughout the XFDU 
  * schema to allow the encoder to place arbitrary metadata conforming to other 

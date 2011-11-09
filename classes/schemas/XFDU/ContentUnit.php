@@ -1,23 +1,35 @@
 <?php
-/* 
- *    This file is part of data_curation.
-
- *    data_curation is free software: you can redistribute it and/or modify
- *    it under the terms of the Apache License, Version 2.0 (See License at the
- *    top of the directory).
-
- *    data_curation is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
- *    You should have received a copy of the Apache License, Version 2.0
- *    along with data_curation.  If not, see <http://www.apache.org/licenses/LICENSE-2.0.html>.
- */
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
- * Description of ContentUnit
+ *  The XFDU standard represents a data package structurally as a series of 
+ * nested content units, that is, as a hierarchy (e.g., a data product, which is 
+ * composed of datasets, which are composed of time series, which are composed 
+ * of records). Every content node in the structural map hierarchy may be 
+ * connected (via subsidiary XFDUPointer or dataObjectPointer elements) to 
+ * information objects which represent that unit as a portion of the whole 
+ * package. The contentUnitType is declared as a base type for concrete 
+ * implementations of contentUnit; The content unit element has the following 
+ * attributes: 1.ID (an XML ID); 2.order: an numeric string 
+ * (e.g., 1.1, 1.2.1, 3,) representation of this unit's order among its siblings 
+ * (e.g., its sequence); order attribute is not meant to be used for processing 
+ * purposes. It is here only for visualization purposes of the potential reader 
+ * of XML instance. It is not guaranteed that any software will take value of 
+ * order attribute into account. contentUnit nesting is the primary means for 
+ * determining order and level of the content information. 3.textInfo: a string 
+ * label to describe this contentUnit to an end user viewing the document, as 
+ * per a table of contents entry 4.repID: a set of IDREFs to representation 
+ * information sections within this XFDU document applicable to this contentUnit. 
+ * 5.dmdID: a set of IDREFS to descriptive information sections within this 
+ * XFDU document applicable to this contentUnit. 6.pdiID: a set of IDREFS to 
+ * preservation description information sections within this XFDU document 
+ * applicable to this contentUnit 7.anyMdID: a set of IDREFS to any other 
+ * metadata sections that do not fit rep,dmd or pdi metadata related to this 
+ * contentUnit 8.unitType: a type of content unit (e.g., Application Data Unit, 
+ * Data Description Unit, Software Installation Unit, etc.). 9. behaviorID-an XML 
+ * ID reference pointing to associate behavior.
  *
- * @author olendorf
+ * @author Rob Olendorf
  * 
  */
 class ContentUnit extends aXMLElement{
@@ -32,22 +44,85 @@ class ContentUnit extends aXMLElement{
    * @var string
    */
   protected $anyMdID;
+  
+  /**
+   * @var string
+   */
   protected $behaviorID;
+  
+  /**
+   *
+   * @var DataObjectPointer
+   */
   protected $dataObjectPointer;
+  
+  /**
+   *
+   * @var string
+   */
   protected $dmdID;
+  
+  /**
+   *
+   * @var any 
+   */
   protected $extension;
+  
+  /**
+   *
+   * @var string
+   */
   protected $id;
+  
+  /**
+   * For display purposes. The position of the content unit among the entire
+   * group.
+   * 
+   * @var string
+   */
   protected $order;
+  
+  /**
+   *
+   * @var string
+   */
   protected $pdiMD;
+  
+  /**
+   *
+   * @var string
+   */
   protected $repID;
+  
+  /**
+   *
+   * @var string
+   */
   protected $textInfo;
+  
+  /**
+   *
+   * @var string
+   */
   protected $unitType;
+  
+  /**
+   *
+   * @var Reference
+   */
   protected $xfduPointer;
 
+  /**
+   * 
+   */
   public function  __construct() {
     $this->abstractContentUnit = array();
   }
 
+  /**
+   * @todo rename abstarctContentUnit
+   * @todo add_ContentUnit
+   */
   /**
    *
    * @return array
@@ -63,6 +138,10 @@ class ContentUnit extends aXMLElement{
   public function isset_abstractContentUnit() {
     return (isset($this->abstractContentUnit) && !empty($this->abstractContentUnit));
   }
+  
+  /**
+   * @todo unset_contentUnits
+   */
 
   /**
    *
@@ -328,14 +407,26 @@ class ContentUnit extends aXMLElement{
     return (isset($this->unitType) && !empty($this->unitType));
   }
   
+  /**
+   *
+   * @param Reference $xfduPointer 
+   */
   public function set_xfduPointer (Reference $xfduPointer) {
     $this->xfduPointer = $xfduPointer;
   }
   
+  /**
+   *
+   * @return Reference 
+   */
   public function get_xfduPointer() {
     return $this->xfduPointer;
   }
   
+  /**
+   *
+   * @return boolean
+   */
   public function isset_xfduPointer() {
     return (isset($this->xfduPointer) && !empty($this->xfduPointer));
   }

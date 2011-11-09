@@ -1,13 +1,11 @@
 <?php
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
  * A wrapper to contain arbitrary XML content.
  *
- * @author Rob
+ * @author Rob Olendorf
  */
-
-require_once dirname(__FILE__) . '/../../../curation_tool.inc';
-
 class XMLData extends aXMLElement{
   /**
    * Freeform or structured XML, stored here as a string to allow for different

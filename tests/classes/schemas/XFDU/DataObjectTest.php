@@ -81,6 +81,13 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_id());
     $this->assertEquals($value, $this->object->get_id());
   }
+  
+  /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidID() {
+  $this->object->set_id('0invalid');
+  }
 
   /**
    * 
@@ -129,6 +136,13 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_repID());
     $this->assertEquals($value, $this->object->get_repID());
   }
+  
+  /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidRepID() {
+    $this->object->set_repID('0invalid');
+  }
 
   /**
    * 
@@ -140,6 +154,13 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
     $this->object->set_size($value);
     $this->assertTrue($this->object->isset_size());
     $this->assertEquals($value, $this->object->get_size());
+  }
+  
+  /**
+   * @expectedException VariableTypeException
+   */
+  public function testInvalidSize() {
+    $this->object->set_size('invalid');
   }
 
   /**

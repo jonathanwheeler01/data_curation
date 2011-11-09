@@ -1,4 +1,6 @@
 <?php
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 /**
  * An element of metadataReferenceType is a generic element used throughout the 
  * XFDU schema to provide a pointer to metadata which resides outside the XFDU 
@@ -15,9 +17,6 @@
  *
  * @author Rob Olendorf
  */
-
-require_once dirname(__FILE__) . '/../../../curation_tool.inc';
-
 class MetadataReference extends Reference{
   /**
    *

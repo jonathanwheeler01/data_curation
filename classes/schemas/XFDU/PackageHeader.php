@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
  * Complex Type for metadata about the mapping of the logical packages to the 
@@ -8,11 +9,9 @@
  * information either defined by an extension of the XFDU Schema or by 
  * freeform XML. packageHeaderType has a single attribute, ID: an XML ID.
  *
- * @author olendorf
+ * @author Rob Olendorf
  *
  */
-require_once dirname(__FILE__) . '/../../../curation_tool.inc';
-
 class PackageHeader extends aXMLElement{
   /**
    *

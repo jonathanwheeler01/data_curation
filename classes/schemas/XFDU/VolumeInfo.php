@@ -1,13 +1,16 @@
 <?php
-/**
- * Description of VolumeInfo. Stores the information for the VolumeInfo element
- * in an XFDU package.
- *
- * @author olendorf
- *
- */
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
+/**
+ * Contains XFDU software related system information, including one mandatory 
+ * element - specificationVersion, which specifies the version of the XFDU 
+ * specification to which this manifest complies. Additionally it has one 
+ * optional element -sequenceInformation that holds information about the 
+ * sequence of XFDUs and the position of the current one in it.
+ *
+ * @author Rob Olendorf
+ *
+ */
 class VolumeInfo extends aXMLElement{
   /**
    * Storoes a SequenceInformation object that specifies the XFDU's position

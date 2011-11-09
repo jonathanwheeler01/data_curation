@@ -94,7 +94,7 @@ class BehaviorObjectTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @expectedException XFDUException
+   * @expectedException InvalidIDTokenException
    */
   public function testBadContentUnitID() {
     $this->object->set_contentUnitID('0badID');
@@ -114,7 +114,7 @@ class BehaviorObjectTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @expectedException XFDUException
+   * @expectedException InvalidIDTokenException
    */
   public function testBadGroupID() {
     $this->object->set_groupID('0badID');
@@ -134,7 +134,7 @@ class BehaviorObjectTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @expectedException XFDUException
+   * @expectedException InvalidIDTokenException
    */
   public function testBadID() {
     $this->object->set_id('0badID');

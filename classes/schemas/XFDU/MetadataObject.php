@@ -1,13 +1,9 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
  * Description of MetadataObject
- *
+ * @todo Figure out why MetdataObject isn't testing.
  * @author Rob
  */
 
@@ -25,7 +21,7 @@ abstract class MetadataCategory implements Enum{
   }
 }
 
-abstract class MetadataClassification {
+abstract class MetadataClassification implements Enum{
   protected $classification; 
 
 
@@ -51,6 +47,16 @@ abstract class MetadataClassification {
   }
 }
 
+/**
+ * A generic framework for pointing to/including metadata within a XFDU 
+ * document, a la Warwick Framework. An metadataObject element may have the 
+ * following attributes: 1. ID: an XML ID for this element. 
+ * 2. classification - concrete type of metadata represented by this element 
+ * of metadataObjectType 3. category - type of metadata class to which this 
+ * metadata belongs (e.g., DMD.REP, etc.) 4. otherClass - type of metadata in 
+ * case classification contains value of "OTHER" 5. otherCategory - type of 
+ * metadata class in case category contains value of "OTHER"
+ */
 class MetadataObject extends aXMLElement{
   /**
    * Should be defined from the MetadataCategory Object.

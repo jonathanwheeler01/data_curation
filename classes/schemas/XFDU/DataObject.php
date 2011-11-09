@@ -1,14 +1,27 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 /**
- * Description of DataObject
+ * An element of dataObjectType contains current byteStream content and any 
+ * required data to restore them to the form intended for the original 
+ * designated community. It has two possible subsidiary elements: The byteStream 
+ * element provides access to the current content dataObjects for an XFDU 
+ * document. An element of dataObjectType must contain 1 or many byteStream 
+ * elements that may contain a fileLocation element, which provides a pointer 
+ * to a content byteStream, and/or a fileContent element, which wraps an encoded 
+ * version of the dataObject. An element of dataObjectType may contain one or 
+ * more transformation elements that contain all of the information required to 
+ * reverse each transformation applied to the dataObject and return the original 
+ * binary data object. The dataObjectType has the following attributes: 
+ * 1. ID: an XML ID 2. mimeType: the MIME type for the dataObject 
+ * 3. size: the size of the dataObject in bytes 4. checksum: a checksum for 
+ * dataObject. Checksum information provided via optional checksum element. 
+ * 5. repID list of representation metadata IDREFs. NB: The size, checksum, and 
+ * mime type are related to the original data before any transformations occurred. 
+ * 6. combinationName - specifies how multiple byteStream objects in a single 
+ * dataObject should be concatenated 7. registrationGroup attribute group that 
+ * provides registration information
  *
- * @author Rob
+ * @author Rob Olendorf
  */
 class DataObject extends aXMLElement{  
   /**
@@ -103,6 +116,10 @@ class DataObject extends aXMLElement{
   }
   
   /**
+   * @todo unset_bytestreams
+   */
+  
+  /**
    *
    * @param ChecksumInformation $checksum
    */
@@ -159,7 +176,7 @@ class DataObject extends aXMLElement{
       $this->id = $id;
     }
     else {
-      throw new XFDUException('Invalid ID token specified.', 0);
+      throw new InvalidIDTokenException($id);
     }
   }
   
@@ -257,10 +274,10 @@ class DataObject extends aXMLElement{
    */
   public function set_repID($repId) {
     if($this->validate_id($repId)) {
-      $this->id = $repId;
+      $this->repId = $repId;
     }
     else {
-      throw new XFDUException('Invalid ID token specified.', 0);
+      throw new InvalidIDTokenException($repId);
     }
   }
   
@@ -289,7 +306,7 @@ class DataObject extends aXMLElement{
       $this->size = $size;
     }
     else {
-      throw new XFDUException('Invalid size specified. Expected int or long.', $code, $previous);
+      throw new VariableTypeException('Integer');
     }
   }
   

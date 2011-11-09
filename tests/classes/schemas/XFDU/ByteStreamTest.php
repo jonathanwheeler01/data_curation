@@ -74,12 +74,12 @@ class ByteStreamTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_id());
     $this->assertEquals($value, $this->object->get_id());
   }
-
+  
   /**
-   * @expectedException XFDUException
+   * @expectedException InvalidIDTokenException
    */
-  public function TestBadID() {
-    $this->object->set_id('1SbadID');
+  public function testInvalidID() {
+    $this->object->set_id('0invalid');
   }
   
   /**
@@ -109,7 +109,7 @@ class ByteStreamTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @expectedException XFDUException
+   * @expectedException VariableTypeException
    */
   public function testInvalidSize() {
     $this->object->set_size('bad');

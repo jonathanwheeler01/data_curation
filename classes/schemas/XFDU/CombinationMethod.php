@@ -2,7 +2,7 @@
 /**
  * Description of CombinationMethod
  *
- * @author Rob
+ * @author Rob Olendorf
  */
 class CombinationMethod implements Enum{
   const CONCAT = 'concat';

@@ -1,14 +1,15 @@
 <?php
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 /**
- * Description of FileContentType
+ * Encapsulates and aggregates a type that can have a choice of either binary or xml data
  *
- * @author Rob
+ * @author Rob Olendorf
  */
 class FileContent extends aXMLElement{  
   /**
    * @todo yet to be implemented. Need to write a file stream wrapper 
-   * @var biary data
+   * @var binary data
    */
   protected $binaryData;
   
@@ -51,7 +52,12 @@ class FileContent extends aXMLElement{
    * @param string $id 
    */
   public function set_id($id) {
-    $this->id = $id;
+    if($this->validate_id($id)) {
+      $this->id = $id;
+    }
+    else {
+      throw new InvalidIDTokenException($id);
+    }
   }
   
   /**

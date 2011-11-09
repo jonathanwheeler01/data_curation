@@ -1,14 +1,12 @@
 <?php
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 /**
  * One of the 5 main XFDU sections. Contains metadataObjects.
  * @todo figure out why the metadatasection isn't testing.
  *
  * @author Rob Olendorf
  */
-
-
-require_once dirname(__FILE__) . '/../../../curation_tool.inc';
-
 class MetaDataSection extends aXMLElement{
   
   /**

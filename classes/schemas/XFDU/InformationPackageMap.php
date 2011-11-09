@@ -1,4 +1,6 @@
 <?php
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 /**
  * The Information Package Map outlines a hierarchical structure for the 
  * original object being encoded, using a series of nested contentUnit elements. 

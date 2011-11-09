@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 /**
  * The interface definition type contains a pointer to an abstract definition of
  *  a set of related behaviors. These abstract behaviors can be associated with 
@@ -14,7 +15,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *  inputParameter that can be either just a string value or pointer to the 
  * content in this package
  *
- * @author Rob
+ * @author Rob Olendorf
  */
 class InterfaceDefinition extends aXMLElement{
   /**

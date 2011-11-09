@@ -42,6 +42,13 @@ class DataObjectPointerTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidDataObjectID() {
+    $this->object->set_dataObjectID('0invalid');
+  }
+  
+  /**
    * Tests ID
    */
   public function testID() {
@@ -51,6 +58,13 @@ class DataObjectPointerTest extends PHPUnit_Framework_TestCase {
     $this->object->set_id($id);
     $this->assertTrue($this->object->isset_id());
     $this->assertEquals($id, $this->object->get_id());
+  }
+  
+  /**
+   * @expectedException InvalidIDTokenException
+   */
+  public function testInvalidID() {
+    $this->object->set_id('0invalid');
   }
 
 }

@@ -1,14 +1,14 @@
 <?php
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 
 /**
  * Description of SequenceInformation. Stores XDFU sequence information data.
  * Implemented as a Bean type data structure with public Class attributes.
  *
- * @author olendorf
+ * @author Rob Olendorf
  *
  */
-require_once dirname(__FILE__) . '/../../../curation_tool.inc';
-
 class SequenceInformation extends aXMLElement{
   /**
    * The XFDU's position in the sequence. The value should be zero if unknown.

@@ -1,4 +1,6 @@
 <?php
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 /**
  * Description of TransformObject
  * An element of transformObjectType contains all of the information required 
@@ -12,10 +14,8 @@
  * are more than one transformation elements in an dataObject this integer 
  * indicates the order in which the reversal transformations should be applied.
  *
- * @author Rob
+ * @author Rob Olendorf
  */
-require_once dirname(__FILE__) . '/../../../curation_tool.inc';
-
 class TransformObject extends aXMLElement{
   /**
    * Information used to derive the encryption key

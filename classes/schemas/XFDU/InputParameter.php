@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 /**
  * Describes the inputs to be used with a behavior.
  *

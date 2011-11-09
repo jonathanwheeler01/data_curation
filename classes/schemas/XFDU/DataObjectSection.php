@@ -1,14 +1,10 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 /**
- * Description of DataObjectSection
+ *  A container for one or more elements of dataObjectType
  *
- * @author Rob
+ * @author Rob Olendorf
  */
 class DataObjectSection extends aXMLElement{  
   /**

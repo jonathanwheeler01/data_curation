@@ -1,14 +1,12 @@
 <?php
-/**
- * HTML type references. locator attribute allows finer granularity within location specified in href
-
-
- *
- * @author olendorf
- *
- */
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
+/**
+ * HTML type references. locator attribute allows finer granularity within location specified in href
+ *
+ * @author Rob Olendorf
+ *
+ */
 class Reference extends aXMLElement{
   /**
    * Typically the HTTP URL

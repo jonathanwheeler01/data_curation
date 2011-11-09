@@ -1,4 +1,6 @@
 <?php
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 /**
  * XFDUType Complex Type. A XFDU document consists of five possible subsidiary 
  * sections: packageHeader (XFDU document header), informationPackageMap 
@@ -9,11 +11,9 @@
  * title/text string identifying the document for users; 4. version: version to 
  * which this XFDU document conforms
  *
- * @author olendorf
+ * @author Rob Olendorf
  * 
  */
-require_once dirname(__FILE__) . '/../../../curation_tool.inc';
-
 class XFDU extends aXMLElement{
   /**
    * Id for the package
