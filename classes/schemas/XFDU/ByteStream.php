@@ -195,7 +195,9 @@ class ByteStream extends aXMLElement{
       $this->size = $size;
     }
     else {
-      throw new VariableTypeException('Integer');
+      $message = 'Expected integer for $size in '.__CLASS__.': '.__METHOD__.'(Line '.__LINE__.').';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
     }
   }
   

@@ -38,7 +38,9 @@ class KeyDerivation extends aXMLElement{
       $this->iterationCount = $iterationCount;
     }
     else {
-      throw new VariableTypeException('Integer');
+      $message = 'Expected integer for iterationCount in '.__CLASS__.': '.__METHOD__.'('.__LINE__.').';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
     }
   }
 

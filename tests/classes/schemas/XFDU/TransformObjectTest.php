@@ -105,11 +105,18 @@ class TransformObjectTest extends PHPUnit_Framework_TestCase
     public function testTransformType() {
       $this->assertFalse($this->object->isset_transformType());
       
-      $value = 'AUTHENICATION';
+      $value = 'AUTHENTICATION';
       $this->object->set_transformType($value);
       
       $this->assertTrue($this->object->isset_transformType());
       $this->assertEquals($value, $this->object->get_transformType());
+    }
+    
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testInvalidTransformType() {
+      $this->object->set_transformType('invalid');
     }
 }
 ?>

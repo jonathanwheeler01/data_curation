@@ -43,7 +43,7 @@ class KeyDerivationTest extends PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @expectedException VariableTypeException
+   * @expectedException InvalidArgumentException
    */
   public function testBadIterationCount() {
     $this->object->set_iterationCount('bad');

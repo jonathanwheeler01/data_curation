@@ -147,11 +147,19 @@ class DataObject extends aXMLElement{
   }
   
   /**
-   * @todo use combinationMethodEnum
    * @param string $combinationName 
    */
   public function set_combinationName($combinationName) {
-    $this->combinationName =$combinationName;
+    $combinationMethods = new CombinationMethod();
+    if($combinationMethods->has_value($combinationName)) {
+      $this->combinationName =$combinationName;
+    }
+    else {
+      $message = 'Invalid value for CombinationMethod found at'.__CLASS__.': '.
+              __METHOD__.': '.__LINE__.'.';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
+    }
   }
   
   /**
@@ -305,11 +313,13 @@ class DataObject extends aXMLElement{
    * @param long $size 
    */
   public function set_size($size) {
-    if(is_int($size)) {
+    if(is_int($size) && $size >= 0) {
       $this->size = $size;
     }
     else {
-      throw new VariableTypeException('Integer');
+      $message = 'Expected integer for $size in '.__CLASS__.': '.__METHOD__.'('.__LINE__.').';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
     }
   }
   

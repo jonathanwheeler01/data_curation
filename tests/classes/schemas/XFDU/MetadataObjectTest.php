@@ -35,10 +35,17 @@ class MetadataObjectTest extends PHPUnit_Framework_TestCase {
   public function testCategory() {
     $this->assertFalse($this->object->isset_category());
     
-    $value = 'test';
+    $value = 'REP';
     $this->object->set_category($value);
     $this->assertTrue($this->object->isset_category());
     $this->assertEquals($value, $this->object->get_category());
+  }
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidCategory() {
+    $this->object->set_category('invalid');
   }
   
   /**
@@ -59,10 +66,17 @@ class MetadataObjectTest extends PHPUnit_Framework_TestCase {
   public function testClassification() {
     $this->assertFalse($this->object->isset_classification());
     
-    $value = 'test';
+    $value = 'CONTEXT';
     $this->object->set_classification($value);
     $this->assertTrue($this->object->isset_classification());
     $this->assertEquals($value, $this->object->get_classification());
+  }
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidClassification() {
+    $this->object->set_classification('invalid');
   }
   
   /**

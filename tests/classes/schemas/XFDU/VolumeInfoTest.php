@@ -34,21 +34,13 @@ class VolumeInfoTest extends PHPUnit_Framework_TestCase {
    * isset methods.
    */
   public function testSequenceInformation() {
-    $seqInfo = new SequenceInformation();
-    $seqInfo->sequencePosition = 1;
-    $seqInfo->sequenceSize = 10;
-    $seqInfo->value = '1 of 10';
+    $this->assertFalse($this->object->isset_sequenceInformation());
     
-    $this->assertFalse($this->object->isset_sequenceInformation(),
-            'SequenceInformation should not be set.');
-
-    $this->object->set_sequenceInformation($seqInfo);
-    $test = $this->object->get_sequenceInformation();
+    $value = new SequenceInformation();
+    $this->object->set_sequenceInformation($value);
+    
     $this->assertTrue($this->object->isset_sequenceInformation());
-    $this->assertObjectHasAttribute('sequencePosition', $test, 'Sequence Position not defined.');
-    $this->assertObjectHasAttribute('sequenceSize', $test, 'Sequence Position not defined.');
-    $this->assertObjectHasAttribute('value', $test, 'Sequence Position not defined.');
-    $this->assertAttributeEquals(1, 'sequencePosition', $test);
+    $this->assertEquals(get_class($value), get_class($this->object->get_sequenceInformation()));
   }
 
 

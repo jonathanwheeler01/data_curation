@@ -155,7 +155,7 @@ class XFDU extends aXMLElement{
 
   /**
    *
-   * @param float $version
+   * @param any $version
    */
   public function set_version($version) {
     $this->version = $version;

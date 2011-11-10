@@ -1,8 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
-/**
- * @todo enum for locatorType;
- */
+
 /**
  * HTML type references. locator attribute allows finer granularity within location specified in href
  *
@@ -84,7 +82,17 @@ class Reference extends aXMLElement{
    * @param string $locator 
    */
   public function set_locator($locator) {
-    $this->locator = $locator;
+    $enum = new Locator();
+    if($enum->has_value($locator)) {
+      $this->locator = $locator;
+    }
+    else {
+      $message = 'Invalid locator given on '.
+              __CLASS__.': '.__METHOD__.': line '.__LINE__.
+              '. The locator must be one of '.  implode(', ', $enum->values()).'.';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
+    }
   }
   
   /**

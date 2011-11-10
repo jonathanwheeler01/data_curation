@@ -28,7 +28,59 @@ class SequenceInformationTest extends PHPUnit_Framework_TestCase {
   protected function tearDown() {
     
   }
-
+  
+  /**
+   * 
+   */
+  public function testSequencePosition() {
+    $this->assertFalse($this->object->isset_sequencePosition());
+    
+    $value = 10;
+    $this->object->set_sequencePosition($value);
+    
+    $this->assertTrue($this->object->isset_sequencePosition());
+    $this->assertEquals($value, $this->object->get_sequencePosition());
+  }
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidSequencePosition() {
+    $this->object->set_sequencePosition(-10);
+  }
+  
+  /**
+   * 
+   */
+  public function testSequenceSize() {
+    $this->assertFalse($this->object->isset_sequenceSize());
+    
+    $value = 10;
+    $this->object->set_sequenceSize($value);
+    
+    $this->assertTrue($this->object->isset_sequenceSize());
+    $this->assertEquals($value, $this->object->get_sequenceSize());
+  }
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidSequenceSize() {
+    $this->object->set_sequenceSize(-10);
+  }
+  
+  /**
+   * 
+   */
+  public function testValue() {
+    $this->assertFalse($this->object->isset_value());
+    
+    $value = 'test';
+    $this->object->set_value($value);
+    
+    $this->assertTrue($this->object->isset_value());
+    $this->assertEquals($value, $this->object->get_value());
+  }
 }
 
 ?>

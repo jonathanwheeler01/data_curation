@@ -8,9 +8,8 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  */
 class XMLData extends aXMLElement{
   /**
-   * Freeform or structured XML, stored here as a string to allow for different
-   * implementation methods of XML, ie. DOM or Simple in PHP
-   * @var XML
+   * Freeform or structured XML. May be stored an any format, String DOM etc.
+   * @var mixed
    */
   protected $any;
   

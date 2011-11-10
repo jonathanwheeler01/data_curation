@@ -65,14 +65,21 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testCombinationName() {
+    
     $this->assertFalse($this->object->isset_combinationName());
     
-    $value = 'test';
+    $value = 'CONCAT';
     $this->object->set_combinationName($value);
     $this->assertTrue($this->object->isset_combinationName());
     $this->assertEquals($value, $this->object->get_combinationName());
   }
   
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidCombinationName() {
+    $this->object->set_combinationName('invalid');
+  }
 
   /**
    * 
@@ -161,7 +168,7 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @expectedException VariableTypeException
+   * @expectedException InvalidArgumentException
    */
   public function testInvalidSize() {
     $this->object->set_size('invalid');

@@ -19,14 +19,12 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  */
 class MetadataObject extends aXMLElement{
   /**
-   * @todo enum for category
    * Should be defined from the MetadataCategory Object.
    * @var string
    */
   protected $category;
   
   /**
-   * @todo enum for classifcation
    * Should be defined from the MetadataClassification Object.
    * @var string 
    */
@@ -74,7 +72,17 @@ class MetadataObject extends aXMLElement{
    * @param string $category 
    */
   public function set_category($category) {
-    $this->category = $category;
+    $categories = new MetadataCategory();
+    if($categories->has_value($category)) {
+      $this->category = $category;
+    }
+    else {
+      $message = 'Invalid metadata category given on '.
+              __CLASS__.': '.__METHOD__.': line '.__LINE__.
+              '. The category must be one of '.  implode(', ', $categories->values()).'.';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
+    }
   }
   
   /**
@@ -99,7 +107,17 @@ class MetadataObject extends aXMLElement{
    * @param string $classification 
    */
   public function set_classification($classification) {
-    $this->classification = $classification;
+    $classes = new MetadataClassification();
+    if($classes->has_value($classification)) {
+      $this->classification = $classification;
+    }
+    else {
+      $message = 'Invalid metadata classification given on '.
+              __CLASS__.': '.__METHOD__.': line '.__LINE__.
+              '. The classification must be one of '.  implode(', ', $classes->values()).'.';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
+    }
   }
   
   /**

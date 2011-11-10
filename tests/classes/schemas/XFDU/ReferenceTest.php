@@ -67,10 +67,17 @@ class ReferenceTest extends PHPUnit_Framework_TestCase {
   public function testLocator() {
     $this->assertFalse($this->object->isset_locator());
     
-    $value = 'test';
+    $value = 'URL';
     $this->object->set_locator($value);
     $this->assertTrue($this->object->isset_locator());
     $this->assertEquals($value, $this->object->get_locator());
+  }
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidLocator() {
+    $this->object->set_locator('invalid');
   }
   
   /**

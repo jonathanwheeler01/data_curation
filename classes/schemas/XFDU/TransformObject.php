@@ -163,11 +163,21 @@ class TransformObject extends aXMLElement{
   }
 
   /**
-   * @todo enum for transform type
+   * 
    * @param type $transformType 
    */
   public function set_transformType($transformType) {
-    $this->transformType = $transformType;
+    $enum = new TransformType();
+    if($enum->has_value($transformType)) {
+      $this->transformType = $transformType;
+    }
+    else {
+      $message = 'Invalid transformation type given on '.
+              __CLASS__.': '.__METHOD__.': line '.__LINE__.
+              '. The transformation types must be one of '.  implode(', ', $enum->values()).'.';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
+    }
   }
 
   /**

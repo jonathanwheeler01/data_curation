@@ -109,7 +109,7 @@ class ByteStreamTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @expectedException VariableTypeException
+   * @expectedException InvalidArgumentException
    */
   public function testInvalidSize() {
     $this->object->set_size('bad');
