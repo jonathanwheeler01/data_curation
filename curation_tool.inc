@@ -1,6 +1,6 @@
 <?php
 /**
- * Autoloading of the curation tools.
+ * Autoloading of the curation tool classes.
  *
  * @author Robert Olendorf
  */
