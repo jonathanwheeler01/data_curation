@@ -11,7 +11,7 @@ class XMLNameSpace {
    * The namespace identifier
    * @var string
    */
-  protected $namespace;
+  protected $uri;
   
   /**
    *
@@ -29,38 +29,38 @@ class XMLNameSpace {
    * Creates a namespace bean, with optional namespace identifier, location
    * and prefix. 
    * 
-   * @param type $namespace
+   * @param type $uri
    * @param type $location
    * @param type $prefix 
    */
-  public function __construct($namespace = NULL, $location = NULL, $prefix = NULL) {
+  public function __construct($uri = NULL, $location = NULL, $prefix = NULL) {
     $this->location = $location;
-    $this->namespace = $namespace;
+    $this->uri = $uri;
     $this->prefix = $prefix;
   }
   
   /**
    *
-   * @param string $namespace 
+   * @param string $uri 
    */
-  public function set_namespace($namespace) {
-    $this->namespace = $namespace;
+  public function set_uri($uri) {
+    $this->uri = $uri;
   }
   
   /**
    *
    * @return string 
    */
-  public function get_namespace() {
-    return $this->namespace;
+  public function get_uri() {
+    return $this->uri;
   }
   
   /**
    *
    * @return boolean 
    */
-  public function isset_namespace() {
-    return (isset($this->namespace) && !empty($this->namespace));
+  public function isset_uri() {
+    return (isset($this->uri) && !empty($this->uri));
   }
   
   /**

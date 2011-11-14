@@ -35,8 +35,34 @@ class aXMLElementTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->validate_id('validID'));
   }
   
+  /**
+   * 
+   */
   public function testInvalidID() {
     $this->assertFalse($this->object->validate_id('0badID'));
+  }
+  
+  public function testAttribute() {
+    $this->assertFalse($this->object->isset_attributes());
+    
+    $name1 = 'attone';
+    $name2 = 'atttwo';
+    $value1 = 'val1';
+    $value2 = 'val2';
+    
+    $this->object->add_attribute($name1, $value1);
+    $this->object->add_attribute($name2, $value2);
+    $atts = $this->object->get_attributes();
+    
+    $this->assertTrue($this->object->isset_attributes());
+    $this->assertEquals(2, sizeof($atts));
+    $this->assertEquals($value1, $atts[$name1]);
+    $this->assertEquals($value2, $this->object->get_attribute($name2));
+    $this->assertFalse($this->object->get_attribute('invalid'));
+    
+    $this->object->unset_attributes();
+    
+    $this->assertFalse($this->object->isset_attributes());
   }
 
 }
