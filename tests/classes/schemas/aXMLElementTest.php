@@ -43,6 +43,21 @@ class aXMLElementTest extends PHPUnit_Framework_TestCase {
     $this->assertFalse($this->object->validate_id('0badID'));
   }
   
+  public function testValidName() {
+    $this->assertTrue($this->object->validate_element_name('valid'));
+    $this->assertTrue($this->object->validate_element_name('pre:valid'));
+  }
+  
+  public function testInvalidName() {
+    $this->assertFalse($this->object->validate_element_name('xmlinvalid'));
+    $this->assertFalse($this->object->validate_element_name('0invalid'));
+    $this->assertFalse($this->object->validate_element_name('<invalid>'));
+    
+  }
+  
+  /**
+   * 
+   */
   public function testAttribute() {
     $this->assertFalse($this->object->isset_attributes());
     

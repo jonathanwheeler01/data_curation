@@ -1,6 +1,6 @@
 <?php
-
 require_once dirname(__FILE__) . '/../../curation_tool.inc';
+
 /**
  * Description of aXMLElement
  *
@@ -25,6 +25,14 @@ abstract class aXMLElement {
    */
   public function validate_id($id) {
     return (preg_match('/^[_a-zA-Z][_a-zA-Z0-9]*/', $id) > 0);
+  }
+  
+  /**
+   * 
+   *  @param string name
+   */
+  public function validate_element_name($name) {
+    return (preg_match('/^(?!((x|X)(m|M)(l|L)))[-_a-zA-Z:\.][^<>]*/', $name) > 0);
   }
   
   /**

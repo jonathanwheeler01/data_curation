@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class MetadataSection {
+class MetadataSection extends aXMLElement{
   protected $metadataObjects;
   
   public function __construct() {
