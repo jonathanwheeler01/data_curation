@@ -1,13 +1,14 @@
 <?php
 
 /**
- * Description of XMLElement
+ * A basic data structure for an XML element. 
  *
- * @author olendorf
+ * @author Rob Olendorf
  * 
  */
 class XMLElement {
-  //put your code here
+  protected $name;
+  protected $value;
 }
 
 ?>

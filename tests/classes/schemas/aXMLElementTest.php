@@ -18,7 +18,8 @@ class aXMLElementTest extends PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->object = new aXMLElement;
+//    $this->object = new aXMLElement;
+    $this->object = $this->getMockForAbstractClass('aXMLElement');
   }
 
   /**
@@ -64,7 +65,31 @@ class aXMLElementTest extends PHPUnit_Framework_TestCase {
     
     $this->assertFalse($this->object->isset_attributes());
   }
-
+  
+  public function testNamespaces() {
+    $this->assertFalse($this->object->isset_namespaces());
+    
+    $uri1 = 'test';
+    $namespace1 = new XMLNameSpace();
+    $namespace1->set_uri($uri1);
+    
+    $uri2 = 'anotherTest';
+    $namespace2 = new XMLNameSpace();
+    $namespace2->set_uri($uri2);
+    
+    $this->object->add_namespace($namespace1);
+    $this->object->add_namespace($namespace2);
+    $namespaces = $this->object->get_namespaces();
+    
+    $this->assertTrue($this->object->isset_namespaces());
+    $this->assertEquals(get_class($namespace1), get_class($namespaces[$uri1]));
+    $this->assertEquals(get_class($namespace2), 
+            get_class($this->object->get_namespace($uri2)));
+    $this->assertFalse($this->object->get_namespace('invalid'));
+    
+    $this->object->unset_namespaces();
+    $this->assertFalse($this->object->isset_namespaces());
+  }
 }
 
 ?>

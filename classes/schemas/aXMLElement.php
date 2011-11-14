@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/../../curation_tool.inc';
  *
  * @author Rob
  */
-class aXMLElement {
+abstract class aXMLElement {
   
   /**
    * An associative array of attributes.
@@ -31,11 +31,7 @@ class aXMLElement {
    *
    * @param XMLNameSpace $namespace 
    */
-  public function __construct(XMLNameSpace $namespace = NULL) {
-    if($namespace !== NULL) {
-      $this->namepaces = array();
-    }
-    
+  public function __construct() {    
     $this->attributes = array();
   }
   
