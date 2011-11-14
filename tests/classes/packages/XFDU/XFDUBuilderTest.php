@@ -28,17 +28,103 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
   protected function tearDown() {
     
   }
+  
+  /**
+   * 
+   */
+  public function testBuild_XFDU() {
+    $packageHeader = new PackageHeader();
+    $informationPackageMap = new InformationPackageMap();
+    $metadataSection = new MetadataSection();
+    $dataObjectSection = new DataObjectSection();
+    $behaviorSection = new BehaviorSection();
+    
+    $xfdu = new XFDU();
+    
+    $xfdu = $this->object->build_XFDU($packageHeader, $informationPackageMap, $metadataSection, $dataObjectSection, $behaviorSection);
+    $this->assertTrue($xfdu->isset_packageHeader());
+    $this->assertTrue($xfdu->isset_informationPackageMap());
+    $this->assertTrue($xfdu->isset_metadataSection());
+    $this->assertTrue($xfdu->isset_dataObjectSection());
+    $this->assertTrue($xfdu->isset_behaviorSection());
+    
+    
+    $xfdu = $this->object->build_XFDU($packageHeader, $informationPackageMap, $metadataSection, $dataObjectSection);
+    $this->assertTrue($xfdu->isset_packageHeader());
+    $this->assertTrue($xfdu->isset_informationPackageMap());
+    $this->assertTrue($xfdu->isset_metadataSection());
+    $this->assertTrue($xfdu->isset_dataObjectSection());
+    $this->assertFalse($xfdu->isset_behaviorSection());
+    
+    
+    $xfdu = $this->object->build_XFDU($packageHeader, $informationPackageMap, $metadataSection);
+    $this->assertTrue($xfdu->isset_packageHeader());
+    $this->assertTrue($xfdu->isset_informationPackageMap());
+    $this->assertTrue($xfdu->isset_metadataSection());
+    $this->assertFalse($xfdu->isset_dataObjectSection());
+    $this->assertFalse($xfdu->isset_behaviorSection());
+    
+    
+    $xfdu = $this->object->build_XFDU($packageHeader, $informationPackageMap);
+    $this->assertTrue($xfdu->isset_packageHeader());
+    $this->assertTrue($xfdu->isset_informationPackageMap());
+    $this->assertFalse($xfdu->isset_metadataSection());
+    $this->assertFalse($xfdu->isset_dataObjectSection());
+    $this->assertFalse($xfdu->isset_behaviorSection());
+  }
+  
+  /**
+   * 
+   */
+  public function testBuild_packageHeader() {
+    $packageHeader = new PackageHeader();
+    
+    $id = 'id';
+    $volumeInfo = new VolumeInfo();
+    $environmentInfo = new EnvironmentInfo();
+    
+    $packageHeader = $this->object->build_packageHeader($id, $volumeInfo, $environmentInfo);
+    $this->assertTrue($packageHeader->isset_id());
+    $this->assertTrue($packageHeader->isset_volumeInfo());
+    $this->assertTrue($packageHeader->isset_environmentInfo());
+    
+    $packageHeader = $this->object->build_packageHeader($id, $volumeInfo);
+    $this->assertTrue($packageHeader->isset_id());
+    $this->assertTrue($packageHeader->isset_volumeInfo());
+    $this->assertFalse($packageHeader->isset_environmentInfo());
+    
+  }
+  
+  public function testBuild_volumeInfo() {
+    $volumeInfo = new VolumeInfo();
+    
+    $version = 2.0;
+    $sequenceInformation = new SequenceInformation();
+    
+    $volumeInfo = $this->object->build_volumeInfo($version, $sequenceInformation);
+    $this->assertEquals($version, $volumeInfo->get_specificationVersion());
+    $this->assertEquals(get_class($sequenceInformation), get_class($volumeInfo->get_sequenceInformation()));
+    
+    $volumeInfo = $this->object->build_volumeInfo($version);
+    $this->assertEquals($version, $volumeInfo->get_specificationVersion());
+    $this->assertFalse($volumeInfo->isset_sequenceInformation());
+    
+    $volumeInfo = $this->object->build_volumeInfo();
+    $this->assertEquals(1.0, $volumeInfo->get_specificationVersion());
+    $this->assertFalse($volumeInfo->isset_sequenceInformation());
+    
+  }
 
   /**
    * 
    */
-  public function testBuildSequenceInfo() {
+  public function testBuild_sequenceInfo() {
     $sequencePosition = 2;
     $sequenceSize = 10;
     $value = 'test';
     
     $object = new SequenceInformation();
-    $object = $this->object->buildSequenceInfo($sequencePosition, $sequenceSize, $value);
+    $object = $this->object->build_SequenceInfo($sequencePosition, $sequenceSize, $value);
     $this->assertEquals('SequenceInformation', get_class($object));
     $this->assertEquals($sequencePosition, $object->get_sequencePosition());
     $this->assertEquals($sequenceSize, $object->get_sequenceSize());

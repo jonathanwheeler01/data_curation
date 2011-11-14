@@ -16,7 +16,6 @@ class XFDUPackage {
    */
   public function __construct(XFDUSetup $settings = NULL) {
     $this->builder = new XFDUBuilder();
-    $
     
   }
   
