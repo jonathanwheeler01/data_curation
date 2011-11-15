@@ -75,7 +75,7 @@ class InformationPackageMapTest extends PHPUnit_Framework_TestCase {
    /**
    * Tests setters, getters and isset methods
    */
-  public function testAabstractContentUnit() {
+  public function testContentUnits() {
     $this->assertFalse($this->object->isset_contentUnits());
     
     $value = new ContentUnit();
@@ -90,6 +90,16 @@ class InformationPackageMapTest extends PHPUnit_Framework_TestCase {
     $this->object->unset_contentUnits();
     
     $this->assertFalse($this->object->isset_contentUnits());
+  }
+  
+  /**
+   * 
+   */
+  public function testAddContentUnitList() {
+    $contentUnitList = array(new ContentUnit(), new ContentUnit());
+    
+    $this->object->add_contentUnitList($contentUnitList);
+    $this->assertEquals(2, sizeof($this->object->get_ContentUnits()));
   }
 }
 

@@ -1,5 +1,5 @@
 <?php
-
+require_once dirname(__FILE__) . '/../../curation_tool.inc';
 /**
  * Encapsulates an XFDU Unit and eases the building and saving the entire datastructure.
  *

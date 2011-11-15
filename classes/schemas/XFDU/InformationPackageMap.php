@@ -129,8 +129,16 @@ class InformationPackageMap extends aXMLElement{
    *
    * @param ContentUnit $contentUnit 
    */
-  public function add_contentUnit(ContentUnit $contentUnit) {
+  public function add_contentUnit($contentUnit) {
     $this->contentUnits[] = $contentUnit;
+  }
+  
+  /**
+   *
+   * @param array<ContentUnit> $contentUnitList 
+   */
+  public function add_contentUnitList(array $contentUnitList) {
+    $this->contentUnits = array_merge($this->contentUnits, $contentUnitList);
   }
   
   /**
