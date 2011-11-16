@@ -77,6 +77,11 @@ class XMLElement extends aXMLElement{
   public function isset_value() {
     return (isset($this->value) && !empty($this->value));
   }
+  
+  public function get_as_DOM() {
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    $element = new DOMElement($this->name, $this->value);
+  }
 }
 
 ?>
