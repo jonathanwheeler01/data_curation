@@ -95,6 +95,15 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     
   }
   
+  public function testBuild_informationPackageMap() {
+    $contentUnitList = array(new ContentUnit(), new ContentUnit());
+    
+    $informationPackageMap = $this->object->build_InformationPackageMap($contentUnitList);
+    $this->assertTrue($informationPackageMap->isset_contentUnits());
+    $this->assertEquals(sizeof($contentUnitList), sizeof($informationPackageMap->get_ContentUnits()));
+    $this->assertEquals('InformationPackageMap', get_class($informationPackageMap));
+  }
+  
   public function testBuild_volumeInfo() {
     $volumeInfo = new VolumeInfo();
     
@@ -130,27 +139,27 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($sequenceSize, $object->get_sequenceSize());
     $this->assertEquals($value, $object->get_value());
   }
-
+  
   /**
-   * @todo Implement testBuildVolumeInfo().
+   * 
    */
-  public function testBuildVolumeInfo() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
+  public function testBuild_environmentInfo() {
+    $xmlData = new XMLData();
+    $extension = 'test';
+    
+    $object = new EnvironmentInfo();
+    $object = $this->object->build_environmentInfo($xmlData, $extension);
+    $this->assertEquals(get_class($xmlData), get_class($object->get_xmlData()));
+    $this->assertEquals($extension, $object->get_extension());
   }
-
-  /**
-   * @todo Implement testBuildPackageHeader().
-   */
-  public function testBuildPackageHeader() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
+  
+  public function testBuild_XMLData() {
+    $anyXML = 'test';
+    
+    $object = new XMLData();
+    $object = $this->object->build_XMLData($anyXML);
+    $this->assertEquals($anyXML, $object->get_any());
   }
-
 }
 
 ?>

@@ -4,9 +4,22 @@ require_once dirname(__FILE__) . '/../../curation_tool.inc';
 /**
  * Description of aXMLElement
  *
- * @author Rob
+ * @author Rob Olendorf
  */
 abstract class aXMLElement {
+  
+  /**
+   *
+   * @var float 
+   */
+  protected $XMLVersion = 1.0;
+  
+  /**
+   *
+   * @var string
+   */
+  protected $XMLEncoding = 'UTF-8';
+  
   
   /**
    * An associative array of attributes.
@@ -41,6 +54,38 @@ abstract class aXMLElement {
    */
   public function __construct() {    
     $this->attributes = array();
+  }
+  
+  /**
+   *
+   * @param float $XMLVersion 
+   */
+  public function set_XMLVersion($XMLVersion) {
+    $this->XMLVersion = $XMLVersion;
+  }
+  
+  /**
+   *
+   * @return float 
+   */
+  public function get_XMLVersion() {
+    return $this->XMLVersion;
+  }
+  
+  /**
+   *
+   * @param string $XMLEncoding 
+   */
+  public function set_XMLEncoding($XMLEncoding) {
+    $this->XMLEncoding = $XMLEncoding;
+  }
+  
+  /**
+   *
+   * @return string 
+   */
+  public function get_XMLEncoding() {
+    return $this->XMLEncoding;
   }
   
   /**

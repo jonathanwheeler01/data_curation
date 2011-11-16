@@ -1,6 +1,5 @@
 <?php
-
-require_once dirname(__FILE__) . '/../../../classes/schemas/XMLElement.php';
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
  * Test class for XMLElement.

@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 /**
  * Description of XFDUBuilder
  *
@@ -56,6 +57,13 @@ class XFDUBuilder {
     return $packageHeader;
   }
   
+  public function build_InformationPackageMap(array $contentUnitList) {
+    $informationPackageMap = new InformationPackageMap();
+    $informationPackageMap->add_contentUnitList($contentUnitList);
+    
+    return $informationPackageMap;
+  }
+  
   /**
    * 
    * @param float $specificationVersion
@@ -102,6 +110,8 @@ class XFDUBuilder {
     if($extension !== NULL) {
       $environmentInfo->set_extension($extension);
     }
+    
+    return $environmentInfo;
   }
   
   /**
@@ -109,9 +119,9 @@ class XFDUBuilder {
    * @param $xmlData
    * @return XMLData 
    */
-  public function build_XMLData($xmlData) {
+  public function build_XMLData($anyXML) {
     $xmlData = new XMLData();
-    $xmlData->set_any($xmlData);
+    $xmlData->set_any($anyXML);
     return $xmlData;
   }
 }

@@ -1,6 +1,5 @@
 <?php
-
-require_once dirname(__FILE__) . '/../../../classes/schemas/aXMLElement.php';
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
  * Test class for aXMLElement.
