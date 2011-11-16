@@ -7,7 +7,14 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * 
  */
 abstract class aDCElement extends aXMLElement{
-  const DC_NAMESPACE = '';
+  const DC_NAMESPACE = 'http://purl.org/dc/elements/1.1/';
+  const DC_SCHEMA_LOCATION = 'http://dublincore.org/schemas/xmls/qdc/dc.xsd';
+  
+  /**
+   *
+   * @var string 
+   */
+  protected $prefix;
   
   /**
    *
@@ -21,6 +28,30 @@ abstract class aDCElement extends aXMLElement{
    * @var string 
    */
   protected $lang;
+  
+  /**
+   *
+   * @param string $prefix 
+   */
+  public function set_prefix($prefix) {
+    $this->prefix = $prefix;
+  }
+  
+  /**
+   *
+   * @return string 
+   */
+  public function get_prefix() {
+    return $this->prefix;
+  }
+  
+  /**
+   *
+   * @return boolean 
+   */
+  public function isset_prefix() {
+    return (isset($this->prefix) && !empty($this->prefix));
+  }
   
   /**
    *
@@ -76,10 +107,25 @@ abstract class aDCElement extends aXMLElement{
    * FALSE, then it is assumed the namespace is declared elsewhere in the 
    * containing document.
    * 
+   * At the current time all of the elements are empty classes serving only as
+   * to name the element with the class name. This allows extension in the future.
+   * 
    * @param boolean $includeNS
    */
-  public function get_element_as_DOM($includeNS = FALSE) {
+  public function get_element_as_DOM() {
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
+    // Add a prefix if one is set
+    if(isset($this->prefix) && !empty($this->prefix)) {
+      $element = $dom->createElement($this->prefix.':'.strtolower(get_class($this)), 
+              $this->value);
+    }
+    else {
+      $element = $dom->createElement(strtolower(get_class($this)), 
+              $this->value);
+    }
+    
+    return $element;
   }
 }
 

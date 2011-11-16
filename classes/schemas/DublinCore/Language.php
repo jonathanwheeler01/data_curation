@@ -1,12 +1,11 @@
 <?php
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
-
 /**
- * Description of Contributor
+ * Dublin Core Language Element
  *
  * @author Rob Olendorf
  * 
  */
-class Contributor extends aDCElement{}
+class Language extends aDCElement{}
 
 ?>

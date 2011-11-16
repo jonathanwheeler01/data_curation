@@ -39,6 +39,17 @@ class CurationAutoLoad {
                   'schemas'.DIRECTORY_SEPARATOR.
                   'xfdu'.DIRECTORY_SEPARATOR.
                   $className.'.php';
+
+    @include_once 'classes'.DIRECTORY_SEPARATOR.
+                  'schemas'.DIRECTORY_SEPARATOR.
+                  'dublincore'.DIRECTORY_SEPARATOR.
+                  $className.'.php';
+
+    @include_once 'classes'.DIRECTORY_SEPARATOR.
+                  'schemas'.DIRECTORY_SEPARATOR.
+                  'dublincore'.DIRECTORY_SEPARATOR.
+                  'terms'.DIRECTORY_SEPARATOR.
+                  $className.'.php';
     
     @include_once 'classes'.DIRECTORY_SEPARATOR.
                   'schemas'.DIRECTORY_SEPARATOR.

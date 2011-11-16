@@ -32,6 +32,19 @@ class aDCElementTest extends PHPUnit_Framework_TestCase {
   /**
    * 
    */
+  public function testPrefix() {
+    $this->assertFalse($this->object->isset_prefix());
+    
+    $value = 'test';
+    $this->object->set_prefix($value);
+    
+    $this->assertTrue($this->object->isset_prefix());
+    $this->assertEquals($value, $this->object->get_prefix());
+  }
+
+  /**
+   * 
+   */
   public function testValue() {
     $this->assertFalse($this->object->isset_value());
     
@@ -54,7 +67,13 @@ class aDCElementTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_lang());
     $this->assertEquals($value, $this->object->get_lang());
   }
-
+  
+  /**
+   * 
+   */
+  public function testPrefixed_get_element_as_DOM() {
+    $this->markTestSkipped('Unable to test this as abstract element. It is tested by each Dublin Core element.');
+  }
 }
 
 ?>

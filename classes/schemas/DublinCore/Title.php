@@ -2,11 +2,11 @@
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
- * Description of Contributor
+ * Dublin Core class for Title
  *
  * @author Rob Olendorf
  * 
  */
-class Contributor extends aDCElement{}
+class Title extends aDCElement{}
 
 ?>
