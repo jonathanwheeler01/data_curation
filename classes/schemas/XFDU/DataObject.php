@@ -23,7 +23,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class DataObject extends aXMLElement{  
+class DataObject extends aXFDUElement{  
   /**
    * Access to content of dataObjects.
    * @var ByteStream

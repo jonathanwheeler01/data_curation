@@ -9,7 +9,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * @author Rob Olendorf
  *
  */
-class SequenceInformation extends aXMLElement{
+class SequenceInformation extends aXFDUElement{
   /**
    * The XFDU's position in the sequence. The value should be zero if unknown.
    * @var integer

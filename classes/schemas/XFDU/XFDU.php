@@ -14,7 +14,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * @author Rob Olendorf
  * 
  */
-class XFDU extends aXMLElement{
+class XFDU extends aXFDUElement{
   /**
    * Id for the package
    * @var string

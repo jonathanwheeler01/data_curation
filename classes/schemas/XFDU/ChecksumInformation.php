@@ -8,7 +8,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class ChecksumInformation extends aXMLElement {
+class ChecksumInformation extends aXFDUElement {
   /**
    *
    * @var string

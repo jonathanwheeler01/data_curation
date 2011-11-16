@@ -12,7 +12,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  */
 
-class EnvironmentInfo extends aXMLElement{
+class EnvironmentInfo extends aXFDUElement{
   /**
    * Allows application specific extensions of the xfdu
    * @var any

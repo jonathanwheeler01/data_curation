@@ -12,7 +12,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class ByteStream extends aXMLElement{
+class ByteStream extends aXFDUElement{
   /**
    *
    * @var ChecksumInformation

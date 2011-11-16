@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class XMLData extends aXMLElement{
+class XMLData extends aXFDUElement{
   /**
    * Freeform or structured XML. May be stored an any format, String DOM etc.
    * @var mixed

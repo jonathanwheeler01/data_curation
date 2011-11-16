@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class BehaviorSection extends aXMLElement{
+class BehaviorSection extends aXFDUElement{
   /**
    *
    * @var array<BehaviorObject>

@@ -7,7 +7,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * @author Rob Olendorf
  *
  */
-class Reference extends aXMLElement{
+class Reference extends aXFDUElement{
   /**
    * Typically the HTTP URL
    * @var string

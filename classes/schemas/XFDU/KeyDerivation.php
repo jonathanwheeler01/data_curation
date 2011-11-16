@@ -9,7 +9,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class KeyDerivation extends aXMLElement{
+class KeyDerivation extends aXFDUElement{
 
   /**
    * Number of iterations used by the algorithm

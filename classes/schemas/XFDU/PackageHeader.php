@@ -12,7 +12,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * @author Rob Olendorf
  *
  */
-class PackageHeader extends aXMLElement{
+class PackageHeader extends aXFDUElement{
   /**
    *
    * @var VolumeInfo

@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class InterfaceDefinition extends aXMLElement{
+class InterfaceDefinition extends aXFDUElement{
   /**
    *
    * @var array<InputParameter>

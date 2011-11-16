@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class DataObjectSection extends aXMLElement{  
+class DataObjectSection extends aXFDUElement{  
   /**
    * Holds the array of data objects.
    * @var array<DataObjects> 

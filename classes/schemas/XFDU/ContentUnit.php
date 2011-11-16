@@ -32,7 +32,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * @author Rob Olendorf
  * 
  */
-class ContentUnit extends aXMLElement{
+class ContentUnit extends aXFDUElement{
   /**
    * An array of the content units held in this contentn unit.
    * @var array

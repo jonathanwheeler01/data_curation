@@ -11,7 +11,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * @author Rob Olendorf
  *
  */
-class VolumeInfo extends aXMLElement{
+class VolumeInfo extends aXFDUElement{
   /**
    * Storoes a SequenceInformation object that specifies the XFDU's position
    * in a series of XFDU packages.

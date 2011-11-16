@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * case classification contains value of "OTHER" 5. otherCategory - type of 
  * metadata class in case category contains value of "OTHER"
  */
-class MetadataObject extends aXMLElement{
+class MetadataObject extends aXFDUElement{
   /**
    * Should be defined from the MetadataCategory Object.
    * @var string

@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class FileContent extends aXMLElement{  
+class FileContent extends aXFDUElement{  
   /**
    * 
    * @var binary data

@@ -7,7 +7,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * @author Rob Olendorf
  *
  */
-class DataObjectPointer extends aXMLElement{
+class DataObjectPointer extends aXFDUElement{
   /**
    *
    * @var string 

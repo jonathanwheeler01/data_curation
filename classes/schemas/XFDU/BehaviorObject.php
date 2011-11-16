@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class BehaviorObject extends aXMLElement{
+class BehaviorObject extends aXFDUElement{
   /**
    * Complex Type for Behaviors. A behavior object can be used to associate 
    * executable behaviors with content in the XFDU object. A behavior object 
