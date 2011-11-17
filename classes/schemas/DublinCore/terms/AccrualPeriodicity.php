@@ -2,11 +2,11 @@
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
- * An entity responsible for making the resource available
+ * The frequency with which items are added to a collection.
  *
  * @author Rob Olendorf
  * 
  */
-class Publisher extends aDCElement{}
+class AccrualPeriodicity extends aDCElement{}
 
 ?>

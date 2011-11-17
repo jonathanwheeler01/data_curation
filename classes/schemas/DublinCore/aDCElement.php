@@ -119,15 +119,19 @@ abstract class aDCElement extends aXMLElement{
     
     // Add a prefix if one is set
     if(isset($this->prefix) && !empty($this->prefix)) {
-      $element = $dom->createElement($this->prefix.':'.strtolower(get_class($this)), 
+      $element = $dom->createElement($this->prefix.':'.$this->first_to_lower(get_class($this)), 
               $this->value);
     }
     else {
-      $element = $dom->createElement(strtolower(get_class($this)), 
+      $element = $dom->createElement($this->first_to_lower(get_class($this)), 
               $this->value);
     }
     
     return $element;
+  }
+  
+  protected function first_to_lower($string){
+    return strtolower(substr($string, 0, 1)).  substr($string, 1);
   }
 }
 

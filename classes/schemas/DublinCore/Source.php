@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
- * Dublin Core class for Source
+ * A related resource from which the described resource is derived.
  *
  * @author Rob Olendorf
  * 

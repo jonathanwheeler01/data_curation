@@ -2,11 +2,11 @@
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
- * An entity responsible for making the resource available
+ * The policy governing the addition of items to a collection.
  *
  * @author Rob Olendorf
  * 
  */
-class Publisher extends aDCElement{}
+class AccrualPolicy extends aDCElement{}
 
 ?>

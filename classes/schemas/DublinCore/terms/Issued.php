@@ -1,12 +1,11 @@
 <?php
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
-
 /**
- * An entity responsible for making the resource available
+ * Date Issued. Formal publication date.
  *
  * @author Rob Olendorf
  * 
  */
-class Publisher extends aDCElement{}
+class Issued extends Date{}
 
 ?>

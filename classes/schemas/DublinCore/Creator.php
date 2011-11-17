@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 /**
- * Dublin Core Creator Element
+ * An entity primarily responsible for making the resource.
  *
  * @author Rob Olendorf
  * 

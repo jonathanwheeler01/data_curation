@@ -2,20 +2,15 @@
 require_once dirname(__FILE__) . '/../../../../curation_tool.inc';
 
 /**
- * PHP Implementation of the Dublin Core term accessRights.
+ * Information about who can access the resource or an indication of its 
+ * security status.
+ * 
+ * Access Rights may include information regarding access or restrictions 
+ * based on privacy, security, or other policies.
  *
  * @author Rob Olendorf
  * 
  */
-class AccessRights extends Description{
-  
-  /**
-   * Need to override this to handle the special case of Abstract being
-   * a key word in PHP
-   */
-
-  public function get_element_as_DOM() {}
-  
-}
+class AccessRights extends Rights{}
 
 ?>

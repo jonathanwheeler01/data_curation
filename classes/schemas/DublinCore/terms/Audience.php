@@ -2,11 +2,11 @@
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
- * An entity responsible for making the resource available
+ * A class of entity for whom the resource is intended or useful.
  *
  * @author Rob Olendorf
  * 
  */
-class Publisher extends aDCElement{}
+class Audience extends aDCElement{}
 
 ?>

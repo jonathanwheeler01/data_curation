@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
- * Description of Contributor
+ * An entity responsible for making contributions to the resource.
  *
  * @author Rob Olendorf
  * 

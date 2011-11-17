@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 /**
- * Dublin Core Date Element
+ * A point or period of time associated with an event in the lifecycle of the resource.
  *
  * @author Rob Olendorf
  * 

@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . '/../../../../curation_tool.inc';
 
 /**
- * PHP Implementation of the Dublin Core term Abtract.
+ * A summary of the resource.
  *
  * @author Rob Olendorf
  * 
