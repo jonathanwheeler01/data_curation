@@ -110,6 +110,8 @@ abstract class aDCElement extends aXMLElement{
    * At the current time all of the elements are empty classes serving only as
    * to name the element with the class name. This allows extension in the future.
    * 
+   * @todo fix get_element_as_DOM so that only the first character is changed lowercase.
+   * 
    * @param boolean $includeNS
    */
   public function get_element_as_DOM() {
