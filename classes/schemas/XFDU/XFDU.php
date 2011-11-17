@@ -75,6 +75,9 @@ class XFDU extends aXFDUElement{
   public function  __construct() {
     $this->version = 1.0;
   }
+  
+  public function get_as_DOM() {
+  }
 
   /**
    *
