@@ -104,6 +104,29 @@ class aXMLElementTest extends PHPUnit_Framework_TestCase {
     $this->object->unset_namespaces();
     $this->assertFalse($this->object->isset_namespaces());
   }
+  
+  /**
+   * 
+   */
+  public function testXMLVersion() {
+    $this->assertEquals(1.0, $this->object->get_XMLVersion());
+    
+    $value = 2.0;
+    $this->object->set_XMLVersion($value);
+    $this->assertEquals($value, $this->object->get_XMLVersion());
+  }
+  
+  /**
+   * 
+   */
+  public function testXMLEncoding() {
+    $this->assertEquals('UTF-8', $this->object->get_XMLEncoding());
+    
+    $value = 'test';
+    $this->object->set_XMLEncoding($value);
+    
+    $this->assertEquals($value, $this->object->get_XMLEncoding());
+  }
 }
 
 ?>

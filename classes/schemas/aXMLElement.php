@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-abstract class aXMLElement {
+abstract class aXMLElement implements iXMLElement{
   
   /**
    *

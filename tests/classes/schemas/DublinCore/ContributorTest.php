@@ -32,7 +32,7 @@ class ContributorTest extends PHPUnit_Framework_TestCase {
   /**
    * 
    */
-  public function testPrefixed_get_element_as_DOM() {
+  public function testPrefixed_get_as_DOM() {
     $value = 'test';
     $prefix = 'pre';
     $dom = new DOMDocument(1.0, 'UTF-8');
@@ -40,18 +40,18 @@ class ContributorTest extends PHPUnit_Framework_TestCase {
     
     $this->object->set_prefix($prefix);
     
-    $this->assertEqualXMLStructure($element, $this->object->get_element_as_DOM(), TRUE);
+    $this->assertEqualXMLStructure($element, $this->object->get_as_DOM(), TRUE);
   }
   
   /**
    * 
    */
-  public function testUnprefixed_get_element_as_DOM() {
+  public function testUnprefixed_get_as_DOM() {
     $value = 'test';
     $dom = new DOMDocument(1.0, 'UTF-8');
     $element = $dom->createElement('contributor', $value);
     
-    $this->assertEqualXMLStructure($element, $this->object->get_element_as_DOM(), TRUE);
+    $this->assertEqualXMLStructure($element, $this->object->get_as_DOM(), TRUE);
   }
 
 }

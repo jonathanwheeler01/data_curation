@@ -78,6 +78,7 @@ class CurationAutoLoad {
   }
 }
 @include_once 'classes'.DIRECTORY_SEPARATOR.'Enum.php';
+@include_once 'classes'.DIRECTORY_SEPARATOR.'schemas'.DIRECTORY_SEPARATOR.'iXMLElement.php';
 /**
  * Register the autoloader.
  */
