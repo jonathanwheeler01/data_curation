@@ -60,7 +60,14 @@ class InterfaceDefinition extends aXFDUElement{
    */
   public function unset_inputParameters() {
     $this->inputParameters = array();
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

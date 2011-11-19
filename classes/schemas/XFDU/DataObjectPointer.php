@@ -76,6 +76,13 @@ class DataObjectPointer extends aXFDUElement{
    */
   public function isset_id() {
     return(isset($this->id) && !empty($this->id));
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 ?>

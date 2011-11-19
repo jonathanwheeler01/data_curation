@@ -35,7 +35,14 @@ class XMLData extends aXFDUElement{
    */
   public function isset_any() {
     return (isset($this->any) && !empty($this->any));
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

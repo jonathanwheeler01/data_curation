@@ -114,7 +114,7 @@ abstract class aDCElement extends aXMLElement{
    * 
    * @param boolean $includeNS
    */
-  public function get_as_DOM() {
+  public function get_as_DOM($prefix = 'dc') {
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
     // Add a prefix if one is set

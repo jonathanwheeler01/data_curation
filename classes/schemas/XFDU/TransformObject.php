@@ -194,7 +194,14 @@ class TransformObject extends aXMLElement{
    */
   public function isset_transformType() {
     return (isset($this->transformType) && !empty($this->transformType));
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

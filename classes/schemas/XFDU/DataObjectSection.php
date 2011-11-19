@@ -49,7 +49,14 @@ class DataObjectSection extends aXFDUElement{
    */
   public function unset_dataObjects() {
     $this->dataObjects = array();
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

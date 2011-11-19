@@ -76,7 +76,14 @@ class MetadataReference extends Reference{
    */
   public function isset_vocubularyName() {
     return (isset($this->vocubularyName) && !empty($this->vocubularyName));
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

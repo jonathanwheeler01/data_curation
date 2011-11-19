@@ -14,7 +14,7 @@ class DCAbstract extends Description{
    * a key word in PHP
    */
 
-  public function get_as_DOM() {
+  public function get_as_DOM($prefix = 'dcterm') {
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
     // Add a prefix if one is set

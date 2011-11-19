@@ -237,17 +237,36 @@ class MetadataObject extends aXFDUElement{
     return (isset($this->id) && !empty($this->id));
   }
   
+  /**
+   *
+   * @param MetadataWrap $metadataWrap 
+   */
   public function set_metadataWrap(MetadataWrap $metadataWrap) {
     $this->metadataWrap = $metadataWrap;
   }
   
+  /**
+   *
+   * @return MetadataWrap 
+   */
   public function get_metadataWrap() {
     return $this->metadataWrap;
   }
   
+  /**
+   *
+   * @return boolean
+   */
   public function isset_metadataWrap() {
     return (isset($this->metadataWrap) && !empty($this->metadataWrap));
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

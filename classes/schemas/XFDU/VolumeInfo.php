@@ -79,7 +79,14 @@ class VolumeInfo extends aXFDUElement{
   public function isset_specificationVersion() {
     return (isset($this->specificationInformation) &&
             !empty($this->specificationInformation));
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
   
 }
 ?>

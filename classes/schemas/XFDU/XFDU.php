@@ -75,9 +75,6 @@ class XFDU extends aXFDUElement{
   public function  __construct() {
     $this->version = 1.0;
   }
-  
-  public function get_as_DOM() {
-  }
 
   /**
    *
@@ -299,5 +296,13 @@ class XFDU extends aXFDUElement{
   public function isset_behaviorSection() {
     return (isset($this->behaviorSection) && !empty($this->behaviorSection));
   }
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
+  
 }
 ?>

@@ -465,6 +465,13 @@ class ContentUnit extends aXFDUElement{
    */
   public function isset_xfduPointer() {
     return (isset($this->xfduPointer) && !empty($this->xfduPointer));
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 ?>

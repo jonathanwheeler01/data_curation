@@ -6,13 +6,13 @@ require_once dirname(__FILE__) . '/../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-abstract class aXMLElement{
+abstract class aXMLElement implements iXMLElement{
   
   /**
    *
    * @var float 
    */
-  protected $XMLVersion = 1.0;
+  protected $XMLVersion = '1.0';
   
   /**
    *

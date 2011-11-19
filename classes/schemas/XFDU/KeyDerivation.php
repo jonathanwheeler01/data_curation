@@ -106,7 +106,14 @@ class KeyDerivation extends aXFDUElement{
    */
   public function isset_salt() {
     return (isset($this->salt) && !empty($this->salt));
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

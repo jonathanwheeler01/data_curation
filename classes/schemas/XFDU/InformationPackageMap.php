@@ -162,6 +162,13 @@ class InformationPackageMap extends aXFDUElement{
    */
   public function unset_contentUnits() {
     $this->contentUnits = array();
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 ?>

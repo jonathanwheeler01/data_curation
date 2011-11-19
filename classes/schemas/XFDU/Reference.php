@@ -19,9 +19,29 @@ class Reference extends aXFDUElement{
    * @var string
    */
   protected $id;
+  
+  /**
+   *
+   * @var string 
+   */
   protected $locator;
+  
+  /**
+   * Drawn from the LocatorType enum class
+   * @var string
+   */
   protected $locatorType;
+  
+  /**
+   *
+   * @var string 
+   */
   protected $otherLocatorType;
+  
+  /**
+   * Human readable description of the element data.
+   * @var string
+   */
   protected $textInfo;
   
   /**
@@ -159,16 +179,35 @@ class Reference extends aXFDUElement{
     return (isset($this->otherLocatorType) && !empty($this->otherLocatorType));
   }
   
+  /**
+   *
+   * @param string $textInfo 
+   */
   public function set_textInfo($textInfo) {
     $this->textInfo = $textInfo;
   }
   
+  /**
+   *
+   * @return string 
+   */
   public function get_textInfo() {
     return $this->textInfo;
   }
   
+  /**
+   *
+   * @return boolean
+   */
   public function isset_textInfo() {
     return (isset($this->textInfo) && !empty($this->textInfo));
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 ?>

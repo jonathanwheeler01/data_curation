@@ -113,10 +113,13 @@ class SequenceInformation extends aXFDUElement{
    */
   public function isset_value() {
     return (isset($this->value) && !empty($this->value));
-  }
+  }  
   
-  public function get_as_DOM() {
-    $dom = new DOMDocument(1.0, 'UTF-8');
-  }
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 ?>

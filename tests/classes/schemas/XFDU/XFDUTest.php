@@ -143,6 +143,8 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_behaviorSection());
     $this->assertEquals(get_class($value), get_class($this->object->get_behaviorSection()));
   }
+  
+  
 }
 
 ?>

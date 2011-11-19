@@ -96,6 +96,13 @@ class InputParameter extends aXFDUElement{
    */
   public function isset_value() {
     return (isset($this->value) && !empty($this->value));
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 ?>

@@ -49,7 +49,14 @@ class BehaviorSection extends aXFDUElement{
    */
   public function unset_behaviorObjects() {
     $this->behaviorObjects = array();
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

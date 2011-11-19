@@ -361,7 +361,14 @@ class DataObject extends aXFDUElement{
    */
   public function isset_transformObject() {
     return (isset($this->transformObject) && !empty($this->transformObject));
-  }
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>
