@@ -106,6 +106,7 @@ class MetadataWrap extends FileContent{
   
   /**
    *
+   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */

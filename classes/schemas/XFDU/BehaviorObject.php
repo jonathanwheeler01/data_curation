@@ -328,6 +328,7 @@ class BehaviorObject extends aXFDUElement{
   
   /**
    *
+   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */

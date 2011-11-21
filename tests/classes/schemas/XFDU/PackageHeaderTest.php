@@ -75,6 +75,68 @@ class PackageHeaderTest extends PHPUnit_Framework_TestCase {
   public function testInvalidID() {
     $this->object->set_id('0invalid');
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $id = 'test';
+    $sequenceSize = 2;
+    $sequencePosition = 1;
+    $value = 'test';
+    
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $expectedElement = $dom->createElement('packageHeader');
+    $expectedElement->setAttribute('ID', $id);
+    
+    $specificationVersion = $dom->createElement('specificationVersion');
+    $specificationVersion->appendChild($dom->createTextNode('1.0'));
+    
+    $expectedSequenceInformation = $dom->createElement('sequenceInformation');
+    $expectedSequenceInformation->setAttribute('sequenceSize', $sequenceSize);
+    $expectedSequenceInformation->setAttribute('sequencePosition', $sequencePosition);
+    $expectedSequenceInformation->appendChild($dom->createTextNode($value));
+    
+    $volumeInfo = $dom->createElement('volumeInfo');
+    $volumeInfo->appendChild($specificationVersion);
+    $volumeInfo->appendChild($expectedSequenceInformation);
+    
+    $expectedElement->appendChild($volumeInfo);
+    $expectedElement->appendChild($dom->createElement('environmentInfo'));
+    
+    $this->object->set_id($id);
+    
+    $volumeInfo = new VolumeInfo();
+    
+    $sequenceInformation = new SequenceInformation();
+    $sequenceInformation->set_sequencePosition($sequencePosition);
+    $sequenceInformation->set_sequenceSize($sequenceSize);
+    $sequenceInformation->set_value($value);
+    $volumeInfo->set_sequenceInformation($sequenceInformation);
+    
+    $this->object->set_volumeInfo($volumeInfo);
+    
+    $environmentInfo = new EnvironmentInfo();
+    $this->object->set_environmentInfo($environmentInfo);
+    
+    $this->assertEqualXMLStructure($expectedElement, $this->object->get_as_DOM(), TRUE);
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingID() {
+    $this->object->get_as_DOM();
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingVolumeInfo() {
+    $this->object->set_id('test');
+    
+    $this->object->get_as_DOM();
+  }
 
 }
 

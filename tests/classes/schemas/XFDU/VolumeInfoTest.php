@@ -57,6 +57,37 @@ class VolumeInfoTest extends PHPUnit_Framework_TestCase {
     $this->object->set_specificationVersion(NULL);
     $this->assertFalse($this->object->isset_specificationVersion());
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $sequenceSize = 2;
+    $sequencePosition = 1;
+    $value = 'test';
+    
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $specificationVersion = $dom->createElement('specificationVersion');
+    $specificationVersion->appendChild($dom->createTextNode('1.0'));
+    
+    $expectedElement = $dom->createElement('volumeInfo');
+    $expectedElement->appendChild($specificationVersion);
+    
+    $expectedSequenceInformation = $dom->createElement('sequenceInformation');
+    $expectedSequenceInformation->setAttribute('sequenceSize', $sequenceSize);
+    $expectedSequenceInformation->setAttribute('sequencePosition', $sequencePosition);
+    $expectedSequenceInformation->appendChild($dom->createTextNode($value));
+    $expectedElement->appendChild($expectedSequenceInformation);
+    
+    $sequenceInformation = new SequenceInformation();
+    $sequenceInformation->set_sequencePosition($sequencePosition);
+    $sequenceInformation->set_sequenceSize($sequenceSize);
+    $sequenceInformation->set_value($value);
+    $this->object->set_sequenceInformation($sequenceInformation);
+    
+    $this->assertEqualXMLStructure($expectedElement, $this->object->get_as_DOM(), TRUE);
+  }
 }
 
 ?>

@@ -120,6 +120,30 @@ class SequenceInformation extends aXFDUElement{
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $sequenceInformation = $dom->createElement($this->first_to_lower(get_class($this)));
+    
+    if($this->isset_sequenceSize()) {
+      $sequenceInformation->setAttribute('sequenceSize', $this->sequenceSize);
+    }
+    else {
+      throw new RequiredElementException('sequenceSize');
+    }
+    
+    if($this->isset_sequencePosition()) {
+      $sequenceInformation->setAttribute('sequencePosition', $this->sequencePosition);
+    }
+    else {
+      throw new RequiredElementException('sequencePosition');
+    }
+    
+    if($this->isset_value()) {
+      $sequenceInformation->appendChild($dom->createTextNode($this->value));
+    }
+    
+    return $sequenceInformation;
+  }
 }
 ?>

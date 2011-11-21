@@ -78,6 +78,20 @@ class EnvironmentInfo extends aXFDUElement{
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $environmentInfo = $dom->createElement($this->first_to_lower(get_class($this)));
+    
+    if($this->isset_xmlData()) {
+      $environmentInfo->appendChild($dom->importNode($this->xmlData->get_as_DOM(), TRUE));
+    }
+    
+    if($this->isset_extension()) {
+      $environmentInfo->appendChild($dom->importNode($this->extension->get_as_DOM(), TRUE));
+    }
+    
+    return $environmentInfo;
+  }
 }
 ?>

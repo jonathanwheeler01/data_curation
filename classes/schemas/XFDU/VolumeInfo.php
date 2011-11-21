@@ -23,13 +23,13 @@ class VolumeInfo extends aXFDUElement{
    * The version of the XFDU schema used.
    * @var float
    */
-  protected $specificationInformation;
+  protected $specificationVersion;
 
   /**
    * Sets the default specification to the most current.
    */
   public function  __construct() {
-    $this->specificationInformation = 1.0;
+    $this->specificationVersion = '1.0';
   }
 
   /**
@@ -61,7 +61,7 @@ class VolumeInfo extends aXFDUElement{
    * @param float $version
    */
   public function set_specificationVersion($version) {
-    $this->specificationInformation = $version;
+    $this->specificationVersion = $version;
   }
 
   /**
@@ -69,7 +69,7 @@ class VolumeInfo extends aXFDUElement{
    * @return float
    */
   public function get_specificationVersion() {
-    return $this->specificationInformation;
+    return $this->specificationVersion;
   }
 
   /**
@@ -77,8 +77,8 @@ class VolumeInfo extends aXFDUElement{
    * @return boolean
    */
   public function isset_specificationVersion() {
-    return (isset($this->specificationInformation) &&
-            !empty($this->specificationInformation));
+    return (isset($this->specificationVersion) &&
+            !empty($this->specificationVersion));
   }  
   
   /**
@@ -86,7 +86,20 @@ class VolumeInfo extends aXFDUElement{
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
-  
+  public function get_as_DOM($prefix = NULL) {
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $volumeInfo = $dom->createElement('volumeInfo');
+    
+    $specificationVersion = $dom->createElement('specificationVersion');
+    $specificationVersion->appendChild($dom->createTextNode($this->specificationVersion));
+    $volumeInfo->appendChild($specificationVersion);
+    
+    if($this->isset_sequenceInformation()) {
+      $volumeInfo->appendChild($dom->importNode($this->sequenceInformation->get_as_DOM(), TRUE));
+    }
+    
+    return $volumeInfo;
+  }
 }
 ?>

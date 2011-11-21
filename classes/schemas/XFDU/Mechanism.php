@@ -8,6 +8,7 @@ class Mechanism extends Reference{
   
   /**
    *
+   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */

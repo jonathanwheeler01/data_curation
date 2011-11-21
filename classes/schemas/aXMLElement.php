@@ -181,6 +181,10 @@ abstract class aXMLElement implements iXMLElement{
   public function unset_namespaces() {
     $this->namepaces = array();
   }
+  
+  protected function first_to_lower($string){
+    return strtolower(substr($string, 0, 1)).  substr($string, 1);
+  }
 }
 
 ?>
