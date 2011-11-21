@@ -19,9 +19,30 @@ class Reference extends aXFDUElement{
    * @var string
    */
   protected $id;
+  
+  /**
+   *
+   * @var string 
+   */
   protected $locator;
+  
+  /**
+   * Should be pulled from the Locator Enum class
+   * @var string 
+   */
   protected $locatorType;
+  
+  /**
+   *
+   * @var string
+   */
   protected $otherLocatorType;
+  
+  /**
+   * Human readable description of the element.
+   * 
+   * @var string 
+   */
   protected $textInfo;
   
   /**

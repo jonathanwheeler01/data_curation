@@ -110,7 +110,6 @@ abstract class aDCElement extends aXMLElement{
    * At the current time all of the elements are empty classes serving only as
    * to name the element with the class name. This allows extension in the future.
    * 
-   * @todo fix get_element_as_DOM so that only the first character is changed lowercase.
    * 
    * @param boolean $includeNS
    */
@@ -130,6 +129,15 @@ abstract class aDCElement extends aXMLElement{
     return $element;
   }
   
+  /**
+   * Takes a string and ensure the first character is lower case. This is useful
+   * for some schemas such as Dublin core that use camel case, but where I used
+   * CapitalCamel case in the classes. Yeah its a bit of extra code, but in the 
+   * long run, I think it helps maintain a bit of clarity.
+   * 
+   * @param type $string
+   * @return type 
+   */
   protected function first_to_lower($string){
     return strtolower(substr($string, 0, 1)).  substr($string, 1);
   }
