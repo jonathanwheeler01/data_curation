@@ -47,6 +47,7 @@ class XMLData extends aXFDUElement{
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
     $xmlData = $dom->createElement('xmlData');
+    $xmlData->appendChild($dom->importNode($this->any, TRUE));
     
     return $xmlData;
     

@@ -128,7 +128,6 @@ abstract class aDCElement extends aXMLElement{
     
     return $element;
   }
-<<<<<<< HEAD
   
   /**
    * Takes a string and ensure the first character is lower case. This is useful
@@ -142,8 +141,6 @@ abstract class aDCElement extends aXMLElement{
   protected function first_to_lower($string){
     return strtolower(substr($string, 0, 1)).  substr($string, 1);
   }
-=======
->>>>>>> 1b6916b591113b1048653626d6b5ba9a1dc62454
 }
 
 ?>

@@ -8,7 +8,9 @@
             <sequenceInformation sequencePosition="1" sequenceSize="2">test</sequenceInformation>
         </volumeInfo>
         <environmentInfo>
-            <xmlData/>
+            <xmlData>
+                <stuff/>
+            </xmlData>
             <extension />
         </environmentInfo>
     </packageHeader>

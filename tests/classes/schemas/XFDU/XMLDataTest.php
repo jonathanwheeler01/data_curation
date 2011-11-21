@@ -40,6 +40,17 @@ class XMLDataTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_any());
     $this->assertEquals($value, $this->object->get_any());
   }
+  
+  public function testGet_as_DOM () {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedElement = $dom->createElement('xmlData');
+    $expectedElement->appendChild($any = $dom->createElement('stuff'));
+    
+    $this->object->set_any($any);
+    
+    $this->assertEqualXMLStructure($expectedElement, $this->object->get_as_DOM(), TRUE);
+  }
 
 }
 
