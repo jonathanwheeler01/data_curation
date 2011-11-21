@@ -215,7 +215,15 @@ class ByteStream extends aXFDUElement{
    */
   public function isset_size() {
     return (isset($this->size) && !empty($this->size));
-  }
+  }  
+  
+  /**
+   *
+   * @todo Iimplement get_as_DOM()
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

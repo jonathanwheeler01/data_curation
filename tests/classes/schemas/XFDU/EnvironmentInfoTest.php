@@ -54,6 +54,25 @@ class EnvironmentInfoTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_xmlData());
     $this->assertEquals($value, $this->object->get_xmlData());
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {    
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedElement = $dom->createElement('environmentInfo');
+    $expectedElement->appendChild($dom->createElement('xmlData'));
+    $expectedElement->appendChild($dom->createElement('extension'));
+    
+    $xmlData = new XMLData();
+    $this->object->set_xmlData($xmlData);
+    
+    $extension = new Extension();
+    $this->object->set_extension($extension);
+    
+    $this->assertEqualXMLStructure($expectedElement, $this->object->get_as_DOM());
+  }
 
 }
 

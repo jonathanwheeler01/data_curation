@@ -102,7 +102,15 @@ class MetadataWrap extends FileContent{
    */
   public function isset_vocabularyName() {
     return (isset($this->vocabularyName) && !empty($this->vocabularyName));
-  }
+  }  
+  
+  /**
+   *
+   * @todo Iimplement get_as_DOM()
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

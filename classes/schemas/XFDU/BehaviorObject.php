@@ -324,7 +324,15 @@ class BehaviorObject extends aXFDUElement{
    */
   public function isset_interfaceDefinition() {
     return (isset($this->interfaceDefinition) && !empty($this->interfaceDefinition));
-  }
+  }  
+  
+  /**
+   *
+   * @todo Iimplement get_as_DOM()
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

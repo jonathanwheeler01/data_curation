@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pre:XFDU xmlns:pre="urn:ccsds:schema:xfdu:1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd" >
+    <packageHeader ID="test">
+        <volumeInfo>
+            <specificationVersion>1.0</specificationVersion>
+        </volumeInfo>
+    </packageHeader>
+    <informationPackageMap />
+</pre:XFDU>

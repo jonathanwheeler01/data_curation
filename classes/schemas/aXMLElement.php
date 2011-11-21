@@ -6,13 +6,13 @@ require_once dirname(__FILE__) . '/../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-abstract class aXMLElement{
+abstract class aXMLElement implements iXMLElement{
   
   /**
    *
    * @var float 
    */
-  protected $XMLVersion = 1.0;
+  protected $XMLVersion = '1.0';
   
   /**
    *
@@ -180,6 +180,10 @@ abstract class aXMLElement{
    */
   public function unset_namespaces() {
     $this->namepaces = array();
+  }
+  
+  protected function first_to_lower($string){
+    return strtolower(substr($string, 0, 1)).  substr($string, 1);
   }
 }
 

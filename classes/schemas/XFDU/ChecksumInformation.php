@@ -67,7 +67,15 @@ class ChecksumInformation extends aXFDUElement {
    */
   public function isset_value() {
     return (isset($this->value) && !empty($this->value));
-  }
+  }  
+  
+  /**
+   *
+   * @todo Iimplement get_as_DOM()
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

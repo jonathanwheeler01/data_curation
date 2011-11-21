@@ -75,9 +75,6 @@ class XFDU extends aXFDUElement{
   public function  __construct() {
     $this->version = 1.0;
   }
-  
-  public function get_as_DOM() {
-  }
 
   /**
    *
@@ -299,5 +296,58 @@ class XFDU extends aXFDUElement{
   public function isset_behaviorSection() {
     return (isset($this->behaviorSection) && !empty($this->behaviorSection));
   }
+  
+  /**
+   * 
+   * @param string $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    // conditionally add the prefix to the element name and namespace
+    // attribute.
+    if($prefix !== NULL) {
+      $xfdu = $dom->createElement($prefix.':'.get_class($this));
+      $xfdu->setAttribute('xmlns:'.$prefix, 'urn:ccsds:schema:xfdu:1');
+    }
+    else {
+      $xfdu = $dom->createElement('xfdu:'.get_class($this));
+      $xfdu->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
+    }
+    $xfdu->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+    $xfdu->setAttribute('xsi:schemaLocation', 'urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd');
+
+    // Required Elements such as packageHeader throw a RequiredElementException if missing.
+    if($this->isset_packageHeader()) {
+      $xfdu->appendChild( $dom->importNode($this->packageHeader->get_as_DOM(), TRUE) );
+    }
+    else {
+      throw new RequiredElementException('packageHeader');
+    }
+    
+    // InformationPackageMap is a required element.
+    if($this->isset_informationPackageMap()) {
+      $xfdu->appendChild( $dom->importNode($this->informationPackageMap->get_as_DOM(), TRUE) );
+    }
+    else {
+      throw new RequiredElementException('informationPackageMap');
+    }
+    
+    if($this->isset_metadataSection()) {
+      $xfdu->appendChild( $dom->importNode($this->metadataSection->get_as_DOM(), TRUE) );
+    }
+    
+    if($this->isset_dataObjectSection()) {
+      $xfdu->appendChild( $dom->importNode($this->dataObjectSection->get_as_DOM(), TRUE) );
+    }
+    
+    if($this->isset_behaviorSection()) {
+      $xfdu->appendChild( $dom->importNode($this->behaviorSection->get_as_DOM(), TRUE) );
+    }
+    
+    return $xfdu;
+  }
+  
 }
 ?>

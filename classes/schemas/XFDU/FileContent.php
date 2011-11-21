@@ -98,7 +98,15 @@ class FileContent extends aXFDUElement{
    */
   public function isset_XMLData() {
     return (isset($this->xmlData) && !empty($this->xmlData));
-  }
+  }  
+  
+  /**
+   *
+   * @todo Iimplement get_as_DOM()
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {}
 }
 
 ?>

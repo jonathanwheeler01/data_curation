@@ -109,6 +109,40 @@ class PackageHeader extends aXFDUElement{
    */
   public function isset_id() {
     return (isset ($this->id) && !empty ($this->id));
+  }  
+  
+  /**
+   *
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $packageHeader = $dom->createElement('packageHeader');
+    
+    // Ensure that the required ID attribute is set and add it if it is. Throw
+    // an exception otherwise.
+    if($this->isset_id()) {
+      $packageHeader->setAttribute('ID', $this->id);
+    }
+    else {
+      throw new RequiredElementException('ID');
+    }
+    
+    // Ensure that volumeInfo is set, throw an exception otherwise.
+    if($this->isset_volumeInfo()) {
+      $packageHeader->appendChild($dom->importNode($this->volumeInfo->get_as_DOM(), TRUE));
+    }
+    else {
+      throw new RequiredElementException('volumeInfo');
+    }
+    
+    if($this->isset_environmentInfo()) {
+      $packageHeader->appendChild($dom->importNode($this->environmentInfo->get_as_DOM(), TRUE));
+    }            
+    
+    return $packageHeader;
   }
 }
 ?>

@@ -7,6 +7,7 @@
  */
 class XMLNameSpace {
   
+  
   /**
    * The namespace identifier
    * @var string
@@ -110,5 +111,6 @@ class XMLNameSpace {
   public function isset_prefix() {
     return (isset($this->prefix) && !empty($this->prefix));
   }
+  
 }
 ?>

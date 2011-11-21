@@ -81,6 +81,43 @@ class SequenceInformationTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_value());
     $this->assertEquals($value, $this->object->get_value());
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $sequenceSize = 2;
+    $sequencePosition = 1;
+    $value = 'test';
+    
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedElement = $dom->createElement('sequenceInformation');
+    $expectedElement->setAttribute('sequenceSize', $sequenceSize);
+    $expectedElement->setAttribute('sequencePosition', $sequencePosition);
+    $expectedElement->appendChild($dom->createTextNode($value));
+    
+    $this->object->set_sequencePosition($sequencePosition);
+    $this->object->set_sequenceSize($sequenceSize);
+    $this->object->set_value($value);
+    
+    $this->assertEqualXMLStructure($expectedElement, $this->object->get_as_DOM());
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingSequenceSize() {
+    $this->object->get_as_DOM();
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingSequencePosition() {
+    $this->object->set_sequenceSize(2);
+    $this->object->get_as_DOM();
+  }
 }
 
 ?>

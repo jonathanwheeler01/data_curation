@@ -35,6 +35,21 @@ class XMLData extends aXFDUElement{
    */
   public function isset_any() {
     return (isset($this->any) && !empty($this->any));
+  }  
+  
+  /**
+   *
+   * @todo Iimplement get_as_DOM()
+   * @param type $prefix 
+   * @return DOMElement;
+   */
+  public function get_as_DOM($prefix = NULL) {
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $xmlData = $dom->createElement('xmlData');
+    
+    return $xmlData;
+    
   }
 }
 

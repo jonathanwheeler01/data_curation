@@ -143,6 +143,99 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_behaviorSection());
     $this->assertEquals(get_class($value), get_class($this->object->get_behaviorSection()));
   }
+  
+  /**
+   * A really long test, that probably violates a lot of the rules of unit
+   * testing, but ends up being a pretty good test of the overall 
+   * document structure.
+   */
+  public function testDefault_get_as_DOM() {
+    // Set the various parameters that will be needed.
+    $id = 'test';
+    $sequenceSize = 2;
+    $sequencePosition = 1;
+    $value = 'test';
+    
+    $dom = new DOMDocument('1.0', 'UTF-8');                                     // create the dom document
+    
+    // Child of volumeInfo
+    $specificationVersion = $dom->createElement('specificationVersion');
+    $specificationVersion->appendChild($dom->createTextNode('1.0'));
+    
+    // Child of volumeInfo
+    $sequenceInformation = new SequenceInformation();
+    $sequenceInformation->set_sequencePosition($sequencePosition);
+    $sequenceInformation->set_sequenceSize($sequenceSize);
+    $sequenceInformation->set_value($value);
+    
+    // Child of packageHeader
+    $volumeInfo = new VolumeInfo();
+    $volumeInfo->set_sequenceInformation($sequenceInformation);
+    
+    //Child of environmentInfo
+    $xmlData = new XMLData();
+    
+    //Child of environmentInfo
+    $extension = new Extension();
+    
+    //Child of packageHeader
+    $environmentInfo = new EnvironmentInfo();
+    $environmentInfo->set_xmlData($xmlData);
+    $environmentInfo->set_extension($extension);
+    
+    //Child of XFDU
+    $packageHeader = new PackageHeader();                                       
+    $packageHeader->set_id($value);
+    $packageHeader->set_volumeInfo($volumeInfo);
+    $packageHeader->set_environmentInfo($environmentInfo);
+    
+    // Root element (XFDU)
+    $this->object->set_packageHeader($packageHeader);
+    $this->object->set_informationPackageMap(new InformationPackageMap);
+    $this->object->set_metadataSection(new MetadataSection());
+    $this->object->set_dataObjectSection(new DataObjectSection());
+    $this->object->set_behaviorSection(new BehaviorSection());
+    
+    $dom->appendChild( $dom->importNode($this->object->get_as_DOM(), TRUE) );
+    
+    
+    $this->assertXmlStringEqualsXmlFile(__DIR__.'/files/xfdu-xfdu-test.xml', $dom->saveXML());
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingPackageHeader() {
+    $this->object->set_packageHeader(new PackageHeader());
+    $this->object->get_as_DOM();
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingInformationPackageMap() {
+    $this->object->get_as_DOM();
+  }
+  
+  /**
+   * 
+   */
+  public function testOtherPrefix_get_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $packageHeader = new PackageHeader();
+    $packageHeader->set_id('test');
+    
+    $volumeInfo = new VolumeInfo();
+    $packageHeader->set_volumeInfo($volumeInfo);
+    
+    $this->object->set_packageHeader($packageHeader);
+    $this->object->set_informationPackageMap(new InformationPackageMap());
+    
+    $dom->appendChild($dom->importNode($this->object->get_as_DOM('pre'), TRUE));
+    
+    $this->assertXmlStringEqualsXmlFile(__DIR__.'/files/pre-xfdu-test.xml', $dom->saveXML());
+  }
 }
 
 ?>
