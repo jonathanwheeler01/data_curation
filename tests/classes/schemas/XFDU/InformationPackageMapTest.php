@@ -101,6 +101,58 @@ class InformationPackageMapTest extends PHPUnit_Framework_TestCase {
     $this->object->add_contentUnitList($contentUnitList);
     $this->assertEquals(2, sizeof($this->object->get_ContentUnits()));
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $id = 'ipmID';
+    $packageType = 'packageType';
+    $textInfo = 'textInfo';
+    
+    $expectedElement = $dom->createElement('informationPackageMap');
+    $expectedElement->setAttribute('ID', $id);
+    $expectedElement->setAttribute('packageType', $packageType);
+    $expectedElement->setAttribute('textInfo', $textInfo);
+    $expectedElement->appendChild($dom->createElement('xfdu:contentUnit'));
+    $expectedElement->appendChild($dom->createElement('xfdu:contentUnit'));
+    
+    $this->object->set_id($id);
+    $this->object->set_packageType($packageType);
+    $this->object->set_textInfo($textInfo);
+    
+    $contentUnit = new ContentUnit();
+    $this->object->add_contentUnit($contentUnit);
+    $this->object->add_contentUnit($contentUnit);
+    
+    $this->assertEqualXMLStructure($expectedElement, $this->object->get_as_DOM(), TRUE);
+  }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM_NoAtts() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedElement = $dom->createElement('informationPackageMap');
+    $expectedElement->appendChild($dom->createElement('xfdu:contentUnit'));
+    $expectedElement->appendChild($dom->createElement('xfdu:contentUnit'));
+    
+    $contentUnit = new ContentUnit();
+    $this->object->add_contentUnit($contentUnit);
+    $this->object->add_contentUnit($contentUnit);
+    
+    $this->assertEqualXMLStructure($expectedElement, $this->object->get_as_DOM(), TRUE);
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingContentUnitInGet_as_DOM() {
+    $this->object->get_as_DOM();
+  }
 }
 
 ?>

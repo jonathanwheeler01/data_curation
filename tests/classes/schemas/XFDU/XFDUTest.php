@@ -158,6 +158,16 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     
     $dom = new DOMDocument('1.0', 'UTF-8');                                     // create the dom document
     
+    //
+    // BUILD THE EXPECTED DOCUMENT
+    //
+    $xfdu = $dom->createElement('xfdu');
+    $xfdu->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
+    
+    //
+    // BUILD THE ACTUAL DOCUMENT
+    //
+    //
     // Child of volumeInfo
     $specificationVersion = $dom->createElement('specificationVersion');
     $specificationVersion->appendChild($dom->createTextNode('1.0'));
@@ -174,14 +184,11 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     
     //Child of environmentInfo
     $xmlData = new XMLData();
-    
-    //Child of environmentInfo
-    $extension = new Extension();
+    $xmlData->set_any($dom->createElement('stuff'));
     
     //Child of packageHeader
     $environmentInfo = new EnvironmentInfo();
     $environmentInfo->set_xmlData($xmlData);
-    $environmentInfo->set_extension($extension);
     
     //Child of XFDU
     $packageHeader = new PackageHeader();                                       
@@ -189,17 +196,25 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     $packageHeader->set_volumeInfo($volumeInfo);
     $packageHeader->set_environmentInfo($environmentInfo);
     
+    //Child of informationPackageMap
+    $contentUnit = new ContentUnit();
+    
+    //Child of XFDU
+    $informatinPackageMap = new InformationPackageMap;
+    $informatinPackageMap->add_contentUnit($contentUnit);
+    
     // Root element (XFDU)
     $this->object->set_packageHeader($packageHeader);
-    $this->object->set_informationPackageMap(new InformationPackageMap);
+    $this->object->set_informationPackageMap($informatinPackageMap);
     $this->object->set_metadataSection(new MetadataSection());
     $this->object->set_dataObjectSection(new DataObjectSection());
     $this->object->set_behaviorSection(new BehaviorSection());
     
     $dom->appendChild( $dom->importNode($this->object->get_as_DOM(), TRUE) );
     
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM()), TRUE);
     
-    $this->assertXmlStringEqualsXmlFile(__DIR__.'/files/xfdu-xfdu-test.xml', $dom->saveXML());
+//    $this->assertXmlStringEqualsXmlFile(__DIR__.'/files/xfdu-xfdu-test.xml', $dom->saveXML());
   }
   
   /**

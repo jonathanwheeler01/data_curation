@@ -473,6 +473,17 @@ class ContentUnit extends aXFDUElement{
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    if($prefix !== NULL) {
+      $contentUnit = $dom->createElement($prefix.':'.$this->first_to_lower(get_class($this)));
+    }
+    else {
+      $contentUnit = $dom->createElement('xfdu:'.$this->first_to_lower(get_class($this)));
+    }
+    
+    return $contentUnit;
+  }
 }
 ?>

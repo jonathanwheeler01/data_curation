@@ -26,44 +26,45 @@ class Extension extends aXFDUElement{
   }
   
   public function get_as_DOM($prefix = NULL) {
-    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
-    
-    $extension = $dom->createElement($this->first_to_lower(get_class($this)));
-    
-    return $extension;
+    // Extension requires that at least one namespace be define.
+    if($this->isset_namespaces()) {
+      $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+
+      $extension = $dom->createElement($this->first_to_lower(get_class($this)));
+      
+      $namespace = new XMLNameSpace();
+      $namespaces = $this->get_namespaces();
+      foreach($namespaces as $namespace) {
+        
+        // A uri is required
+        if(!$namespace->isset_uri()) {
+          throw new RequiredElementException('Namespace URI');
+        }
+        
+        // Extension requires a prefix too to avoid collisions with
+        // the xfdu namespace
+        if(!$namespace->isset_prefix()) {
+          throw new RequiredElementException('Namespace Prefix');
+        }
+        
+        $extension->setAttribute('xmlns:'.$namespace->get_prefix(), $namespace->get_uri());
+        
+        // A schema location is not required but can be added. 
+        if($namespace->isset_location()) {
+          $extension->setAttribute('xsi:schemaLocation', 
+                  $extension->getAttribute('xsi:schemaLocation').' '.
+                  $namespace->get_uri().' '.$namespace->get_location());
+        }
+      }
+      
+      $extension->appendChild($dom->importNode($this->any, TRUE));
+
+      return $extension;
+    }
+    else {
+      throw new RequiredElementException('Namespace');
+    }
   }
-//  public function get_as_DOM($prefix = NULL) {
-//    if($this->isset_namespaces()) {
-//    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
-//    
-//    return $dom->createElement('extension');
-    
-//    $extension = $dom->createElement($this->first_to_lower(get_class($this)));
-//    
-//    $namespace = new XMLNameSpace();
-//    foreach($this->namepaces as $namespace) {
-//      if($namespace->isset_prefix()) {
-//        $extension->setAttribute('xmlns:'.$namespace->get_prefix(), $namespace->get_uri());
-//      }
-//      else {
-//        $extension->setAttribute('xmlns', $namespace->get_uri());
-//      }
-//      
-//      if($namespace->isset_location()) {
-//        $extension->setAttribute('xsi:schemaLocation', 
-//                $extension->getAttribute('xsi:schemaLocation').' '.
-//                $namespace->get_uri().' '.$namespace->get_location());
-//      }
-//    }
-//    
-//    $extension->appendChild($dom->importNode($this->any));
-//    
-//    return $extension;
-//    }
-//    else {
-//      throw new RequiredElementException('NameSpace');
-//    }
-//  }
 }
 
 ?>

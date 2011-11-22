@@ -11,10 +11,11 @@
             <xmlData>
                 <stuff/>
             </xmlData>
-            <extension />
         </environmentInfo>
     </packageHeader>
-    <informationPackageMap />
+    <informationPackageMap>
+        <xfdu:contentUnit />
+    </informationPackageMap>
     <metadataSection />
     <dataObjectSection />
     <behaviorSection />

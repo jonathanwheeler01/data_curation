@@ -166,14 +166,38 @@ class InformationPackageMap extends aXFDUElement{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
   public function get_as_DOM($prefix = NULL) {
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
-    return $dom->createElement('informationPackageMap');
+    $informationPackageMap = $dom->createElement('informationPackageMap');
+    
+    if($this->isset_contentUnits()) {
+      $contentUnits = $this->get_ContentUnits();
+      $contentUnit = new ContentUnit();
+      foreach($contentUnits as $contentUnit) {
+        $informationPackageMap->appendChild($dom->importNode($contentUnit->get_as_DOM()));
+      }
+    }
+    else {
+      throw new RequiredElementException('contentUnit');
+    }
+    
+    if($this->isset_id()) {
+      $informationPackageMap->setAttribute('ID', $this->get_id());
+    }
+    
+    if($this->isset_packageType()) {
+      $informationPackageMap->setAttribute('packageType', $this->get_packageType());
+    }
+    
+    if($this->isset_textInfo()) {
+      $informationPackageMap->setAttribute('textInfo', $this->get_textInfo());
+    }
+    
+    return $informationPackageMap;
   }
 }
 ?>
