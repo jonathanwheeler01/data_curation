@@ -161,8 +161,15 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     //
     // BUILD THE EXPECTED DOCUMENT
     //
+    
+    $packageHeader = $dom->createElement('packageHeader');
+    $packageHeader->setAttribute('ID', 'test');
+    
+    // Root element
     $xfdu = $dom->createElement('xfdu');
     $xfdu->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
+    $xfdu->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+    $xfdu->setAttribute('xsi:schemaLocation', 'urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd');
     
     //
     // BUILD THE ACTUAL DOCUMENT
