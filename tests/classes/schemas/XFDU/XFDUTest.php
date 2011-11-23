@@ -162,14 +162,58 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     // BUILD THE EXPECTED DOCUMENT
     //
     
-    $packageHeader = $dom->createElement('packageHeader');
-    $packageHeader->setAttribute('ID', 'test');
+    // Child of volumeInfo
+    $expectedSpecificationVersion = $dom->createElement('specificationVersion');
+    $expectedSpecificationVersion->appendChild($dom->createTextNode($this->object->get_version()));
     
-    // Root element
-    $xfdu = $dom->createElement('xfdu');
-    $xfdu->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
-    $xfdu->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-    $xfdu->setAttribute('xsi:schemaLocation', 'urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd');
+    // Child of volumeInfo
+    $expectedSequenceInformation = $dom->createElement('sequenceInformation');
+    $expectedSequenceInformation->setAttribute('sequencePosition', $sequencePosition);
+    $expectedSequenceInformation->setAttribute('sequenceSize', $sequenceSize);
+    $expectedSequenceInformation->appendChild($dom->createTextNode($value));
+    
+    // Child of environmentInfo
+    $expectedXmlData = $dom->createElement('xmlData');
+    $expectedXmlData->appendChild($dom->createElement('stuff'));
+    
+    // Child of packageHeader
+    $expectedEnvironmentInfo = $dom->createElement('environmentInfo');
+    $expectedEnvironmentInfo->appendChild($expectedXmlData);
+    
+    // Child of packageHeader
+    $expectedVolumeInfo = $dom->createElement('volumeInfo');
+    $expectedVolumeInfo->appendChild($expectedSpecificationVersion);
+    $expectedVolumeInfo->appendChild($expectedSequenceInformation);
+    
+    // Child of xfdu
+    $expectedPackageHeader = $dom->createElement('packageHeader');
+    $expectedPackageHeader->setAttribute('ID', $id);
+    $expectedPackageHeader->appendChild($expectedVolumeInfo);
+    $expectedPackageHeader->appendChild($expectedEnvironmentInfo);
+    
+    // Child of xfdu
+    $expectedInformationPackageMap = $dom->createElement('informationPackageMap');
+    $expectedInformationPackageMap->appendChild($dom->createElement('xfdu:contentUnit'));
+    
+    // Child of xfdu
+    $expectedMetadataSection = $dom->createElement('metadataSection');
+    
+    // Child of xfdu
+    $expectedDataObjectSection = $dom->createElement('dataObjectSection');
+    
+    // Child of xfdu
+    $expectedBehaviorSection = $dom->createElement('behaviorSection');
+    
+    // Root xfdu element
+    $expectedElement = $dom->createElement('xfdu:XFDU');
+    $expectedElement->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
+    $expectedElement->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+    $expectedElement->setAttribute('xsi:schemaLocation', 'urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd');
+    $expectedElement->appendChild($expectedPackageHeader);
+    $expectedElement->appendChild($expectedInformationPackageMap);
+    $expectedElement->appendChild($expectedMetadataSection);
+    $expectedElement->appendChild($expectedDataObjectSection);
+    $expectedElement->appendChild($expectedBehaviorSection);
     
     //
     // BUILD THE ACTUAL DOCUMENT
@@ -197,16 +241,16 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     $environmentInfo = new EnvironmentInfo();
     $environmentInfo->set_xmlData($xmlData);
     
-    //Child of XFDU
+    // Child of XFDU
     $packageHeader = new PackageHeader();                                       
     $packageHeader->set_id($value);
     $packageHeader->set_volumeInfo($volumeInfo);
     $packageHeader->set_environmentInfo($environmentInfo);
     
-    //Child of informationPackageMap
+    // Child of informationPackageMap
     $contentUnit = new ContentUnit();
     
-    //Child of XFDU
+    // Child of XFDU
     $informatinPackageMap = new InformationPackageMap;
     $informatinPackageMap->add_contentUnit($contentUnit);
     
@@ -219,7 +263,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     
     $dom->appendChild( $dom->importNode($this->object->get_as_DOM(), TRUE) );
     
-    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM()), TRUE);
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
     
 //    $this->assertXmlStringEqualsXmlFile(__DIR__.'/files/xfdu-xfdu-test.xml', $dom->saveXML());
   }
@@ -242,22 +286,22 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
   /**
    * 
    */
-  public function testOtherPrefix_get_as_DOM() {
-    $dom = new DOMDocument('1.0', 'UTF-8');
-    
-    $packageHeader = new PackageHeader();
-    $packageHeader->set_id('test');
-    
-    $volumeInfo = new VolumeInfo();
-    $packageHeader->set_volumeInfo($volumeInfo);
-    
-    $this->object->set_packageHeader($packageHeader);
-    $this->object->set_informationPackageMap(new InformationPackageMap());
-    
-    $dom->appendChild($dom->importNode($this->object->get_as_DOM('pre'), TRUE));
-    
-    $this->assertXmlStringEqualsXmlFile(__DIR__.'/files/pre-xfdu-test.xml', $dom->saveXML());
-  }
+//  public function testOtherPrefix_get_as_DOM() {
+//    $dom = new DOMDocument('1.0', 'UTF-8');
+//    
+//    $packageHeader = new PackageHeader();
+//    $packageHeader->set_id('test');
+//    
+//    $volumeInfo = new VolumeInfo();
+//    $packageHeader->set_volumeInfo($volumeInfo);
+//    
+//    $this->object->set_packageHeader($packageHeader);
+//    $this->object->set_informationPackageMap(new InformationPackageMap());
+//    
+//    $dom->appendChild($dom->importNode($this->object->get_as_DOM('pre'), TRUE));
+//    
+//    $this->assertXmlStringEqualsXmlFile(__DIR__.'/files/pre-xfdu-test.xml', $dom->saveXML());
+//  }
 }
 
 ?>

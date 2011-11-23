@@ -223,12 +223,54 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($textInfo, $this->object->get_textInfo());
   }
   
+  /**
+   * 
+   */
   public function testXfduPointer() {
     $this->assertFalse($this->object->isset_xfduPointer());
     
     $value = new Reference();
     $this->object->set_xfduPointer($value);
     $this->assertEquals('Reference', get_class($this->object->get_xfduPointer()), 'Class '.get_class($this->object->get_xfduPointer()).' found.');
+  }
+  
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $id = 'cuID';
+    $amdID = 'amdID';
+    $behID = 'behID';
+    $dmdID = 'dmdID';
+    $pdiID = 'pdiID';
+    $repID = 'repID';
+    $textInfo = 'textInfo';
+    $order = 'order';
+    $unitType = 'unitType';
+    
+    $expectedElement = $dom->createElement('xfdu:contentUnit');
+    $expectedElement->setAttribute('ID', $id);
+    $expectedElement->setAttribute('anyMdID', $amdID);
+    $expectedElement->setAttribute('behaviorID', $behID);
+    $expectedElement->setAttribute('dmdID', $dmdID);
+    $expectedElement->setAttribute('pdiID', $pdiID);
+    $expectedElement->setAttribute('repID', $repID);
+    $expectedElement->setAttribute('textInfo', $textInfo);
+    $expectedElement->setAttribute('order', $order);
+    $expectedElement->setAttribute('unitType', $unitType);
+    
+    
+    
+    $this->object->set_id($id);
+    $this->object->set_anyMdID($amdID);
+    $this->object->set_behaviorID($behID);
+    $this->object->set_dmdID($dmdID);
+    $this->object->set_pdiID($pdiID);
+    $this->object->set_repID($repID);
+    $this->object->set_textInfo($textInfo);
+    $this->object->set_order($order);
+    $this->object->set_unitType($unitType);
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
   }
 
 }

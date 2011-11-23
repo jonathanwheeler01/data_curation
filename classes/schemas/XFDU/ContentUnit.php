@@ -483,6 +483,17 @@ class ContentUnit extends aXFDUElement{
       $contentUnit = $dom->createElement('xfdu:'.$this->first_to_lower(get_class($this)));
     }
     
+    // Handle the long list of attributes.
+    if($this->isset_id()) {$contentUnit->setAttribute('ID', $this->id);}
+    if($this->isset_anyMdID()) {$contentUnit->setAttribute('anyMdID', $this->anyMdID);}
+    if($this->isset_behaviorID()) {$contentUnit->setAttribute('behaviorID', $this->behaviorID);}
+    if($this->isset_dmdID()) {$contentUnit->setAttribute('dmdID', $this->dmdID);}
+    if($this->isset_pdiID()) {$contentUnit->setAttribute('pdiID', $this->pdiMD);}
+    if($this->isset_repID()) {$contentUnit->setAttribute('repID', $this->repID);}
+    if($this->isset_textInfo()) {$contentUnit->setAttribute('textInfo', $this->textInfo);}
+    if($this->isset_order()) {$contentUnit->setAttribute('order', $this->order);}
+    if($this->isset_unitType()) {$contentUnit->setAttribute('unitType', $this->unitType);}
+    
     return $contentUnit;
   }
 }

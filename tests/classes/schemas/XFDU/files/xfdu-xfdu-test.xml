@@ -13,10 +13,26 @@
             </xmlData>
         </environmentInfo>
     </packageHeader>
-    <informationPackageMap>
-        <xfdu:contentUnit />
+    <informationPackageMap ID="ipmID" packageType="'packageType" textInfo="textInfo">
+        <xfdu:contentUnit ID="cuID" anyMdID="amdID" behaviorID="behID" dmdID="dmdID" pdiID="pdiID" repID="repID" textInfo="textInfo" order="order" unitType="unitType" >
+            <XFDUPointer locatorType="URL" href=""/>
+            <dataObjectPointer dataObjectID="cuID2"/>
+        </xfdu:contentUnit>
     </informationPackageMap>
-    <metadataSection />
-    <dataObjectSection />
-    <behaviorSection />
+    <metadataSection >
+        <metadataObject ID="amdID" />
+        <metadataObject ID="dmdID" />
+        <metadataObject ID="pdiID" />
+        <metadataObject ID="repID" />
+    </metadataSection>
+    <dataObjectSection >
+        <dataObject ID="cuID2">
+            <byteStream></byteStream>
+        </dataObject>
+    </dataObjectSection>
+    <behaviorSection >
+        <behaviorObject ID="behID" contentUnitID="cuID">
+            <interfaceDefinition locatorType="URL"></interfaceDefinition>
+        </behaviorObject>
+    </behaviorSection>
 </xfdu:XFDU>

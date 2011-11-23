@@ -8,6 +8,7 @@ require_once dirname(__FILE__) . '/../../curation_tool.inc';
  * 
  */
 class XMLElement extends aXMLElement{
+  protected $elementID;
   
   /**
    *
@@ -22,11 +23,32 @@ class XMLElement extends aXMLElement{
   protected $value;
   
   /**
+   *
+   * @var array<XMLElement>
+   */
+  protected $children;
+  
+  public function __construct($name = NULL) {
+    $this->elementID = sha1(time().rand(0, 100000));
+    if($name !== NULL) {
+      $this->set_name($name);
+    }
+    $this->children = array();
+    parent::__construct();
+  }
+  
+  public function get_elementID() {
+    return $this->elementID;
+  }
+  
+  /**
    * Sets the element name. Throws an InvalidArgumentException exceptoin if an invalid
    * XML element name is specifeid.
    * @param string $name 
    */
   public function set_name($name) {
+    $this->elementID = sha1(time().rand(0, 100000));
+    
     if($this->validate_element_name($name)) {
       $this->name = $name;
     }
@@ -78,9 +100,53 @@ class XMLElement extends aXMLElement{
     return (isset($this->value) && !empty($this->value));
   }
   
+  /**
+   * A new element must be created for each child. Otherwise the append will just
+   * overwrite the existing child.
+   * @param XMLElement $child 
+   */
+  public function append_child(XMLElement $child) {
+    $this->children[$child->get_elementID()] = $child;
+  }
+  
+  /**
+   *
+   * @return array<XMLElement> 
+   */
+  public function get_children() {
+    return $this->children;
+  }
+  
+  /**
+   *
+   * @param XMLElement $child 
+   */
+  public function remove_child(XMLElement $child) {
+    $this->children = array_diff_key($this->children, array($child->get_elementID() => $child));
+  }
+  
+  /**
+   * 
+   */
+  public function unset_children() {
+    $this->children = array();
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_children() {
+    return (isset($this->children) && !empty($this->children));
+  }
+  
+  
+  /**
+   * @todo Implement get_as_DOM in XMLElement. Low priorit for now.
+   * @param type $prefix 
+   */
   public function get_as_DOM($prefix = NULL) {
-    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
-    $element = new DOMElement($this->name, $this->value);
+    throw new UnimplementedMethodException(get_class($this), __METHOD__);
   }
 }
 

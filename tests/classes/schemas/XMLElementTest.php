@@ -60,6 +60,27 @@ class XMLElementTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_value());
     $this->assertEquals($value, $this->object->get_value());
   }
+  
+  public function testChildren() {
+    $this->assertFalse($this->object->isset_children());
+    
+    $child1 = new XMLElement('child1');
+    $child2 = new XMLElement('child2');
+    
+    $this->object->append_child($child1);
+    $this->assertTrue($this->object->isset_children());
+    $this->assertEquals(1, sizeof($this->object->get_children()));
+    
+    $this->object->append_child($child2);
+    $this->assertEquals(2, sizeof($this->object->get_children()));
+    
+    $this->object->append_child($child1);
+    $this->assertEquals(2, sizeof($this->object->get_children()));
+    
+    $this->object->remove_child($child1);
+    $this->assertEquals(1, sizeof($this->object->get_children()));
+    
+  }
 }
 
 ?>
