@@ -257,7 +257,7 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     $expectedElement->setAttribute('textInfo', $textInfo);
     $expectedElement->setAttribute('order', $order);
     $expectedElement->setAttribute('unitType', $unitType);
-    
+   git
     
     
     $this->object->set_id($id);
