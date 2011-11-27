@@ -35,18 +35,41 @@ class MetadataSectionTest extends PHPUnit_Framework_TestCase {
   public function testMetadataObject() {
     $this->assertFalse($this->object->isset_metadataObjects());
     
-    $value = new MetadataObject();
-    $this->object->add_metadataObject($value);
-    $this->object->add_metadataObject($value);
+    $value1 = new MetadataObject();
+    $value2 = new MetadataObject();
+    $this->object->add_metadataObject($value1);
+    $this->object->add_metadataObject($value2);
     $objs = $this->object->get_metadataObjects();
     
     $this->assertTrue($this->object->isset_metadataObjects());
     $this->assertEquals(2, sizeof($objs));
-    $this->assertEquals(get_class($value), get_class($objs[0]));
+    $this->assertEquals(get_class($value1), get_class($objs[0]));
     
     $this->object->unset_metadataObjects();
     
     $this->assertFalse($this->object->isset_metadataObjects());
+  }
+  
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $id1 = 'id1';
+    $id2 = 'id2';
+    
+    $expectedElement = $dom->createElement('metadataSection');
+    $expectedElement->appendChild($expectedMetadataObject1 = $dom->createElement('metadataObject'));
+    $expectedMetadataObject1->setAttribute('ID', $id1);
+    $expectedElement->appendChild($expectedMetadataObject2 = $dom->createElement('metadataObject'));
+    $expectedMetadataObject2->setAttribute('ID', $id2);
+
+    $metadataObject1 = new MetadataObject();
+    $metadataObject1->set_id($id1);
+    $metadataObject2 = new MetadataObject();
+    $metadataObject2->set_id($id2);
+    $this->object->add_metadataObject($metadataObject1);
+    $this->object->add_metadataObject($metadataObject2);
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
   }
 
 }

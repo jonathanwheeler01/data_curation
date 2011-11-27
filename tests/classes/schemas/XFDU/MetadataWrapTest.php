@@ -64,6 +64,45 @@ class MetadataWrapTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_vocabularyName());
     $this->assertEquals($value, $this->object->get_vocabularyName());
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM_xmlData() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedElement = $dom->createElement('metadataWrap');
+    $expectedElement->appendChild($dom->createElement('xmlData'));
+    
+    $this->object->set_XMLData(new XMLData());
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM_binaryData() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedElement = $dom->createElement('metadataWrap');
+    $expectedElement->appendChild($binaryData = $dom->createElement('binaryData'));
+    $binaryData->appendChild($dom->createTextNode('test'));
+    
+    $this->object->set_binaryData('test');
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testCheckXmlBinaryData() {
+    $this->object->set_XMLData(new XMLData());
+    $this->object->set_binaryData('test');
+    
+    $this->object->get_as_DOM();
+  }
 
 }
 

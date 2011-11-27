@@ -76,8 +76,8 @@ class ReferenceTest extends PHPUnit_Framework_TestCase {
   /**
    * @expectedException InvalidArgumentException
    */
-  public function testInvalidLocator() {
-    $this->object->set_locator('invalid');
+  public function testInvalidLocatorType() {
+    $this->object->set_locatorType('invalid');
   }
   
   /**
@@ -114,6 +114,60 @@ class ReferenceTest extends PHPUnit_Framework_TestCase {
     $this->object->set_textInfo($value);
     $this->assertTrue($this->object->isset_textInfo());
     $this->assertEquals($value, $this->object->get_textInfo());
+  }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $locatorType = 'URL';
+    $id = 'id';
+    $href = 'href';
+    $locator = 'locator';
+    $otherLocatorType = 'otherLocatorType';
+    $textInfo = 'textInfo';
+    
+    $expectedElement = $dom->createElement('reference');
+    $expectedElement->setAttribute('locatorType', $locatorType);
+    $expectedElement->setAttribute('ID', $id);
+    $expectedElement->setAttribute('href', $href);
+    $expectedElement->setAttribute('locator', $locator);
+    $expectedElement->setAttribute('otherLocatorType', $otherLocatorType);
+    $expectedElement->setAttribute('textInfo', $textInfo);
+    
+    
+    $this->object->set_locatorType($locatorType);
+    $this->object->set_id($id);
+    $this->object->set_href($href);
+    $this->object->set_locator($locator);
+    $this->object->set_otherLocatorType($otherLocatorType);
+    $this->object->set_textInfo($textInfo);
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingLocatorType() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $this->object->get_as_DOM();
+  }
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidLocatorTypeGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $locatorType = 'INVALID';
+    
+    $this->object->set_locatorType($locatorType);
+    
+    $this->object->get_as_DOM();
   }
 }
 

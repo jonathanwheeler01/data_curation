@@ -48,6 +48,45 @@ class DataObjectSectionTest extends PHPUnit_Framework_TestCase {
     $this->assertFalse($this->object->isset_dataObjects());
     
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $doID1 = 'doID1';
+    $doID2 = 'doID2';
+    
+    $expectedElement = $dom->createElement('dataObjectSection');
+    $expectedElement->appendChild($expectedDataObject1 = $dom->createElement('dataObject'));
+    $expectedElement->appendChild($expectedDataObject2 = $dom->createElement('dataObject'));
+    $expectedDataObject1->setAttribute('ID', $doID1);
+    $expectedDataObject2->setAttribute('ID', $doID2);
+    $expectedDataObject1->appendChild($dom->createElement('byteStream'));
+    $expectedDataObject2->appendChild($dom->createElement('byteStream'));
+    
+    $bytestream = new ByteStream();
+    
+    $dataObject1 = new DataObject();
+    $dataObject1->set_id($doID1);
+    $dataObject1->add_bytstream($bytestream);
+    
+    $dataObject2 = new DataObject();
+    $dataObject2->set_id($doID2);
+    $dataObject2->add_bytstream($bytestream);
+    
+    $this->object->add_dataObject($dataObject1);
+    $this->object->add_dataObject($dataObject2);
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingDataObjects() {
+    $this->object->get_as_DOM();
+  }
 
 }
 

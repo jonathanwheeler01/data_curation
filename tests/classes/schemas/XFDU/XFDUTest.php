@@ -198,8 +198,17 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     // Child of xfdu
     $expectedMetadataSection = $dom->createElement('metadataSection');
     
+    // Child of dataObject
+    $expectedByteStream = $dom->createElement('byteStream');
+    
+    // Child of dataObjectSection
+    $expectedDataObject = $dom->createElement('dataObject');
+    $expectedDataObject->setAttribute('ID', $id);
+    $expectedDataObject->appendChild($expectedByteStream);
+    
     // Child of xfdu
     $expectedDataObjectSection = $dom->createElement('dataObjectSection');
+    $expectedDataObjectSection->appendChild($expectedDataObject);
     
     // Child of xfdu
     $expectedBehaviorSection = $dom->createElement('behaviorSection');
@@ -254,11 +263,23 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     $informatinPackageMap = new InformationPackageMap;
     $informatinPackageMap->add_contentUnit($contentUnit);
     
+    //Child of dataObject
+    $bytestream = new ByteStream();
+    
+    // Child of dataObjectSection
+    $dataObject = new DataObject();
+    $dataObject->set_id($id);
+    $dataObject->add_bytstream($bytestream);
+    
+    // Child of XFDU
+    $dataObjectSection = new DataObjectSection();
+    $dataObjectSection->add_dataObject($dataObject);
+    
     // Root element (XFDU)
     $this->object->set_packageHeader($packageHeader);
     $this->object->set_informationPackageMap($informatinPackageMap);
     $this->object->set_metadataSection(new MetadataSection());
-    $this->object->set_dataObjectSection(new DataObjectSection());
+    $this->object->set_dataObjectSection($dataObjectSection);
     $this->object->set_behaviorSection(new BehaviorSection());
     
     $dom->appendChild( $dom->importNode($this->object->get_as_DOM(), TRUE) );

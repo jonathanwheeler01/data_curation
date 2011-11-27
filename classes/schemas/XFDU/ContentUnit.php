@@ -110,7 +110,7 @@ class ContentUnit extends aXFDUElement{
    *
    * @var Reference
    */
-  protected $xfduPointer;
+  protected $XFDUPointer;
 
   /**
    * 
@@ -445,31 +445,30 @@ class ContentUnit extends aXFDUElement{
   
   /**
    *
-   * @param Reference $xfduPointer 
+   * @param xfduPointer $xfduPointer 
    */
-  public function set_xfduPointer (Reference $xfduPointer) {
-    $this->xfduPointer = $xfduPointer;
+  public function set_XFDUPointer (xfduPointer $xfduPointer) {
+    $this->XFDUPointer = $xfduPointer;
   }
   
   /**
    *
-   * @return Reference 
+   * @return xfduPointer 
    */
-  public function get_xfduPointer() {
-    return $this->xfduPointer;
+  public function get_XFDUPointer() {
+    return $this->XFDUPointer;
   }
   
   /**
    *
    * @return boolean
    */
-  public function isset_xfduPointer() {
-    return (isset($this->xfduPointer) && !empty($this->xfduPointer));
+  public function isset_XFDUPointer() {
+    return (isset($this->XFDUPointer) && !empty($this->XFDUPointer));
   }  
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
@@ -493,6 +492,21 @@ class ContentUnit extends aXFDUElement{
     if($this->isset_textInfo()) {$contentUnit->setAttribute('textInfo', $this->textInfo);}
     if($this->isset_order()) {$contentUnit->setAttribute('order', $this->order);}
     if($this->isset_unitType()) {$contentUnit->setAttribute('unitType', $this->unitType);}
+    
+    if($this->isset_XFDUPointer()) {
+      $contentUnit->appendChild($dom->importNode($this->XFDUPointer->get_as_DOM()));
+    }
+    
+    if($this->isset_dataObjectPointer()) {
+      $contentUnit->appendChild($dom->importNode($this->dataObjectPointer->get_as_DOM()));
+    }
+    
+    $childContentUnit = new ContentUnit();
+    if($this->isset_contentUnits()) {
+      foreach($this->contentUnits as $childContentUnit) {
+        $contentUnit->appendChild($dom->importNode($childContentUnit->get_as_DOM($prefix)));
+      }
+    }
     
     return $contentUnit;
   }

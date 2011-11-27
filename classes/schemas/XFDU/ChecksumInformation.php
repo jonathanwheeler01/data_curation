@@ -71,11 +71,25 @@ class ChecksumInformation extends aXFDUElement {
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    if(!$this->isset_checksumName()) {
+      throw new RequiredElementException('checksumName');
+    }
+    
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $checksum = $dom->createElement('checksum');
+    $checksum->setAttribute('checksumName', $this->checksumName);
+    
+    if($this->isset_value()) {
+      $checksum->appendChild($dom->createTextNode($this->value));
+    }
+    
+    return $checksum;
+  }
 }
 
 ?>

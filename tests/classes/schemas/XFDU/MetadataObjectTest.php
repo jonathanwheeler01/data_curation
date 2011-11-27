@@ -134,7 +134,98 @@ class MetadataObjectTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_metadataWrap());
     $this->assertEquals(get_class($value), get_class($this->object->get_metadataWrap()));
   }
+  
+  public function testMetadataReference() {
+    $this->assertFalse($this->object->isset_metadataReference());
+    
+    $value = new MetadataReference();
+    $this->object->set_metadataReference($value);
+    $this->assertTrue($this->object->isset_metadataReference());
+    $this->assertEquals(get_class($value), get_class($this->object->get_metadataReference()));
+  }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $id = 'moID';
+    $category = 'ANY';
+    $classification = 'CONTEXT';
+    $otherCategory = 'otherCat';
+    $otherClass = 'otherClass';
+    $dataObjectID = 'dataObjectID';
+    $locatorType = 'URL';
+    
+    $metadataReference = new MetadataReference();
+    
+    $expectedElement = $dom->createElement('metadataObject');
+    $expectedElement->setAttribute('ID', $id);
+    $expectedElement->setAttribute('category', $category);
+    $expectedElement->setAttribute('classification', $classification);
+    $expectedElement->setAttribute('otherCategory', $otherCategory);
+    $expectedElement->setAttribute('otherClass', $otherClass);
+    
+    $expectedElement->appendChild(
+            $expectedMetadataReference = $dom->createElement('metadataReference'));
+    $expectedMetadataReference->setAttribute('locatorType', $locatorType);
+    
+    $expectedElement->appendChild(
+            $expectedMetadataWrap = $dom->createElement('metadataWrap'));
+    
+    $expectedElement->appendChild(
+            $expectedDataObjectPointer = $dom->createElement('dataObjectPointer'));
+    $expectedDataObjectPointer->setAttribute('dataObjectID', $dataObjectID);
+    
+    $this->object->set_id($id);
+    $this->object->set_category($category);
+    $this->object->set_classification($classification);
+    $this->object->set_otherCategory($otherCategory);
+    $this->object->set_otherClass($otherClass);
+    
+    $metadataReference = new MetadataReference();
+    $metadataReference->set_locatorType($locatorType);
+    $this->object->set_metadataReference($metadataReference);
+    
+    $metadataWrap = new MetadataWrap();
+    $this->object->set_metadataWrap($metadataWrap);
+    
+    $dataObjectPointer = new DataObjectPointer();
+    $dataObjectPointer->set_dataObjectID($dataObjectID);
+    $this->object->set_dataObjectPointer($dataObjectPointer);
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingID() {
+    $this->object->get_as_DOM();
+  }
 
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidCategoryGet_as_DOM() {
+    $id = 'moID';
+    $category = 'INVALID';
+    
+    $this->object->set_id($id);
+    $this->object->set_category($category);
+  }
+
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidClassificationGet_as_DOM() {
+    $id = 'moID';
+    $classification = 'INVALID';
+    
+    $this->object->set_id($id);
+    $this->object->set_classification($classification);
+  }
 }
 
 ?>

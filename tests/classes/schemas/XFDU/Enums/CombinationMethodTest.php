@@ -36,11 +36,11 @@ class CombinationMethodTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testValue_of() {
-    $this->assertEquals('CONCAT', $this->object->value_of('CONCAT'));
+    $this->assertEquals('concat', $this->object->value_of('concat'));
   }
   
   public function testHas_value() {
-    $this->assertTrue($this->object->has_value('CONCAT'));
+    $this->assertTrue($this->object->has_value('concat'));
   }
 
 }

@@ -263,11 +263,95 @@ class MetadataObject extends aXFDUElement{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
+   * @param MetadataReference $metadataReference 
+   */
+  public function set_metadataReference(MetadataReference $metadataReference) {
+    $this->metadataReference = $metadataReference;
+  }
+  
+  /**
+   *
+   * @return MetadataReference 
+   */
+  public function get_metadataReference() {
+    return $this->metadataReference;
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_metadataReference() {
+    return (isset($this->metadataReference) && !empty($this->metadataReference));
+  }
+  
+  /**
+   *
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    if(!$this->isset_id()) {
+      throw new RequiredElementException('ID');
+    }
+    
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $metadataObject = $dom->createElement($this->first_to_lower(get_class($this)));
+    $metadataObject->setAttribute('ID', $this->id);
+    
+    if($this->isset_category()) {
+      $categories = new MetadataCategory();
+      if($categories->has_value($this->category)) {
+        $metadataObject->setAttribute('category', $this->category);
+      }
+      else {
+        $message = 'Invalid metadata category given on '.
+                __CLASS__.': '.__METHOD__.': line '.__LINE__.
+                '. The locator must be one of '.  implode(', ', $categories->values()).'.';
+        $code = 0;
+        $previous = NULL;
+        throw new InvalidArgumentException($message, $code, $previous);
+      }  
+    }
+    
+    if($this->isset_classification()) {
+      $classifications = new MetadataClassification();
+      if($classifications->has_value($this->classification)) {
+        $metadataObject->setAttribute('classification', $this->classification);
+      }
+      else {
+        $message = 'Invalid metadata classification given on '.
+                __CLASS__.': '.__METHOD__.': line '.__LINE__.
+                '. The locator must be one of '.  implode(', ', $classifications->values()).'.';
+        $code = 0;
+        $previous = NULL;
+        throw new InvalidArgumentException($message, $code, $previous);
+      }
+    }
+    
+    if($this->isset_otherCategory()) {
+      $metadataObject->setAttribute('otherCategory', $this->otherCategory);
+    }
+    
+    if($this->isset_otherClass()) {
+      $metadataObject->setAttribute('otherClass', $this->otherClass);
+    }
+    
+    if($this->isset_metadataReference()) {
+      $metadataObject->appendChild($dom->importNode($this->metadataReference->get_as_DOM(), TRUE));
+    }
+    
+    if($this->isset_metadataWrap()) {
+      $metadataObject->appendChild($dom->importNode($this->metadataWrap->get_as_DOM(), TRUE));
+    }
+    
+    if($this->isset_dataObjectPointer()) {
+      $metadataObject->appendChild($dom->importNode($this->dataObjectPointer->get_as_DOM(), TRUE));
+    }
+
+    return $metadataObject;
+  }
 }
 
 ?>

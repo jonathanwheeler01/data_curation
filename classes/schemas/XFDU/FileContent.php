@@ -102,11 +102,33 @@ class FileContent extends aXFDUElement{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    if($this->isset_binaryData() && $this->isset_XMLData()) {
+      $message = 'XMLData and binaryData and binary data cannot both be defined '.
+              'in '.__FILE__.' line: '.__LINE__.'.';
+      $code = 0;
+      $previous = NULL;
+      throw new InvalidArgumentException($message, $code, $previous);
+    }
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $fileContent = $dom->createElement('fileContent');
+    if($this->isset_id()){$fileContent->setAttribute('ID', $this->id);}
+    
+    if($this->isset_XMLData()){
+      $fileContent->appendChild($dom->importNode($this->xmlData->get_as_DOM(), TRUE));
+    }    
+    
+    if($this->isset_binaryData()){
+      $fileContent->appendChild($binaryData = $dom->createElement('binaryData'));
+      $binaryData->appendChild($dom->createTextNode($this->binaryData));
+    }
+    
+    return $fileContent;
+  }
 }
 
 ?>

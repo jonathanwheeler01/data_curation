@@ -6,7 +6,7 @@
  * 
  */
 class XMLNameSpace {
-  
+   
   
   /**
    * The namespace identifier

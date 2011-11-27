@@ -80,11 +80,40 @@ class MetadataReference extends Reference{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    if(!$this->isset_locatorType()) {
+      throw new RequiredElementException('locatorType');
+    }
+    
+    $locatorTypes = new Locator();
+    
+    if(!$locatorTypes->has_value($this->locatorType)) {
+      $message = 'Invalid locatorType given on '.
+              __CLASS__.': '.__METHOD__.': line '.__LINE__.
+              '. The locator must be one of '.  implode(', ', $enum->values()).'.';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
+    }
+    
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $metadataReference = $dom->createElement('metadataReference');
+    
+    // Set a whole bunch of attributes
+    $metadataReference->setAttribute('locatorType', $this->locatorType);
+    if($this->isset_locator()) {$metadataReference->setAttribute('locator', $this->locator);}
+    if($this->isset_otherLocatorType()) {$metadataReference->setAttribute('otherLocatorType', $this->otherLocatorType);}
+    if($this->isset_href()) {$metadataReference->setAttribute('href', $this->href);}
+    if($this->isset_id()) {$metadataReference->setAttribute('ID', $this->id);}
+    if($this->isset_textInfo()) {$metadataReference->setAttribute('textInfo', $this->textInfo);}
+    if($this->isset_mimeType()) {$metadataReference->setAttribute('mimeType', $this->mimeType);}
+    if($this->isset_vocubularyName()) {$metadataReference->setAttribute('vocabularyName', $this->vocubularyName);}
+    
+    return $metadataReference;
+  }
 }
 
 ?>

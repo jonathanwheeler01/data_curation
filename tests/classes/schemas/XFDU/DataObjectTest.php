@@ -68,7 +68,7 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
     
     $this->assertFalse($this->object->isset_combinationName());
     
-    $value = 'CONCAT';
+    $value = 'concat';
     $this->object->set_combinationName($value);
     $this->assertTrue($this->object->isset_combinationName());
     $this->assertEquals($value, $this->object->get_combinationName());
@@ -184,6 +184,69 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
     $this->object->set_transformObject($value);
     $this->assertTrue($this->object->isset_transformObject());
     $this->assertEquals(get_class($value), get_class($this->object->get_transformObject()));
+  }
+  
+  public function testGet_as_DOM() {
+    $id = 'doID';
+    $mimeType = 'mimeType';
+    $registeredID = 'regID';
+    $registrationAuthority = 'regAuth';
+    $repID = 'repID';
+    $size = 1;
+    $combinationName = 'concat';
+    
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedElement = $dom->createElement('dataObject');
+    $expectedElement->setAttribute('ID', $id);
+    $expectedElement->setAttribute('mimeType', $mimeType);
+    $expectedElement->setAttribute('registeredID', $registeredID);
+    $expectedElement->setAttribute('registrationAuthority', $registrationAuthority);
+    $expectedElement->setAttribute('repID', $repID);
+    $expectedElement->setAttribute('size', $size);
+    $expectedElement->setAttribute('combinationName', $combinationName);
+    
+    $expectedElement->appendChild($expectedByteStream1 = $dom->createElement('byteStream'));
+    $expectedElement->appendChild($expectedByteStream2 = $dom->createElement('byteStream'));
+    
+    $this->object->set_id($id);
+    $this->object->set_mimeType($mimeType);
+    $this->object->set_registeredID($registeredID);
+    $this->object->set_registrationAuthority($registrationAuthority);
+    $this->object->set_repID($repID);
+    $this->object->set_size($size);
+    $this->object->set_combinationName($combinationName);
+    
+    $byteStream1 = new ByteStream();
+    $byteStream2 = new ByteStream();
+    $this->object->add_bytstream($byteStream1);
+    $this->object->add_bytstream($byteStream2);
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingID() {
+    $this->object->get_as_DOM();
+  }
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidCombinationMethod() {
+    $this->object->set_id('doID');
+    $this->object->set_combinationName('INVALID');
+    $this->object->get_as_DOM();
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingByteStreams() {
+    $this->object->set_id('doID');
+    $this->object->get_as_DOM();
   }
 }
 

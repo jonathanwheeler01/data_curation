@@ -31,6 +31,7 @@ class MetadataWrap extends FileContent{
    * @var string
    */
   protected $vocabularyName;
+ 
   
   /**
    *
@@ -102,15 +103,40 @@ class MetadataWrap extends FileContent{
    */
   public function isset_vocabularyName() {
     return (isset($this->vocabularyName) && !empty($this->vocabularyName));
-  }  
+  } 
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    if($this->isset_binaryData() && $this->isset_XMLData()) {
+      $message = 'XMLData and binaryData and binary data cannot both be defined '.
+              'in '.__FILE__.' line: '.__LINE__.'.';
+      $code = 0;
+      $previous = NULL;
+      throw new InvalidArgumentException($message, $code, $previous);
+    }
+    
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $metadataWrap = $dom->createElement('metadataWrap');
+    if($this->isset_mimeType()) {$metadataWrap->setAttribute('mimeType', $this->mimeType);}
+    if($this->isset_textInfo()) {$metadataWrap->setAttribute('textInfo', $this->textInfo);}
+    if($this->isset_vocabularyName()) {$metadataWrap->setAttribute('vocabularyName', $this->vocabularyName);}
+    
+    if($this->isset_XMLData()) {
+      $metadataWrap->appendChild($dom->importNode($this->xmlData->get_as_DOM(), TRUE));
+    }
+    
+    if($this->isset_binaryData()) {
+      $metadataWrap->appendChild($binaryData = $dom->createElement('binaryData'));
+      $binaryData->appendChild($dom->createTextNode($this->binaryData));
+    }
+    
+    return $metadataWrap;
+  }
 }
 
 ?>

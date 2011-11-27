@@ -66,6 +66,32 @@ class DataObjectPointerTest extends PHPUnit_Framework_TestCase {
   public function testInvalidID() {
     $this->object->set_id('0invalid');
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $dataObjectID = 'dataObjectID';
+    $id = 'dopID';
+    
+    $expectedElement = $dom->createElement('dataObjectPointer');
+    $expectedElement->setAttribute('dataObjectID', $dataObjectID);
+    $expectedElement->setAttribute('ID', $id);
+    
+    $this->object->set_dataObjectID($dataObjectID);
+    $this->object->set_id($id);
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingDataObjectID() {
+    $this->object->get_as_DOM();
+  }
 
 }
 

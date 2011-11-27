@@ -52,6 +52,31 @@ class ChecksumInformationTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_value());
     $this->assertEquals($value, $this->object->get_value());
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $checksumName = 'checksumName';
+    $value ='value';
+    
+    $expectedElement = $dom->createElement('checksum');
+    $expectedElement->setAttribute('checksumName', $checksumName);
+    $expectedElement->appendChild($dom->createTextNode($value));
+    
+    $this->object->set_checksumName($checksumName);
+    $this->object->set_value($value);
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingChecksumName() {
+    $this->object->get_as_DOM();
+  }
 
 }
 

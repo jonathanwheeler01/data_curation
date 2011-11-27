@@ -53,14 +53,21 @@ class MetadataSection extends aXFDUElement{
   
   /**
    *
-   * @todo Implement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
   public function get_as_DOM($prefix = NULL) {
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
-    return $dom->createElement('metadataSection');
+    $metadataSection = $dom->createElement('metadataSection');
+    $metadataObject = new MetadataObject();
+    if($this->isset_metadataObjects()) {
+      foreach($this->metadataObjects as $metadataObject) {
+        $metadataSection->appendChild($dom->importNode($metadataObject->get_as_DOM()));
+      }
+    }
+    
+    return $metadataSection;
   }
 }
 

@@ -365,11 +365,48 @@ class DataObject extends aXFDUElement{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    if(!$this->isset_id()) {
+      throw new RequiredElementException('dataObject ID');
+    }
+    
+    if(!$this->isset_bytestreams()) {
+      throw new RequiredElementException('byteStreams');
+    }
+    
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $dataObject = $dom->createElement('dataObject');
+    $dataObject->setAttribute('ID', $this->id);
+    if($this->isset_mimeType()) {$dataObject->setAttribute('mimeType', $this->mimeType);}
+    if($this->isset_registeredID()) {$dataObject->setAttribute('registeredID', $this->registeredID);}
+    if($this->isset_registrationAuthority()) {$dataObject->setAttribute('registrationAuthority', $this->registrationAuthority);}
+    if($this->isset_repID()) {$dataObject->setAttribute('repID', $this->repId);}
+    if($this->isset_size()) {$dataObject->setAttribute('size', $this->size);}
+    if($this->isset_combinationName()) {
+      $enum = new CombinationMethod();
+      if($enum->has_value($this->combinationName)) {
+        $dataObject->setAttribute('combinationName', $this->combinationName);
+      }
+      else {
+        $message = 'Invalid combinationName given on '.
+                __CLASS__.': '.__METHOD__.': line '.__LINE__.
+                '. The locator must be one of '.  implode(', ', $enum->values()).'.';
+        $code = 0;
+        throw new InvalidArgumentException($message, $code);
+      }
+    }
+    
+    $byteStream = new ByteStream();
+    foreach($this->byteStreams as $byteStream) {
+      $dataObject->appendChild($dom->importNode($byteStream->get_as_DOM(), TRUE));
+    }
+    
+    return $dataObject;
+  }
 }
 
 ?>

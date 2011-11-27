@@ -80,10 +80,24 @@ class DataObjectPointer extends aXFDUElement{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {    
+    if(!$this->isset_dataObjectID()) {
+      throw new RequiredElementException('dataobjectID');
+    }
+    
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $dataObjectPointer = $dom->createElement($this->first_to_lower(get_class($this)));
+    $dataObjectPointer->setAttribute('dataObjectID', $this->dataObjectID);
+    
+    if($this->isset_id()) {
+      $dataObjectPointer->setAttribute('ID', $this->id);
+    }
+    
+    return $dataObjectPointer;
+  }
 }
 ?>

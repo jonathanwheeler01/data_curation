@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__) . '/../../../curation_tool.inc';
+
 
 /**
  * HTML type references. locator attribute allows finer granularity within location specified in href
@@ -102,17 +102,7 @@ class Reference extends aXFDUElement{
    * @param string $locator 
    */
   public function set_locator($locator) {
-    $enum = new Locator();
-    if($enum->has_value($locator)) {
-      $this->locator = $locator;
-    }
-    else {
-      $message = 'Invalid locator given on '.
-              __CLASS__.': '.__METHOD__.': line '.__LINE__.
-              '. The locator must be one of '.  implode(', ', $enum->values()).'.';
-      $code = 0;
-      throw new InvalidArgumentException($message, $code);
-    }
+    $this->locator = $locator;
   }
   
   /**
@@ -136,7 +126,17 @@ class Reference extends aXFDUElement{
    * @param enum $locatorType 
    */
   public function set_locatorType($locatorType) {
-    $this->locatorType = $locatorType;
+    $enum = new Locator();
+    if($enum->has_value($locatorType)) {
+      $this->locatorType = $locatorType;
+    }
+    else {
+      $message = 'Invalid locator given on '.
+              __CLASS__.': '.__METHOD__.': line '.__LINE__.
+              '. The locator must be one of '.  implode(', ', $enum->values()).'.';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
+    }
   }
   
   /**
@@ -205,10 +205,60 @@ class Reference extends aXFDUElement{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $reference = $dom->createElement($this->first_to_lower(get_class($this)));
+    $this->set_DOM_attributes($reference);
+    
+    return $reference;
+  }
+  
+  /**
+   * Sets the attributes for the element in get_as_DOM().
+   * 
+   * @param DOMElement &$reference 
+   */
+  protected function set_DOM_attributes(DOMElement &$reference) {
+    
+    if(!$this->isset_locatorType()) {
+      throw new RequiredElementException('locatorType');
+    }
+    
+    $locatorTypes = new Locator();
+    
+    if(!$locatorTypes->has_value($this->locatorType)) {
+      $message = 'Invalid locatorType given on '.
+              __CLASS__.': '.__METHOD__.': line '.__LINE__.
+              '. The locator must be one of '.  implode(', ', $enum->values()).'.';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
+    }
+    
+    $reference->setAttribute('locatorType', $this->locatorType);
+    
+    if($this->isset_id()) {
+      $reference->setAttribute('ID', $this->id);
+    }
+    
+    if($this->isset_href()) {
+      $reference->setAttribute('href', $this->href);
+    }
+    
+    if($this->isset_locator()) {
+      $reference->setAttribute('locator', $this->locator);
+    }
+    
+    if($this->isset_otherLocatorType()) {
+      $reference->setAttribute('otherLocatorType', $this->otherLocatorType);
+    }
+    
+    if($this->isset_textInfo()) {
+      $reference->setAttribute('textInfo', $this->textInfo);
+    }
+  }
 }
 ?>

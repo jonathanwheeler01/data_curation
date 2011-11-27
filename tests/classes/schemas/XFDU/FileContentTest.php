@@ -72,6 +72,39 @@ class FileContentTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_XMLData());
     $this->assertEquals('XMLData', get_class($this->object->get_XMLData()));
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOMxmlData() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedElement = $dom->createElement('fileContent');
+    $expectedElement->appendChild($expectedXmlData  = $dom->createElement('xmlData'));
+    $expectedXmlData->appendChild($dom->createElement('stuff'));
+    
+    $xmlData = new XMLData();
+    $xmlData->set_any($dom->createElement('stuff'));
+    
+    $this->object->set_XMLData($xmlData);
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOMBinaryData() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedElement = $dom->createElement('fileContent');
+    $expectedElement->appendChild($expectedXmlData  = $dom->createElement('binaryData'));
+    $expectedXmlData->appendChild($dom->createTextNode('stuff'));
+        
+    $this->object->set_binaryData('stuff');
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
 
 }
 

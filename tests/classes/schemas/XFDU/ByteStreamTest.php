@@ -52,7 +52,7 @@ class ByteStreamTest extends PHPUnit_Framework_TestCase {
   public function testFileLocations() {
     $this->assertFalse($this->object->isset_fileLocations());
     
-    $value = new Reference();
+    $value = new FileLocation();
     $this->object->add_fileLocation($value);
     $this->object->add_fileLocation($value);
     $objs = $this->object->get_fileLocations();
@@ -113,6 +113,55 @@ class ByteStreamTest extends PHPUnit_Framework_TestCase {
    */
   public function testInvalidSize() {
     $this->object->set_size('bad');
+  }
+  
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $id = 'csID';
+    $size = 1;
+    $mimeType = 'mimeType';
+    $checksumName = 'checksumName';
+    $locatorType1 = 'OTHER';
+    $locatorType2 = 'URL';
+    
+    $expectedElement = $dom->createElement('byteStream');
+    $expectedElement->setAttribute('ID', $id);
+    $expectedElement->setAttribute('size', $size);
+    $expectedElement->setAttribute('mimeType', $mimeType);
+    
+    $expectedElement->appendChild($expectedFileLocation1 = $dom->createElement('fileLocation'));
+    $expectedFileLocation1->setAttribute('locatorType', $locatorType1);
+    
+    $expectedElement->appendChild($expectedFileLocation2 = $dom->createElement('fileLocation'));
+    $expectedFileLocation2->setAttribute('locatorType', $locatorType2);
+    
+    $expectedElement->appendChild($dom->createElement('fileContent'));
+    
+    $expectedElement->appendChild($checksum = $dom->createElement('checksum'));
+    $checksum->setAttribute('checksumName', $checksumName);
+    
+    
+    $fileLocation1 = new FileLocation();
+    $fileLocation1->set_locatorType($locatorType1);
+    
+    $fileLocation2 = new FileLocation();
+    $fileLocation2->set_locatorType($locatorType2);
+    
+    $this->object->set_id($id);
+    $this->object->set_size($size);
+    $this->object->set_mimeType($mimeType);
+    
+    $filecontent = new FileContent();
+    $this->object->set_fileContent($filecontent);
+    
+    $this->object->add_fileLocation($fileLocation1);
+    $this->object->add_fileLocation($fileLocation2);
+    
+    $checksum = new ChecksumInformation();
+    $checksum->set_checksumName($checksumName);
+    $this->object->set_checksum($checksum);
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
   }
 }
 

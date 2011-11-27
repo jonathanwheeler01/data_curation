@@ -8,7 +8,7 @@ require_once dirname(__FILE__) . '/../../../../curation_tool.inc';
  */
 class CombinationMethod extends aEnum{
   public function __construct() {
-    $this->enum = array('CONCAT' => 'CONCAT');
+    $this->enum = array('concat' => 'concat');
   }
 }
 

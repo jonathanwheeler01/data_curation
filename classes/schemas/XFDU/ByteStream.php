@@ -27,7 +27,7 @@ class ByteStream extends aXFDUElement{
   
   /**
    *
-   * @var array<Reference>
+   * @var array<fileLocation>
    */
   protected $fileLocations;
   
@@ -105,14 +105,14 @@ class ByteStream extends aXFDUElement{
    *
    * @param Reference $fileLocation 
    */
-  public function add_fileLocation(Reference $fileLocation) {
+  public function add_fileLocation(fileLocation $fileLocation) {
     $this->fileLocations[] = $fileLocation;
   }
   
   
   /**
    *
-   * @return array<Reference> 
+   * @return array<fileLocation> 
    */
   public function get_fileLocations() {
     return $this->fileLocations;
@@ -219,11 +219,30 @@ class ByteStream extends aXFDUElement{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $byteStream = $dom->createElement('byteStream');
+    if($this->isset_id()) {$byteStream->setAttribute('ID', $this->id);}
+    if($this->isset_size()) {$byteStream->setAttribute('size', $this->size);}
+    if($this->isset_mimeType()) {$byteStream->setAttribute('mimeType', $this->mimeType);}
+        
+    if($this->isset_fileLocations()) {
+      $fileLocation = new FileLocation();
+      foreach($this->fileLocations as $fileLocation) {
+        $byteStream->appendChild($dom->importNode($fileLocation->get_as_DOM(), TRUE));
+      }
+    }
+    
+    if($this->isset_fileContent()) {$byteStream->appendChild($dom->importNode($this->fileContent->get_as_DOM(), TRUE));}
+    if($this->isset_checksum()){$byteStream->appendChild($dom->importNode($this->checksum->get_as_DOM(), TRUE));}
+
+    
+    return $byteStream;
+  }
 }
 
 ?>

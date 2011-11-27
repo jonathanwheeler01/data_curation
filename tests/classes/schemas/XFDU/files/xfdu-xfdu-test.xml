@@ -14,22 +14,36 @@
         </environmentInfo>
     </packageHeader>
     <informationPackageMap ID="ipmID" packageType="'packageType" textInfo="textInfo">
-        <xfdu:contentUnit ID="cuID" anyMdID="amdID" behaviorID="behID" dmdID="dmdID" pdiID="pdiID" repID="repID" textInfo="textInfo" order="order" unitType="unitType" >
-            <XFDUPointer locatorType="URL" href=""/>
-            <dataObjectPointer dataObjectID="cuID2"/>
+        <xfdu:contentUnit >
+            <XFDUPointer ID="xfduPointerID" href="" locatorType="URL" locator=""  otherLocatorType="" textInfo=""/>
+            <dataObjectPointer  dataObjectID="doID" ID="dopID"/>
+            <dataObjectPointer dataObjectID="doID"/>
+            <xfdu:contentUnit />
         </xfdu:contentUnit>
     </informationPackageMap>
     <metadataSection >
-        <metadataObject ID="amdID" />
-        <metadataObject ID="dmdID" />
-        <metadataObject ID="pdiID" />
-        <metadataObject ID="repID" />
+        <metadataObject ID="moID" category="ANY" classification="CONTEXT" otherCategory="otherCat" otherClass="otherClass" >
+            <metadataReference locatorType="URL"  locator=" " otherLocatorType="" href="" ID="id"  textInfo=""
+                                 mimeType="" vocabularyName=""/>
+            <metadataWrap>
+                <binaryData>dGVzdA==</binaryData>
+            </metadataWrap>
+            <dataObjectPointer dataObjectID="doID" />
+        </metadataObject>
     </metadataSection>
     <dataObjectSection >
-        <dataObject ID="cuID2">
-            <byteStream></byteStream>
+        <dataObject ID="doID" mimeType="test" registeredID="regid" registrationAuthority="" 
+            repID="behID" size="1" combinationName="concat">
+            <byteStream size="1" mimeType="" ID="bsID">
+                <fileLocation locatorType="OTHER" />
+                <fileLocation locatorType="URL"/>
+                <fileContent/>
+                <checksum checksumName=""></checksum>
+            </byteStream>
+            <byteStream></byteStream>      
         </dataObject>
     </dataObjectSection>
+    
     <behaviorSection >
         <behaviorObject ID="behID" contentUnitID="cuID">
             <interfaceDefinition locatorType="URL"></interfaceDefinition>

@@ -227,13 +227,16 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testXfduPointer() {
-    $this->assertFalse($this->object->isset_xfduPointer());
+    $this->assertFalse($this->object->isset_XFDUPointer());
     
-    $value = new Reference();
-    $this->object->set_xfduPointer($value);
-    $this->assertEquals('Reference', get_class($this->object->get_xfduPointer()), 'Class '.get_class($this->object->get_xfduPointer()).' found.');
+    $value = new xfduPointer();
+    $this->object->set_XFDUPointer($value);
+    $this->assertEquals('XFDUPointer', get_class($this->object->get_XFDUPointer()), 'Class '.get_class($this->object->get_XFDUPointer()).' found.');
   }
   
+  /**
+   * 
+   */
   public function testGet_as_DOM() {
     $dom = new DOMDocument('1.0', 'UTF-8');
     
@@ -246,6 +249,8 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     $textInfo = 'textInfo';
     $order = 'order';
     $unitType = 'unitType';
+    $locatorType = 'URL';
+    $dataObjectID = 'dataObjectID';
     
     $expectedElement = $dom->createElement('xfdu:contentUnit');
     $expectedElement->setAttribute('ID', $id);
@@ -257,8 +262,15 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     $expectedElement->setAttribute('textInfo', $textInfo);
     $expectedElement->setAttribute('order', $order);
     $expectedElement->setAttribute('unitType', $unitType);
-   git
     
+    $expectedElement->appendChild($XFDUPointer = $dom->createElement('XFDUPointer'));
+    $XFDUPointer->setAttribute('locatorType', $locatorType);
+    
+    $expectedElement->appendChild($dataObjectPointer = $dom->createElement('dataObjectPointer'));
+    $dataObjectPointer->setAttribute('dataObjectID', $dataObjectID);
+    
+    $expectedElement->appendChild($dom->createElement('xfdu:contentUnit'));
+    $expectedElement->appendChild($dom->createElement('xfdu:contentUnit'));
     
     $this->object->set_id($id);
     $this->object->set_anyMdID($amdID);
@@ -269,6 +281,33 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     $this->object->set_textInfo($textInfo);
     $this->object->set_order($order);
     $this->object->set_unitType($unitType);
+    
+    $xfduPointer = new xfduPointer();
+    $xfduPointer->set_locatorType($locatorType);
+    
+    $dataObjectPointer = new DataObjectPointer();
+    $dataObjectPointer->set_dataObjectID($dataObjectID);
+    
+    $contentUnit1 = new ContentUnit();
+    $contentUnit2 = new ContentUnit();
+    
+    $this->object->set_XFDUPointer($xfduPointer);
+    $this->object->set_dataObjectPointer($dataObjectPointer);
+    $this->object->add_contentUnit($contentUnit1);
+    $this->object->add_contentUnit($contentUnit2);
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
+  
+  public function testEmptyCUGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedElement = $dom->createElement('xfdu:contentUnit');
+    
+    
+    $xfduPointer = new xfduPointer();
+    
+    $dataObjectPointer = new DataObjectPointer();
     
     $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
   }

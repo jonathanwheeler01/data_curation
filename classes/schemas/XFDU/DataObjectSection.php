@@ -53,14 +53,23 @@ class DataObjectSection extends aXFDUElement{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
   public function get_as_DOM($prefix = NULL) {
+    if(!$this->isset_dataObjects()) {
+      throw new RequiredElementException('dataObjects');
+    }
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
-    return $dom->createElement('dataObjectSection');
+    $dataObjectSection = $dom->createElement('dataObjectSection');
+    
+    $dataObject = new DataObject();
+    foreach($this->dataObjects as $dataObject) {
+      $dataObjectSection->appendChild($dom->importNode($dataObject->get_as_DOM(), TRUE));
+    }
+    
+    return $dataObjectSection;
   }
 }
 
