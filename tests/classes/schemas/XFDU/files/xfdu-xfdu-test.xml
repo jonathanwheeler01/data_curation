@@ -45,8 +45,9 @@
     </dataObjectSection>
     
     <behaviorSection >
-        <behaviorObject ID="behID" contentUnitID="cuID">
-            <interfaceDefinition locatorType="URL"></interfaceDefinition>
+        <behaviorObject ID="boID" contentUnitID="xfduPointerID" behaviorType="test" created="2001-10-26T21:32:52" groupID="groupID" textInfo="textInfo">
+            <interfaceDefinition locatorType="URL">
+            </interfaceDefinition>
         </behaviorObject>
     </behaviorSection>
 </xfdu:XFDU>

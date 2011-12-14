@@ -178,6 +178,97 @@ class BehaviorObjectTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_interfaceDefinition());
     $this->assertEquals(get_class($value), get_class($this->object->get_interfaceDefinition()));
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $id = 'boID';
+    $contentUnitID = 'cuID';
+    $behaviorType = 'behaviorType';
+    $locatorType = 'URL';
+    $created = '2001-10-26T21:32:52';
+    $groupID = 'groupID';
+    $textInfo = 'textInfo';
+    
+    $expectedElement = $dom->createElement('behaviorObject');
+    $expectedElement->setAttribute('ID', $id);
+    $expectedElement->setAttribute('contentUnitID', $contentUnitID);
+    $expectedElement->setAttribute('behaviorType', $behaviorType);
+    $expectedElement->setAttribute('created', $created);
+    $expectedElement->setAttribute('groupID', $groupID);
+    $expectedElement->setAttribute('textInfo', $textInfo);
+    
+    $expectedElement->appendChild($expectedInterfaceDefinition = $dom->createElement('interfaceDefinition'));
+    $expectedInterfaceDefinition->setAttribute('locatorType', $locatorType);
+    
+    $expectedElement->appendChild($expectedBehaviorObject1 = $dom->createElement('behaviorObject'));
+    $expectedBehaviorObject1->setAttribute('ID', $id);
+    $expectedBehaviorObject1->setAttribute('contentUnitID', $contentUnitID);
+    
+    $expectedBehaviorObject1->appendChild($expectedInterfaceDefinition1 = $dom->createElement('interfaceDefinition'));
+    $expectedInterfaceDefinition1->setAttribute('locatorType', $locatorType);
+    
+    $expectedElement->appendChild($expectedBehaviorObject2 = $dom->createElement('behaviorObject'));
+    $expectedBehaviorObject2->setAttribute('ID', $id);
+    $expectedBehaviorObject2->setAttribute('contentUnitID', $contentUnitID);
+    
+    $expectedBehaviorObject2->appendChild($expectedInterfaceDefinition1 = $dom->createElement('interfaceDefinition'));
+    $expectedInterfaceDefinition1->setAttribute('locatorType', $locatorType);
+    
+    $this->object->set_id($id);
+    $this->object->set_contentUnitID($contentUnitID);
+    $this->object->set_behaviorType($behaviorType);
+    $this->object->set_created($created);
+    $this->object->set_groupID($groupID);
+    $this->object->set_textInfo($textInfo);
+    
+    $interfaceDefinition = new InterfaceDefinition();
+    $interfaceDefinition->set_locatorType($locatorType);
+    $this->object->set_interfaceDefinition($interfaceDefinition);
+    
+    $behaviorObject1 = new BehaviorObject();
+    $behaviorObject1->set_id($id);
+    $behaviorObject1->set_contentUnitID($contentUnitID);
+    $behaviorObject1->set_interfaceDefinition($interfaceDefinition);
+    
+    $behaviorObject2 = new BehaviorObject();
+    $behaviorObject2->set_id($id);
+    $behaviorObject2->set_contentUnitID($contentUnitID);
+    $behaviorObject2->set_interfaceDefinition($interfaceDefinition);
+    
+    $this->object->add_behaviorObject($behaviorObject1);
+    $this->object->add_behaviorObject($behaviorObject2);
+    
+    $actualElement = $this->object->get_as_DOM();
+    
+    $this->assertEqualXMLStructure($expectedElement, $actualElement, TRUE);
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingID() {
+    $this->object->get_as_DOM();
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingContentUnitID() {
+    $this->object->set_id('id');
+    $this->object->get_as_DOM();
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingOInterfaceDefinition() {
+    $this->object->set_id('id');
+    $this->object->set_contentUnitID('cuID');
+    $this->object->get_as_DOM();
+  }
 
 }
 

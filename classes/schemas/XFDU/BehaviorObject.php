@@ -263,7 +263,7 @@ class BehaviorObject extends aXFDUElement{
   }
   
   /**
-   * 
+   * @todo consider adding regex to validate this ceated value.
    * @return mixed
    */
   public function get_created() {
@@ -328,11 +328,59 @@ class BehaviorObject extends aXFDUElement{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    // Get checks for required elements out of the way
+    if(!$this->isset_id()) {
+      throw new RequiredElementException('ID');
+    }
+    
+    if(!$this->isset_contentUnitID()) {
+      throw new RequiredElementException('contentUnitID');
+    }
+    
+    if(!$this->isset_interfaceDefinition()) {
+      throw new RequiredElementException('interfaceDefinition');
+    }
+    
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $behaviorObject = $dom->createElement('behaviorObject');
+    
+    // Take care of the required attributes and elements.
+    $behaviorObject->setAttribute('ID', $this->id);
+    $behaviorObject->setAttribute('contentUnitID', $this->contentUnitID);
+    $behaviorObject->appendChild($dom->importNode($this->interfaceDefinition->get_as_DOM(), TRUE));
+    
+    // Take care of optional attributes and elements.
+    if($this->isset_behaviorType()) {
+      $behaviorObject->setAttribute('behaviorType', $this->behaviorType);
+    }
+    
+    if($this->isset_created()) {
+      $behaviorObject->setAttribute('created', $this->created);
+    }
+    
+    if($this->isset_groupID()) {
+      $behaviorObject->setAttribute('groupID', $this->groupID);
+    }
+    
+    if($this->isset_textInfo()) {
+      $behaviorObject->setAttribute('textInfo', $this->textInfo);
+    }
+    
+    $childBehaviorObject = new BehaviorObject();
+    if($this->isset_behaviorObjects()) {
+      foreach($this->behaviorObjects as $childBehaviorObject) {
+        $behaviorObject->appendChild($dom->importNode($childBehaviorObject->get_as_DOM(), TRUE));
+      }
+    }
+    
+    
+    return $behaviorObject;
+  }
 }
 
 ?>

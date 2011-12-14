@@ -17,17 +17,23 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob Olendorf
  */
-class InterfaceDefinition extends aXFDUElement{
+class InterfaceDefinition extends Reference{
   /**
    *
-   * @var array<InputParameter>
+   * @var array<inputParameter>
    */
   protected $inputParameters;
+  
+  /**
+   * @var array<BehaviorObject>
+   */
+  protected $behaviorObjects;
   
   /**
    * 
    */
   public function __construct() {
+    $this->inputParameters = array();
     $this->inputParameters = array();
   }
 
@@ -64,11 +70,52 @@ class InterfaceDefinition extends aXFDUElement{
   
   /**
    *
+   * @param BehaviorObject $behaviorObject 
+   */
+  public function add_behaviorObject(BehaviorObject $behaviorObject) {
+    $this->behaviorObjects[] = $behaviorObject;
+  }
+  
+  /**
+   *
+   * @return array<BehaviorObjects> 
+   */
+  public function get_behaviorObjects() {
+    return $this->behaviorObjects;
+  }
+  
+  /**
+   *
+   * @return boolean 
+   */
+  public function isset_behaviorObjects() {
+    return (isset($this->behaviorObjects) && !empty($this->behaviorObjects));
+  }
+  
+  /**
+   * 
+   */
+  public function unset_behaviorObjects() {
+    $this->behaviorObjects = array();
+  }
+  
+  /**
+   *
    * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    if(!$this->isset_locatorType()) {
+      throw new RequiredElementException('locatorType');
+    }
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $interfaceDefinition = $dom->createElement('interfaceDefinition');
+    $interfaceDefinition->setAttribute('locatorType', $this->locatorType);
+    
+    return $interfaceDefinition;
+  }
 }
 
 ?>

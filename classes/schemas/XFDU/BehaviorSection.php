@@ -60,7 +60,15 @@ class BehaviorSection extends aXFDUElement{
   public function get_as_DOM($prefix = NULL) {
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
-    return $dom->createElement('behaviorSection');
+    $behaviorSection =  $dom->createElement('behaviorSection');
+    
+    if($this->isset_behaviorObjects()) {
+      foreach($this->behaviorObjects as $behaviorObject) {
+        $behaviorSection->appendChild($dom->importNode($behaviorObject->get_as_DOM(), TRUE));
+      }
+    }
+    
+    return $behaviorSection;
   }
 }
 

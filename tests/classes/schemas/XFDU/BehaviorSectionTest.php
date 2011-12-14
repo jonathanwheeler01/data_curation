@@ -47,6 +47,16 @@ class BehaviorSectionTest extends PHPUnit_Framework_TestCase {
     $this->object->unset_behaviorObjects();
     $this->assertFalse($this->object->isset_behaviorObjects());
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $expectedElement = $dom->createElement('behaviorSection');
+    
+    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
 
 }
 
