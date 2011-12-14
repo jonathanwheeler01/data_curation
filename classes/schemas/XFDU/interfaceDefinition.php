@@ -25,15 +25,9 @@ class InterfaceDefinition extends Reference{
   protected $inputParameters;
   
   /**
-   * @var array<BehaviorObject>
-   */
-  protected $behaviorObjects;
-  
-  /**
    * 
    */
   public function __construct() {
-    $this->inputParameters = array();
     $this->inputParameters = array();
   }
 
@@ -70,49 +64,47 @@ class InterfaceDefinition extends Reference{
   
   /**
    *
-   * @param BehaviorObject $behaviorObject 
-   */
-  public function add_behaviorObject(BehaviorObject $behaviorObject) {
-    $this->behaviorObjects[] = $behaviorObject;
-  }
-  
-  /**
-   *
-   * @return array<BehaviorObjects> 
-   */
-  public function get_behaviorObjects() {
-    return $this->behaviorObjects;
-  }
-  
-  /**
-   *
-   * @return boolean 
-   */
-  public function isset_behaviorObjects() {
-    return (isset($this->behaviorObjects) && !empty($this->behaviorObjects));
-  }
-  
-  /**
-   * 
-   */
-  public function unset_behaviorObjects() {
-    $this->behaviorObjects = array();
-  }
-  
-  /**
-   *
    * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
   public function get_as_DOM($prefix = NULL) {
+    // Check for required elements
     if(!$this->isset_locatorType()) {
       throw new RequiredElementException('locatorType');
     }
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
     $interfaceDefinition = $dom->createElement('interfaceDefinition');
+    
+    // Handle Required elements
     $interfaceDefinition->setAttribute('locatorType', $this->locatorType);
+    
+    // Handle optional elements.
+    if($this->isset_href()) {
+      $interfaceDefinition->setAttribute('href', $this->href);
+    }
+    
+    if($this->isset_id()) {
+      $interfaceDefinition->setAttribute('ID', $this->id);
+    }
+    
+    if($this->isset_locator()) {
+      $interfaceDefinition->setAttribute('locator', $this->locator);
+    }
+    
+    if($this->isset_otherLocatorType()) {
+      $interfaceDefinition->setAttribute('otherLocatorType', $this->otherLocatorType);
+    }
+    
+    if($this->isset_textInfo()) {
+      $interfaceDefinition->setAttribute('textInfo', $this->textInfo);
+    }
+    
+    /**
+     * @todo handle input paramters
+     */
+    
     
     return $interfaceDefinition;
   }

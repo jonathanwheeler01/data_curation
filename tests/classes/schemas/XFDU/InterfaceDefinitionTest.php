@@ -47,6 +47,46 @@ class InterfaceDefinitionTest extends PHPUnit_Framework_TestCase {
     $this->object->unset_inputParameters();
     $this->assertFalse($this->object->isset_inputParameters());
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $locatorType = 'URL';
+    $id = 'idID';
+    $href = 'href';
+    $locator = 'locator';
+    $otherLocatorType = 'otherLocatorType';
+    $textInfo = 'textInfo';
+    
+    $expectedElement = $dom->createElement('interfaceDefinition');
+    $expectedElement->setAttribute('locatorType', $locatorType);
+    $expectedElement->setAttribute('ID', $id);
+    $expectedElement->setAttribute('href', $href);
+    $expectedElement->setAttribute('locator', $locator);
+    $expectedElement->setAttribute('otherLocatorType', $otherLocatorType);
+    $expectedElement->setAttribute('textInfo', $textInfo);
+    
+    $this->object->set_locatorType($locatorType);
+    $this->object->set_id($id);
+    $this->object->set_href($href);
+    $this->object->set_locator($locator);
+    $this->object->set_otherLocatorType($otherLocatorType);
+    $this->object->set_textInfo($textInfo);
+    
+    $actualElement = $dom->importNode($this->object->get_as_DOM(), TRUE);
+    
+    $this->assertEqualXMLStructure($expectedElement, $actualElement, TRUE);
+    
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingLocatorType() {
+    $this->object->get_as_DOM();
+  }
 
 }
 
