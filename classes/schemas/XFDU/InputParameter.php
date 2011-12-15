@@ -79,6 +79,15 @@ class InputParameter extends aXFDUElement{
    * @param string $value 
    */
   public function set_value($value) {
+    // The value can be a DataObjectPointer or any of the type primitives, which are
+    // all treated as a string. Test that an invalid object is not passed.
+    if(gettype($value) == 'object' && get_class($value) != 'DataObjectPointer') {
+      $message = get_class($value).'is neither a type primitive castable to a string '.
+              'or an instance of DataObjectPointer.';
+      $code = 0;
+      throw new InvalidArgumentException($message, $code);
+    }
+    
     $this->value = $value;
   }
   
@@ -100,10 +109,35 @@ class InputParameter extends aXFDUElement{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    if(!$this->isset_name()) {
+      throw new RequiredElementException('name');
+    }
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    
+    $inputParameter = $dom->createElement('inputParameter');
+    
+    // Handle required elements.
+    $inputParameter->setAttribute('name', $this->name);
+    
+    // Handle optional elements.
+    if($this->isset_value()) {
+      // No need to worry about the correct class as it is checked when the
+      // value is set.
+      if(gettype($this->value) == 'object') {
+        $dataObjectPointer = new DataObjectPointer();
+        $dataObjectPointer = $this->value;
+        $inputParameter->appendChild($dom->importNode($dataObjectPointer->get_as_DOM(), TRUE));
+      }
+      else {
+        $inputParameter->appendChild($dom->createTextNode($this->value));
+      }
+    }
+    
+    return $inputParameter;
+  }
 }
 ?>

@@ -59,6 +59,7 @@ class InterfaceDefinitionTest extends PHPUnit_Framework_TestCase {
     $locator = 'locator';
     $otherLocatorType = 'otherLocatorType';
     $textInfo = 'textInfo';
+    $name = 'name';
     
     $expectedElement = $dom->createElement('interfaceDefinition');
     $expectedElement->setAttribute('locatorType', $locatorType);
@@ -67,6 +68,10 @@ class InterfaceDefinitionTest extends PHPUnit_Framework_TestCase {
     $expectedElement->setAttribute('locator', $locator);
     $expectedElement->setAttribute('otherLocatorType', $otherLocatorType);
     $expectedElement->setAttribute('textInfo', $textInfo);
+    $expectedElement->appendChild($ExpectedInputParameter1 = $dom->createElement('inputParameter'));
+    $expectedElement->appendChild($ExpectedInputParameter2 = $dom->createElement('inputParameter'));
+    $ExpectedInputParameter1->setAttribute('name', $name);
+    $ExpectedInputParameter2->setAttribute('name', $name);
     
     $this->object->set_locatorType($locatorType);
     $this->object->set_id($id);
@@ -74,6 +79,12 @@ class InterfaceDefinitionTest extends PHPUnit_Framework_TestCase {
     $this->object->set_locator($locator);
     $this->object->set_otherLocatorType($otherLocatorType);
     $this->object->set_textInfo($textInfo);
+    
+    $actualInputParameter = new InputParameter();
+    $actualInputParameter->set_name($name);
+    
+    $this->object->add_inputParameter($actualInputParameter);
+    $this->object->add_inputParameter($actualInputParameter);
     
     $actualElement = $dom->importNode($this->object->get_as_DOM(), TRUE);
     

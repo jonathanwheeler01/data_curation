@@ -378,7 +378,6 @@ class BehaviorObject extends aXFDUElement{
       }
     }
     
-    
     return $behaviorObject;
   }
 }

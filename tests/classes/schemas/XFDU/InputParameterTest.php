@@ -67,7 +67,68 @@ class InputParameterTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($this->object->isset_value());
     $this->assertEquals($value, $this->object->get_value());
   }
-
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidValueObject() {
+    $value = new DummySchema();
+    
+    $this->object->set_value($value);
+  }
+  
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM_TextValue() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $name = 'name';
+    $value = 'value';
+    
+    $expectedElement = $dom->createElement('inputParameter');
+    $expectedElement->setAttribute('name', $name);
+    $expectedElement->appendChild($dom->createTextNode($value));
+    
+    $this->object->set_name($name);
+    $this->object->set_value($value);
+    
+    $actualElement = $this->object->get_as_DOM();
+    
+    $this->assertEqualXMLStructure($expectedElement, $actualElement, TRUE);
+  }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOM_DataObjectPointerValue() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $name = 'name';
+    $dataObjectID = 'doid';
+    $value = new DataObjectPointer();
+    $value->set_dataObjectID($dataObjectID);
+    
+    $expectedElement = $dom->createElement('inputParameter');
+    $expectedElement->setAttribute('name', $name);
+    $expectedElement->appendChild($expectedDataObjectPointer = $dom->createElement('dataObjectPointer'));
+    $expectedDataObjectPointer->setAttribute('dataObjectID', $dataObjectID);
+    
+    $this->object->set_name($name);
+    $actualDataObjectPointer = new DataObjectPointer();
+    $actualDataObjectPointer->set_dataObjectID($dataObjectID);
+    $this->object->set_value($value);
+    
+    $actualElement = $dom->importNode($this->object->get_as_DOM(), TRUE);
+    
+    $this->assertEqualXMLStructure($expectedElement, $actualElement, TRUE);
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   */
+  public function testMissingLocatorType() {
+    $this->object->get_as_DOM();
+  }
 }
 
 ?>

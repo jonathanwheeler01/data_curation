@@ -64,7 +64,6 @@ class InterfaceDefinition extends Reference{
   
   /**
    *
-   * @todo Iimplement get_as_DOM()
    * @param type $prefix 
    * @return DOMElement;
    */
@@ -101,10 +100,12 @@ class InterfaceDefinition extends Reference{
       $interfaceDefinition->setAttribute('textInfo', $this->textInfo);
     }
     
-    /**
-     * @todo handle input paramters
-     */
-    
+    if($this->isset_inputParameters()) {
+      $inputParameter = new InputParameter();
+      foreach($this->inputParameters as $inputParameter) {
+        $interfaceDefinition->appendChild($dom->importNode($inputParameter->get_as_DOM(), TRUE));
+      }
+    }
     
     return $interfaceDefinition;
   }
