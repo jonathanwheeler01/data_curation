@@ -101,13 +101,13 @@ class XFDUBuilder {
    * @param XMLData $xmlData = NULL
    * @param mixed $extension = NULL
    */
-  public function build_environmentInfo(XMLData $xmlData = null, $extension = NULL) {
+  public function build_environmentInfo(XMLData $xmlData = NULL, $extension = NULL) {
     $environmentInfo = new EnvironmentInfo();
-    if($xmlData !== NULL) {
+    if($xmlData !== NULL && $xmlData != '') {
       $environmentInfo->set_xmlData($xmlData);
     }
     
-    if($extension !== NULL) {
+    if($extension !== NULL && $extension != '') {
       $environmentInfo->set_extension($extension);
     }
     

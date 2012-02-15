@@ -20,6 +20,8 @@ class XFDUSetup {
   public $sequencePosition;
   public $sequenceSize;
   public $sequenceInfoValue;
+  public $environmentInfoXMLData = NULL;
+  public $extension = NULL;
   
   public function __construct() {
     $this->specificationVersion = 1.0;

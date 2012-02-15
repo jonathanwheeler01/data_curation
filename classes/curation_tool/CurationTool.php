@@ -1,42 +1,25 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-/* 
- *    This file is part of data_curation.
-
- *    data_curation is free software: you can redistribute it and/or modify
- *    it under the terms of the Apache License, Version 2.0 (See License at the
- *    top of the directory).
-
- *    data_curation is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
- *    You should have received a copy of the Apache License, Version 2.0
- *    along with data_curation.  If not, see <http://www.apache.org/licenses/LICENSE-2.0.html>.
- */
-
-/**
- * Description of CurationTool
- *
- * @author olendorf
- *
- */
-
-
-
 /**
  * Description of CurationTool
  *
  *
- * @author olendorf
+ * @author Rob Olendorf
  * 
  */
 class CurationTool {
-  protected $root;                                                              // Root directory for the data, or the data file itself.
-  protected $exclude;
+  
+  /**
+   *  Root directory for the data, or the data file itself.
+   * @var type 
+   */
+  protected $root;
+  
+  /**
+   * Files to exclude. This is not implemented yet.
+   * @todo Impliment exclusion - should allow exclusion based on file type file name or partial file names. Most likely a dynamic implementation of regular expresssions.
+   * @var type 
+   */
+  protected $exclude;                                                           
 
   public function  __construct($path = '') {
     if($path != '') {
@@ -70,7 +53,8 @@ class CurationTool {
   }
 
   /**
-   * Starts processing the data directory.
+   * Starts processing the data directory by ensuring the file or directory exists
+   * and if it is a bare file enclosing it in a directory. 
    */
   public function process_dataset() {
 //    $this->oldcwd = getcwd();
@@ -79,19 +63,22 @@ class CurationTool {
       throw new PathNotFoundException('No path has been specified', E_ERROR);
     }
 
+    // If it's a bare file, moves the file into a same named directory.
+    // This provides a consistent structure across all data sets.
     if(is_file($this->root)) {
+      // Get the required info from the file
       $pathInfo = pathinfo($this->root);
       $fileName = basename($this->root, $pathInfo['extension']);
 
-      mkdir($pathInfo['dirname'].DIRECTORY_SEPARATOR.$fileName);
-      rename($this->root, $pathInfo['dirname'].
+      mkdir($pathInfo['dirname'].DIRECTORY_SEPARATOR.$fileName);                // make the new directory
+      rename($this->root, $pathInfo['dirname'].                                 // Move the file into the new directory
                                      DIRECTORY_SEPARATOR.$fileName.
                                      DIRECTORY_SEPARATOR.$pathInfo['basename']);
 
-      $this->root = $pathInfo['dirname'].DIRECTORY_SEPARATOR.$pathInfo['filename'];
+      $this->root = $pathInfo['dirname'].DIRECTORY_SEPARATOR.$pathInfo['filename']; // Set root to the directory not file
     }
 
-    $this->process_path($this->root);
+    $this->process_path($this->root);                                           // Start processing the data.
   }
 
   /**
@@ -101,20 +88,28 @@ class CurationTool {
    * @param <string> $path
    */
   protected function process_path($path) {
+    // Each directory gets meta directory.
     if(!file_exists($path.'/meta')) {
       mkdir($path.'/meta');
     }
+    
+    // Create the xfdu package for this directory.
+    $setting = new XFDUSetup();
+    $setting->root = $path;
+    $package = new XFDUPackage($settings);
 
     $contents = scandir($path);
     $contents = array_diff($contents, $this->exclude);
 
     foreach($contents as $item) {
+      
       if(is_file($path.DIRECTORY_SEPARATOR.$item)) {
         $this->handle_file($path.DIRECTORY_SEPARATOR.$item);
       }
+      
       else if(is_dir($path.DIRECTORY_SEPARATOR.$item)) {
         $this->handle_directory($path.DIRECTORY_SEPARATOR.$item);
-        $this->process_path($path.DIRECTORY_SEPARATOR.$item);
+        $this->process_path($path.DIRECTORY_SEPARATOR.$item);                   // Recursive call
       }
     }
   }

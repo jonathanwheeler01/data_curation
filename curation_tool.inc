@@ -21,7 +21,7 @@ class CurationAutoLoad {
    * type suffix is omitted.
    * @example autoload('myClassName');
    */
-  public static function autoload($className) {
+  public static function autoload_curation($className) {
     // The @ symbol suppresses the warnings so we can just try each subdirectory
     // as needed. Seems a bit cludgey, but it does work.
     @include_once 'classes'.DIRECTORY_SEPARATOR.
@@ -82,5 +82,5 @@ class CurationAutoLoad {
 /**
  * Register the autoloader.
  */
-spl_autoload_register(array('CurationAutoLoad', 'autoload'));
+spl_autoload_register(array('CurationAutoLoad', 'autoload_curation'));
 ?>

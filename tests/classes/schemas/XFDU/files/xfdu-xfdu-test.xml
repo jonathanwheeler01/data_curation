@@ -1,53 +1,262 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xfdu:XFDU xmlns:xfdu="urn:ccsds:schema:xfdu:1"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd" >
-    <packageHeader ID="test">
-        <volumeInfo>
-            <specificationVersion>1.0</specificationVersion>
-            <sequenceInformation sequencePosition="1" sequenceSize="2">test</sequenceInformation>
-        </volumeInfo>
-        <environmentInfo>
-            <xmlData>
-                <stuff/>
-            </xmlData>
-        </environmentInfo>
-    </packageHeader>
-    <informationPackageMap ID="ipmID" packageType="'packageType" textInfo="textInfo">
-        <xfdu:contentUnit >
-            <XFDUPointer ID="xfduPointerID" href="" locatorType="URL" locator=""  otherLocatorType="" textInfo=""/>
-            <dataObjectPointer  dataObjectID="doID" ID="dopID"/>
-            <dataObjectPointer dataObjectID="doID"/>
-            <xfdu:contentUnit />
-        </xfdu:contentUnit>
-    </informationPackageMap>
-    <metadataSection >
-        <metadataObject ID="moID" category="ANY" classification="CONTEXT" otherCategory="otherCat" otherClass="otherClass" >
-            <metadataReference locatorType="URL"  locator=" " otherLocatorType="" href="" ID="id"  textInfo=""
-                                 mimeType="" vocabularyName=""/>
-            <metadataWrap>
-                <binaryData>dGVzdA==</binaryData>
-            </metadataWrap>
-            <dataObjectPointer dataObjectID="doID" />
-        </metadataObject>
-    </metadataSection>
-    <dataObjectSection >
-        <dataObject ID="doID" mimeType="test" registeredID="regid" registrationAuthority="" 
-            repID="behID" size="1" combinationName="concat">
-            <byteStream size="1" mimeType="" ID="bsID">
-                <fileLocation locatorType="OTHER" />
-                <fileLocation locatorType="URL"/>
-                <fileContent/>
-                <checksum checksumName=""></checksum>
-            </byteStream>
-            <byteStream></byteStream>      
-        </dataObject>
-    </dataObjectSection>
+
+<h3>January 17 (Tuesday)</h3>
+<ul>
+    <li><strong>Topic: </strong><cite>Introduction</cite></li>
+    <li><strong>Presenters: </strong>All</li>
+    <li><strong>Reading/Activity: </strong>All of us will attend the first class to explain the experimental aspects of this grant-funded course and opportunities for innovation in an interdisciplinary environment. The four lecturers will talk about their fields related to WW&W and what they want to bring to the experience. Show video: “Women and the Politics of Water” –part 1 (12 mins)</li>
+    <a href="http://www.youtube.com/watch?v=TcXJnZBnBRU title="Women and the politcs of water">Everywoman-Women and the Politics of Water- Part 1</a>
+    <a href="http://womenwaterwork.org/sites/default/files/resources/Grants_WWW_Data_of_our_lives_2012.pptx">Johann's &quot;These Are the Data of Our Lives&quot;</a>
+</ul>
+
+<h3>January 19 (Thursday)</h3>
+<ul>
+    <li><strong>Topic: </strong><cite>Pretest: Where are you in this picture?</cite></li>
+    <li><strong>Presenters: </strong>All, Christy</li>
+    <li><strong>Reading/Activity: </strong>Pre-test (Christy); Explain more about the grant and class objectives, marking; showcase the Drupal Website (referred to as: WW&W Portal). Introduce the Water footprint tool (www.waterfootprint.org ) and how to use the calculator for indirect water use.</li>
+    <a href="https://www.surveymonkey.com/s/DHKTNQV">Click here to take survey at Survey Monkey</a>
+    <a href="https://github.com/olendorf/teaching/blob/master/womenwaterwork/Definitions%20of%20Data.pptx">Data Data Everywhere</a>
+    <a href="http://www.ted.com/talks/david_mccandless_the_beauty_of_data_visualization.html">David McCandless video on The Beauty of Data Visualization</a>
+    </UL>
+    <h3>January 24 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Power at the Personal Level of Use.</cite></li>
+        <li><strong>Presenters: </strong>All, Rob, Christy</li>
+        <li><strong>Reading/Activity: </strong>Group work comparing water footprints. “Women and the Politics of Water”—part 2 (12 mins.) Introduce use of water calculator on regional/national/global scales - identify strengths/weaknesses of such a tool, especially in regard to quantity/quality/social impacts.</li>
+    </ul>
     
-    <behaviorSection >
-        <behaviorObject ID="boID" contentUnitID="xfduPointerID" behaviorType="test" created="2001-10-26T21:32:52" groupID="groupID" textInfo="textInfo">
-            <interfaceDefinition locatorType="URL">
-            </interfaceDefinition>
-        </behaviorObject>
-    </behaviorSection>
-</xfdu:XFDU>
+    <h3>January 26 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Power in larger social/political/economic arenas.</cite></li>
+        <li><strong>Presenters: </strong>All</li>
+        <li><strong>Class Lecture Slide Deck:</strong><a href="/sites/default/files/resources/AUSTIN.pptx">Mary Hunter Austin <image src="/sites/default/files/icons/ppticon_small.png"></a></li>
+        <li><strong>Reading/Activity: </strong>View <a href="http://libmedia.unm.edu/vod/www/CadillacDesert1A.htm">Mulholland’s Dream (Part 1)</a>, and <a href="http://libmedia.unm.edu/vod/www/CadillacDesert1B.htm">Mulholland’s Dream (Part 2)</a> — a film based on Cadillac Desert with women a key narrators</li>
+    </ul>
+    
+    <h3>January 31 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Women and Environmental History</cite></li>
+        <li><strong>Presenters: </strong>Virginia</li>
+        <li><strong>Activity: </strong>Introduce the ways in which environmental history has been treated as a story of Man and Nature, and explore some of the ways that taking women and gender into account deepens and expands the topic.</li>
+        <li><strong>Readings:</strong></li>
+        <ul>
+            <li><a href="/sites/default/files/readings/man_and_nature.pdf">Scharff, “Man and Nature! Sex Secrets of Environmental History” <img src="/sites/default/files/icons/pdficon_small.png" alt="download PDF"/></a>
+                <li><strong>Class Lecture Slide Deck: </strong><a href="/sites/default/files/resources/ScharffWomensHistory.ppt">Women's History Presentation <img src="/sites/default/files/icons/ppticon_small.png" alt="download PowerPoint"/></a>
+        </ul>
+    </ul>
+    
+    <h3>February 2 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>How to use informatics to develop background on the course content to date.</cite></li>
+        <li><strong>Presenters: </strong>Johann, Rob, Kevin, Karl</li>
+        <li><strong>Activity: </strong>The first data management lecture will explain the field of informatics, the role of data in society, and provide examples of how informatics is used in various disciplines.  Intro (Johann); Metadata (Kevin); Visualizing data (Rob); Use and application of Geo-referenced data (Karl); </li>
+        <li><strong>Readings:</strong></li>
+        <ul>
+            <li>Nathan Yau. 2011.<em><a href="/sites/default/files/readings/Yau_TellingStoriesWithData.pdf">Telling Stories with Data</a></em> <cite>in</cite> Visualize this : the FlowingData guide to design, visualization, and statistics. Indianapolis, Ind. : Wiley Pub., c2011<a href="/sites/default/files/readings/Yau_TellingStoriesWithData.pdf"><img src="/sites/default/files/icons/pdficon_small.png" alt="download PDF"/></a> Please read this before class.</li>
+        </ul>
+    </ul>
+    
+    <h3>February 7 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>What is water like. How we put water to “work.”</cite></li>
+        <li><strong>Presenters: </strong>Julie</li>
+        <li>Barnett, C. 2011.  Blue Revolution. <em>Chapter 1: The Illusion of Water Abundance</em>. Boston: Beacon Press.<a href="/sites/default/files/readings/blue-rev-chapter1.pdf"> <img src="/sites/default/files/icons/pdficon_small.png" alt="download PDF"/></a></li>
+        <!--<li><strong>Reading/Activity: </strong> The Middle Rio Grande, history, Cochiti Dam, and restoration (Julie). Reading: from NM legislative field conferences. Data: waterdata.usgs.gov</li>-->
+    </ul>
+    
+    <h3>February 9 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>What is water like. How we put water to “work,” continued.</cite></li>
+        <li><strong>Presenters: </strong>Laurie</li>
+        <li><strong>Reading/Activity: </strong>Rio Grande water quality. Reading: USGS Circular 1222. Data: USGS Circular 1222.</li>
+        <li><strong>Readings:</strong></li>
+        <ul>
+            <li><a href="/sites/default/files/readings/USGS1222.pdf">Ground Water Resources of the Middle Rio Grande Basin (USGS Circular 1222)</em> <img src="/sites/default/files/icons/pdficon_small.png" alt="download PDF"/></a></li>
+        </ul>
+    </ul>
+    
+    <h3>February 14 (Tuesday) </h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>How we imagine water. To what extent does gender matter as we follow water?</cite></li>
+        <li><strong>Presenters: </strong> Virginia</li>
+        <li><strong>Reading/Activity: </strong> From production to consumption: Women and Water in the Puget Sound region. Reading: Chapter from Scharff and Brucken, Home Lands: How Women Made the West.</li>
+    </ul>
+    
+    <h3>February 16 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>How women artists in the West have envisioned water.</cite></li> 
+        <li><strong>Presenters: </strong>Vera</li>
+        <li>
+            <strong>Readings:</strong>
+            <ul>
+                <li>Basia Irland. 2007.<em> Water Library</em>. &quot;Sources to Sea (And Back Again)&quot;. Albuquerque: UNM Press<a href="/sites/default/files/readings/waterlibrary_volume_4.pdf"><img src="/sites/default/files/icons/pdficon_small.png" alt="download PDF"/></a></li>
+                <li>Basia Irland. <a href="http://basiairland.com">Basia Irland's website.</a>
+                    <li>Laura Gilpin. 1949.<em> The Rio Grande: River of Destiny</em>.  New York: Duell, Sloan and Pearce. Preface<a href="/sites/default/files/readings/gilpin_1949_preface.pdf"><img src="/sites/default/files/icons/pdficon_small.png" alt="download PDF"/></a></li>
+                    <li>Laura Gilpin. 1949.<em> The Rio Grande: River of Destiny</em>.  New York: Duell, Sloan and Pearce. pp. 128-154 (2 pdfs.)<a href="/sites/default/files/readings/gilpin_1949_part1.pdf"><img src="/sites/default/files/icons/pdficon_small.png" alt="download PDF"/></a><a href="/sites/default/files/readings/gilpin_1949_part2.pdf"><img src="/sites/default/files/icons/pdficon_small.png" alt="download PDF"/></a></li>
+                    <li> Basia Irland selection from Water Library. Video: “<a href="http://libmedia.unm.edu/vod/www/AGatheringofWater.html">A Gathering of Waters: Rio Grande, Source to Sea” (26mins)</a></li>
+            </ul>
+        </li>
+        <li><strong>Activity: </strong> How women artists in the West have envisioned water: a lecture that emphasizes NM and the Southwest—with special emphasis on Laura Gilpin’s photos for her Rio Grande: River of Destiny (1949). Reading:. Guest: Basia Irland will come to the class and discuss this work.</li>
+        <li><strong>Assignment: Assignment due by 9:00 AM, Feb. 23:</strong> Screen through the Schlesinger Library History of Women in America Collection and begin to build your own database of women photographers and their subjects.   Using the Drupal site, add your data set and write a blog about women’s work as photographers, including an analysis of one image you found especially compelling. (5pts).</li>
+    </ul>
+    
+    <h3>February 21 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Formalize water diary</cite></li>
+        <li><strong>Presenters: </strong>Rob, Kevin</li>
+        <li><strong>Reading/Activity: </strong>Specifying and collecting data; explaining the Informatics tools students need to know about and those they will be using during the course such as the Drupal content management system and spread sheets for entering their data. [Rob & Kevin] Training in Drupal. Exercise: Begin adding data to web input form.</li>
+    </ul>
+    
+    <h3>February 23 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Finding information and data sources. </cite></li>
+        <li><strong>Presenters: </strong>Christy, Kevin</li>
+        <li><strong>Reading/Activity: </strong> Searching/Selecting data sets and related literature (LibGuides); using Endnote Web to organize these [Christy]; Spreadsheets [Kevin].</li>
+    </ul>
+    
+    <h3>February 28 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite> Begin work on poster presentations</cite></li>
+        <li><strong>Presenters: </strong>All</li>
+        <li><strong>Reading/Activity: </strong> Each student identifies 3 possible research topics for their final poster presentation.</li>
+    </ul>
+    
+    <h3>March 1 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Who Controls Water?</cite></li>
+        <li><strong>Presenters: </strong>Julie & Laurie</li>
+        <li><strong>Reading/Activity: </strong> Flood control, Albuquerque’s storm water management system. Reading: Kelly & Blake on Albuquerque’s storm water challenges, looking for brief article on flood control. Data: www.amafca.org</li>
+    </ul>
+    
+    <h3>March 6 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite> Water, Health, and the Border</cite></li>
+        <li><strong>Presenters: </strong>Virginia</li>
+        <li><strong>Reading/Activity: </strong> Discussion of Di Chiro, “Steps to an Ecology of Justice: Women’s Environmental Networks across the Santa Cruz Watershed”</li>
+        <li><strong>Assignment: Due Date March 6.</strong>1000-word storytelling exercise, arising from previous work in the class; details to come.</li>
+    </ul>
+    
+    <h3>March 8 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Title for Lecture:  Western Water and Green Entrepreneurship</cite></li>
+        <li><strong>Presenters: </strong> Maria Montoya</li>
+        <li><strong>Reading/Activity: </strong> </li>
+    </ul>
+    
+    <h3>March 12 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Spring Break</cite></li>
+        <li><strong>Presenters: </strong>n/a</li>
+        <li><strong>Reading/Activity: </strong>n/a</li>
+    </ul>
+    
+    <h3>March 15 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Spring Break</cite></li>
+        <li><strong>Presenters: </strong>n/a</li>
+        <li><strong>Reading/Activity: </strong>n/a</li>
+    </ul>
+    
+    <h3>March 20 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Water privatization and impacts on women.</cite></li>
+        <li><strong>Presenters: </strong>Vera</li>
+        <li><strong>Reading/Activity: </strong>Water privatization and impacts on women. A discussion the pros/cons of water privatization. Reading: from Maude Barlow, Blue Covenant: The Global Water Crisis and the Coming Battle for the Right to Water and Zwarteveen, “A Masculine Water World: The Politics of Gender and identity in Irrigation Expert Thinking.” Video: F.L.O.W. (For Love of Water) with task of looking at women’s roles as they appear (or not) in the documentary.</li>
+        <li><strong>Assignment due by 9:00 AM, Mar. 20:</strong>  Each student will be assigned an on-line activist site dealing with gender and water.  You will review the site and document the sort of data used/emphasized and add your findings to the course data base.  You will also write a blog analyzing your findings. (5pts).</li>
+    </ul>
+    
+    <h3>March 22 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Albuquerque’s ‘Drinking Water’ Project.</cite></li>
+        <li><strong>Presenters: </strong>Julie & Laurie</li>
+        <li><strong>Reading/Activity: </strong>Albuquerque’s ‘Drinking Water’ Project, moving from groundwater to surface water for supply, ethic of water. Reading: from NM legislative field conference, also from Cynthia Barnett. Data: waterdata.usgs.gov, and epa water reports on quality (segway to next topic).</li>
+    </ul>
+    
+    <h3>March 27 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Explaining data quality and access issues.</cite></li>
+        <li><strong>Presenters: </strong>Rob, Karl, Kevin</li>
+        <li><strong>Reading/Activity: </strong>At this session we will pose the essay challenge question: Is it true that women in developing countries generally have to walk 2 miles to get drinking water? What data sets could clarify/prove this; how do we know it is good data?</li>
+    </ul>
+    
+    <h3>March 29 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite> What difference does water quality make in your life?</cite></li>
+        <li><strong>Presenters: </strong>Vera</li>
+        <li><strong>Reading/Activity: </strong> Lecture on history of women’s contributions to water pollution issues in the U.S.—from Rachel Carson to contemporary environmental justice activists. Reading: Steingraber, Living Downstream: An Ecologist’s Personal Investigation of Cancer and the Environment (rev. ed. 2010).</li>
+    </ul>
+    
+    <h3>April 3 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Women’s Bodies/Bodies of Water: Endocrine disruptors. </cite></li>
+        <li><strong>Presenters: </strong>Virginia</li>
+        <li><strong>Readings:</strong>
+            <ul>
+                <li>Sandra Steingraber. 1997.<em> Living Downstream: An Ecologist Looks at Cancer and the Environment</em>. Chapter 1 (&quot;Trace Amounts&quot;). New York: Addison Wesley<a href="/sites/default/files/readings/steingraber_1997_chapter1.pdf"><img src="/sites/default/files/icons/pdficon_small.png" alt="download PDF"/></a></li>
+                <li>Sandra Steingraber. 1997.<em> Living Downstream: An Ecologist Looks at Cancer and the Environment</em>. Chapter 9 (&quot;Water&quot;). New York: Addison Wesley<a href="/sites/default/files/readings/steingraber_1997_chapter9.pdf"><img src="/sites/default/files/icons/pdficon_small.png" alt="download PDF"/></a></li>
+            </ul>
+        </li>
+        <li><strong>Activity: </strong>Reading: Langston, “Gender Transformed: Endocrine Disruptors in the Environment.</li>
+    </ul>
+    
+    <h3>April 5 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Gender Water Geographies</cite></li>
+        <li><strong>Presenters: </strong>Vera</li>
+        <li><strong>Reading/Activity: </strong>Each student will be assigned an article to read in one of two recent journal  issues dedicated to research on women and water: Gender, Place and Culture on “Gender Water Geographies” (2009) and International Feminist Journal of Politics on “Women and the Politics of Water” (2007). Class discussion will center on the range of data and stories currently driving research in our topic.</li>
+    </ul>
+    
+    <h3>April 10 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Impact of climate change on water resources in the Middle Rio Grande.</cite></li>
+        <li><strong>Presenters: </strong>Julie</li>
+        <li><strong>Reading/Activity: </strong>Reading: Hurd and Coonrod.</li>
+    </ul>
+    
+    <h3>April 12 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Impact of climate change on water resources, continued.</cite></li>
+        <li><strong>Presenters: </strong>Laurie</li>
+        <li><strong>Reading/Activity: </strong> </li>
+    </ul>
+    
+    <h3>April 17 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>What does the Data tell us?</cite></li>
+        <li><strong>Presenters: </strong>Karl, Rob, Kevin</li>
+        <li><strong>Reading/Activity: </strong>Analyzing the data from your diary and creating a data management plan. Can geo-spatial data functionality improve your analysis or provide different insights?</li>
+    </ul>
+    
+    <h3>April 19 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Panel Discussion</cite></li>
+        <li><strong>Presenters: </strong>All</li>
+        <li><strong>Reading/Activity: </strong>Panel discussion with female professionals (such as Dagmar Llewellyn) on the work they do, what they see as our water “future”, and reflections on why, as women, they chose the field.</li>
+        <li>Barnett, C. 2011.  Blue Revolution. <em>pp 182-229.</em>. Boston: Beacon Press.<a href="/sites/default/files/readings/blue-rev-pp182-229.pdf"> <img src="/sites/default/files/icons/pdficon_small.png" alt="download PDF"/></a></li>
+    </ul>
+    
+    <h3>April 24 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Overview of other Data Analysis Tools and Systems </cite></li>
+        <li><strong>Presenters: </strong>Rob, Karl</li>
+        <li><strong>Reading/Activity: </strong>Data crunching and data experimentation in the Internet age; quality of data analysis; reliability of data interpretation systems . This is also a working session using student research projects.</li>
+    </ul>
+    
+    <h3>April 26 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Prepare Poster Presentations.</cite></li>
+        <li><strong>Presenters: </strong>All</li>
+        <li><strong>Reading/Activity: </strong>Work session preparing for poster presentations.</li>
+    </ul>
+    
+    <h3>May 1 (Tuesday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Poster Presentations</cite></li>
+        <li><strong>Presenters: </strong>Class</li>
+    </ul>
+    
+    <h3>May 3 (Thursday)</h3>
+    <ul>
+        <li><strong>Topic: </strong><cite>Poster Presentation</cite></li>
+        <li><strong>Presenters: </strong>Class</li>
+    </ul>
+    
