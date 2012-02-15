@@ -35,6 +35,7 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
   public function testBuild_XFDU() {
      $packageHeaderID = 'packageHeader';
      $impID = 'packageMap';
+     $doID = 'doID';
      
      $dom = new DOMDocument('1.0', 'UTF-8');
      
@@ -56,6 +57,22 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
      //Expected informationPackageMap
      $expectedInformationPackageMap = $dom->createElement('informationPackageMap');
      $expectedInformationPackageMap->appendChild($expectedContentUnit);
+     
+     //Expected metadataSection
+     $expectedMetadataSection = $dom->createElement('metadataSection');
+     
+     // Expected Dataobject Section
+     $expectedByteStream = $dom->createElement('byteStream');
+     
+     $expectedDataObject = $dom->createElement('dataObject');
+     $expectedDataObject->setAttribute('ID', $doID);
+     $expectedDataObject->appendChild($expectedByteStream);
+     
+     $expectedDataObjectSection = $dom->createElement('dataObjectSection');
+     $expectedDataObjectSection->appendChild($expectedDataObject);
+     
+     //Expected behaviorSection
+     $expectedBehaviorSection = $dom->createElement('behaviorSection');
 
     // Expected Root xfdu element
     $expectedElement = $dom->createElement('xfdu:XFDU');
@@ -64,6 +81,9 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $expectedElement->setAttribute('xsi:schemaLocation', 'urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd');
     $expectedElement->appendChild($expectedPackageHeader);
     $expectedElement->appendChild($expectedInformationPackageMap);
+    $expectedElement->appendChild($expectedMetadataSection);
+    $expectedElement->appendChild($expectedDataObjectSection);
+    $expectedElement->appendChild($expectedBehaviorSection);
     
     
     // Actual xfdu.
@@ -74,7 +94,21 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $informationPackageMap = new InformationPackageMap();
     $informationPackageMap->add_contentUnit(new ContentUnit());
     $informationPackageMap->set_id($impID);
-    $xfdu = $this->object->build_XFDU($packageHeader, $informationPackageMap);
+    
+    $medatadataSection = new MetadataSection();
+    
+    $byteStream = new ByteStream();
+    
+    $dataObject = new DataObject();
+    $dataObject->set_id($doID);
+    $dataObject->add_bytstream($byteStream);
+    
+    $dataObjectSection = new DataObjectSection();
+    $dataObjectSection->add_dataObject($dataObject);
+    
+    $behaviorSection = new BehaviorSection();
+    
+    $xfdu = $this->object->build_XFDU($packageHeader, $informationPackageMap, $medatadataSection, $dataObjectSection, $behaviorSection);
     
     $this->assertEqualXMLStructure($expectedElement, $xfdu->get_as_DOM());
   }
@@ -103,10 +137,30 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
    * @todo Implement testBuild_volumeInfo().
    */
   public function testBuild_volumeInfo() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
+    $version = '1.0';
+    $sequenceSize = 3;
+    $sequencePosition = 2;
+     $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedSpecificationVersion = $dom->createElement('specificationVersion');
+    $expectedSpecificationVersion->appendChild($dom->createTextNode($version));
+    
+    $expectedSequenceInformation = $dom->createElement('sequenceInformation');
+    $expectedSequenceInformation->setAttribute('sequencePosition', $sequencePosition);
+    $expectedSequenceInformation->setAttribute('sequenceSize', $sequenceSize);
+    $expectedSequenceInformation->appendChild($dom->createTextNode($sequencePosition.' of '.$sequenceSize));
+    
+    $expectedElement = $dom->createElement('volumeInfo');
+    $expectedElement->appendChild($expectedSpecificationVersion);
+    $expectedElement->appendChild($expectedSequenceInformation);
+    
+    $sequenceInformation = new SequenceInformation();
+    $sequenceInformation->set_sequencePosition($sequencePosition);
+    $sequenceInformation->set_sequenceSize($sequenceSize);
+    $sequenceInformation->set_value($sequencePosition.' of '.$sequenceSize);
+    $volumeInfo = $this->object->build_volumeInfo($version, $sequenceInformation);
+    
+    $this->assertEqualXMLStructure($expectedElement, $volumeInfo->get_as_DOM(), TRUE);
   }
 
   /**
