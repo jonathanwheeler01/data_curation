@@ -154,10 +154,7 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $expectedElement->appendChild($expectedSpecificationVersion);
     $expectedElement->appendChild($expectedSequenceInformation);
     
-    $sequenceInformation = new SequenceInformation();
-    $sequenceInformation->set_sequencePosition($sequencePosition);
-    $sequenceInformation->set_sequenceSize($sequenceSize);
-    $sequenceInformation->set_value($sequencePosition.' of '.$sequenceSize);
+    $sequenceInformation = $this->object->build_SequenceInfo($sequencePosition, $sequenceSize, $sequencePosition.' of '.$sequenceSize);
     $volumeInfo = $this->object->build_volumeInfo($version, $sequenceInformation);
     
     $this->assertEqualXMLStructure($expectedElement, $volumeInfo->get_as_DOM(), TRUE);
@@ -177,10 +174,62 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
    * @todo Implement testBuild_environmentInfo().
    */
   public function testBuild_environmentInfo() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    // Test both xmlData and extension set.
+    $anyxml = $dom->createElement('anyXML');
+    $specificXML = $dom->createElement('specificXML');
+    $specificXML->setAttribute('xmlns', 'temp');
+    
+    $expectedXmlData = $dom->createElement('xmlData');
+    $expectedXmlData->appendChild($anyxml);
+    
+    $expectedExtension = $dom->createElement('extension');
+    $expectedExtension->appendChild($specificXML);
+    
+    $expectedElement = $dom->createElement('environmentInfo');
+    $expectedElement->appendChild($expectedXmlData);
+    $expectedElement->appendChild($expectedExtension);
+    
+    $xmlData = $this->object->build_XMLData($anyxml);
+    $extension = new Extension();
+    $extension->set_any($specificXML);
+    $environmentInfo = $this->object->build_environmentInfo($xmlData, $extension);
+    
+    $this->assertEqualXMLStructure($expectedElement, $environmentInfo->get_as_DOM(), TRUE);
+    
+    // Test no extension
+    $anyxml = $dom->createElement('anyXML');
+    
+    $expectedXmlData = $dom->createElement('xmlData');
+    $expectedXmlData->appendChild($anyxml);
+    
+    $expectedElement = $dom->createElement('environmentInfo');
+    $expectedElement->appendChild($expectedXmlData);
+    
+    $xmlData = $this->object->build_XMLData($anyxml);
+    $environmentInfo = $this->object->build_environmentInfo($xmlData);
+    
+    $this->assertEqualXMLStructure($expectedElement, $environmentInfo->get_as_DOM(), TRUE);
+    
+    
+    
+    // Test both xmlData and extension set.
+    $specificXML = $dom->createElement('specificXML');
+    $specificXML->setAttribute('xmlns', 'temp');
+    
+    $expectedExtension = $dom->createElement('extension');
+    $expectedExtension->appendChild($specificXML);
+    
+    $expectedElement = $dom->createElement('environmentInfo');
+    $expectedElement->appendChild($expectedExtension);
+    
+    $xmlData = $this->object->build_XMLData($anyxml);
+    $extension = new Extension();
+    $extension->set_any($specificXML);
+    $environmentInfo = $this->object->build_environmentInfo(NULL, $extension);
+    
+    $this->assertEqualXMLStructure($expectedElement, $environmentInfo->get_as_DOM(), TRUE);
   }
 
   /**

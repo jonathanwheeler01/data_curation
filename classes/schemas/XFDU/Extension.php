@@ -9,7 +9,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 class Extension extends aXFDUElement{
   /**
    *
-   * @var any 
+   * @var XML 
    */
   protected $any;
   
@@ -26,44 +26,13 @@ class Extension extends aXFDUElement{
   }
   
   public function get_as_DOM($prefix = NULL) {
-    // Extension requires that at least one namespace be define.
-    if($this->isset_namespaces()) {
-      $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+    $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
 
-      $extension = $dom->createElement($this->first_to_lower(get_class($this)));
-      
-      $namespace = new XMLNameSpace();
-      $namespaces = $this->get_namespaces();
-      foreach($namespaces as $namespace) {
-        
-        // A uri is required
-        if(!$namespace->isset_uri()) {
-          throw new RequiredElementException('Namespace URI');
-        }
-        
-        // Extension requires a prefix too to avoid collisions with
-        // the xfdu namespace
-        if(!$namespace->isset_prefix()) {
-          throw new RequiredElementException('Namespace Prefix');
-        }
-        
-        $extension->setAttribute('xmlns:'.$namespace->get_prefix(), $namespace->get_uri());
-        
-        // A schema location is not required but can be added. 
-        if($namespace->isset_location()) {
-          $extension->setAttribute('xsi:schemaLocation', 
-                  $extension->getAttribute('xsi:schemaLocation').' '.
-                  $namespace->get_uri().' '.$namespace->get_location());
-        }
-      }
-      
-      $extension->appendChild($dom->importNode($this->any, TRUE));
+    $extension = $dom->createElement($this->first_to_lower(get_class($this)));
 
-      return $extension;
-    }
-    else {
-      throw new RequiredElementException('Namespace');
-    }
+    $extension->appendChild($dom->importNode($this->any, TRUE));
+
+    return $extension;
   }
 }
 

@@ -15,27 +15,27 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 class EnvironmentInfo extends aXFDUElement{
   /**
    * Allows application specific extensions of the xfdu
-   * @var any
+   * @var Extension
    */
   protected $extension;
 
   /**
    * Freeform XML
-   * array<Object>
+   * @var XMLdata
    */
   protected  $xmlData;
 
   /**
    *
-   * @param mixed $extension 
+   * @param Extension $extension 
    */
-  public function set_extension($extension) {
+  public function set_extension(Extension $extension) {
     $this->extension = $extension;
   }
   
   /**
    *
-   * @return mixed
+   * @return Extension
    */
   public function get_extension() {
     return $this->extension;
@@ -51,7 +51,7 @@ class EnvironmentInfo extends aXFDUElement{
   
   /**
    *
-   * @param XML $xmlData 
+   * @param XMLData $xmlData 
    */
   public function set_xmlData($xmlData) {
     $this->xmlData = $xmlData;
@@ -59,7 +59,7 @@ class EnvironmentInfo extends aXFDUElement{
   
   /**
    * 
-   * @return XML 
+   * @return XMLData
    */
   public function get_xmlData() {
     return $this->xmlData;

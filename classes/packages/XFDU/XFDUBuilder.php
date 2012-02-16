@@ -50,16 +50,18 @@ class XFDUBuilder {
     $packageHeader = new PackageHeader();
     $packageHeader->set_id($id);
     $packageHeader->set_volumeInfo($volumeInfo);
-    if($environmentInfo !== NULL) {
+    if($environmentInfo != NULL) {
       $packageHeader->set_environmentInfo($environmentInfo);
     }
     
     return $packageHeader;
   }
   
-  public function build_InformationPackageMap(array $contentUnitList) {
+  public function build_InformationPackageMap(array $contentUnitList = NULL) {
     $informationPackageMap = new InformationPackageMap();
-    $informationPackageMap->add_contentUnitList($contentUnitList);
+    if($contentUnitList) {
+      $informationPackageMap->add_contentUnitList($contentUnitList);
+    }
     
     return $informationPackageMap;
   }
@@ -107,7 +109,7 @@ class XFDUBuilder {
       $environmentInfo->set_xmlData($xmlData);
     }
     
-    if($extension !== NULL && $extension != '') {
+    if($extension != NULL && $extension != '') {
       $environmentInfo->set_extension($extension);
     }
     
