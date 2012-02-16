@@ -117,10 +117,19 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
    * @todo Implement testBuild_packageHeader().
    */
   public function testBuild_packageHeader() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expectedContentUnit1 = $dom->createElement('xfdu:contentUnit');
+    $expectedContentUnit2 = $dom->createElement('xfdu:contentUnit');
+    
+    $expectedElement = $dom->createElement('informationPackageMap');
+    $expectedElement->appendChild($expectedContentUnit1);
+    $expectedElement->appendChild($expectedContentUnit2);
+    
+    $contentUnitList = array(new ContentUnit(), new ContentUnit());
+    $informationPackageMap = $this->object->build_InformationPackageMap($contentUnitList);
+    
+    $this->assertEqualXMLStructure($expectedElement, $informationPackageMap->get_as_DOM(), TRUE);
   }
 
   /**
@@ -158,16 +167,6 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $volumeInfo = $this->object->build_volumeInfo($version, $sequenceInformation);
     
     $this->assertEqualXMLStructure($expectedElement, $volumeInfo->get_as_DOM(), TRUE);
-  }
-
-  /**
-   * @todo Implement testBuild_SequenceInfo().
-   */
-  public function testBuild_SequenceInfo() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
   }
 
   /**
@@ -230,16 +229,6 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $environmentInfo = $this->object->build_environmentInfo(NULL, $extension);
     
     $this->assertEqualXMLStructure($expectedElement, $environmentInfo->get_as_DOM(), TRUE);
-  }
-
-  /**
-   * @todo Implement testBuild_XMLData().
-   */
-  public function testBuild_XMLData() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
   }
 
 }

@@ -6,7 +6,7 @@
  * @author Rob Olendorf
  * 
  */
-class CurationTool {
+class DirectoryProcessor {
   
   /**
    *  Root directory for the data, or the data file itself.

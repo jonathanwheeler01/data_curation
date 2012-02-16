@@ -33,7 +33,7 @@ class CurationAutoLoadTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testAutoload() {
-    $ctool = new CurationTool();
+    $ctool = new DirectoryProcessor();
     $this->assertTrue(class_exists('CurationTool'), 'Autoload of CurationTool.');
 
     $xfdu = new XFDU();
