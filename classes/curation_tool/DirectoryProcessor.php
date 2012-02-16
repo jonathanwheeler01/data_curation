@@ -119,7 +119,6 @@ class DirectoryProcessor {
    * @param <string> $path
    */
   protected function handle_file($path) {
-    print 'file: '.$path.'\n';
   }
 
   /**
@@ -127,7 +126,6 @@ class DirectoryProcessor {
    * @param <type> $path
    */
   protected function handle_directory($path) {
-
   }
 }
 ?>
