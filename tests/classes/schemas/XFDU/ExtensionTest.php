@@ -53,116 +53,16 @@ class ExtensionTest extends PHPUnit_Framework_TestCase {
     $prefix = 'pre';
     $location = 'example.com/test.xsd';
     $any = $dom->createElement($prefix.':stuff');
+    $any->setAttribute('xmlns:'.$prefix, $uri);
     
     $expectedElement = $dom->createElement('extension');
-    $expectedElement->setAttribute('xmlns:'.$prefix, $uri);
-    $expectedElement->setAttribute('xsi:schemaLocation', $uri.' '.$location);
     $expectedElement->appendChild($any);
     
-    $namespace = new XMLNameSpace();
-    $namespace->set_location($location);
-    $namespace->set_prefix($prefix);
-    $namespace->set_uri($uri);
-    
-    $this->object->add_namespace($namespace);
     $this->object->set_any($any);
     
     
     $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
   }
-  
-  /**
-   * 
-   */
-  public function testGet_as_DOM_no_Location() {
-    $dom = new DOMDocument('1.0', 'UTF-8');
-    
-    $uri = 'test';
-    $prefix = 'pre';
-    $location = 'example.com/test.xsd';
-    $any = $dom->createElement($prefix.':stuff');
-    
-    $expectedElement = $dom->createElement('extension');
-    $expectedElement->setAttribute('xmlns:'.$prefix, $uri);
-    $expectedElement->appendChild($any);
-    
-    $namespace = new XMLNameSpace();
-    $namespace->set_prefix($prefix);
-    $namespace->set_uri($uri);
-    
-    $this->object->add_namespace($namespace);
-    $this->object->set_any($any);
-    
-    
-    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
-  }
-  
-  /**
-   * 
-   */
-  public function testGet_as_DOM_multiNS() {
-    $dom = new DOMDocument('1.0', 'UTF-8');
-    
-    $uri1 = 'test';
-    $prefix1 = 'pre';
-    $location1 = 'example.com/test.xsd';
-    
-    $uri2 = 'test2';
-    $prefix2 = 'two';
-    $location2 = 'example.com/test2.xsd';
-    
-    $any = $dom->createElement($prefix1.':stuff');
-    
-    $expectedElement = $dom->createElement('extension');
-    $expectedElement->setAttribute('xmlns:'.$prefix1, $uri1);
-    $expectedElement->setAttribute('xmlns:'.$prefix2, $uri2);
-    $expectedElement->setAttribute('xsi:schemaLocation', $uri1.' '.$location1.
-                                                         $uri2.' '.$location2);
-    $expectedElement->appendChild($any);
-    
-    $namespace1 = new XMLNameSpace();
-    $namespace1->set_location($location1);
-    $namespace1->set_prefix($prefix1);
-    $namespace1->set_uri($uri1);
-    
-    $namespace2 = new XMLNameSpace();
-    $namespace2->set_location($location2);
-    $namespace2->set_prefix($prefix2);
-    $namespace2->set_uri($uri2);
-    
-    $this->object->add_namespace($namespace1);
-    $this->object->add_namespace($namespace2);
-    $this->object->set_any($any);
-    
-    
-    $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
-  }
-  
-  /**
-   * @expectedException RequiredElementException
-   */
-  public function testMissingNameSpaceGet_as_DOM() {
-    $this->object->get_as_DOM();
-  }
-  
-  /**
-   * @expectedException RequiredElementException
-   */
-  public function testMissingPrefixInGet_as_DOM() {
-    $namespace = new XMLNameSpace();
-    $namespace->set_uri('test');
-    $this->object->get_as_DOM();
-  }
-  
-  /**
-   * @expectedException RequiredElementException
-   */
-  public function testMissingURIInGet_as_DOM() {
-    $namespace = new XMLNameSpace();
-    $namespace->set_prefix('test');
-    $this->object->get_as_DOM();
-  }
-
 }
 
 ?>

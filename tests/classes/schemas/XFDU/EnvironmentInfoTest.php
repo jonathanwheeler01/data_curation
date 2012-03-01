@@ -35,11 +35,22 @@ class EnvironmentInfoTest extends PHPUnit_Framework_TestCase {
   public function testExtension() {
     $this->assertFalse($this->object->isset_extension());
     
-    $value = 'test';
-    $this->object->set_extension($value);
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $anyXML = $dom->createElement('stuff');
+    $anyXML->setAttribute('xmlns:pre', 'example.com');
+    
+    $extension = new Extension();
+    $extension->set_any($anyXML);
+    
+    $expected = $dom->createElement('extension');
+    $expected->appendChild($anyXML);
+    
+    $this->object->set_extension($extension);
     
     $this->assertTrue($this->object->isset_extension());
-    $this->assertEquals($value, $this->object->get_extension());
+    $this->assertEquals('Extension', get_class($this->object->get_extension()));
+    $this->assertEquals($expected, $dom->importNode($this->object->get_extension()->get_any()));
   }
   
   /**
