@@ -1,6 +1,7 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../classes/curation_tool/DirectoryProcessor.php';
+//require_once dirname(__FILE__) . '/../../../classes/curation_tool/DirectoryProcessor.php';
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
 /**
  * Test class for DirectoryProcessor.
@@ -36,6 +37,8 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
     mkdir($directory, 0, TRUE);
            
     // add files
+    $this->makeFile('barefile.txt', 'this is a bare file');
+    
     $this->makeFile('testproj'.DIRECTORY_SEPARATOR.'file1.txt', 'this is file 1');
     $this->makeFile('testproj'.DIRECTORY_SEPARATOR.'file1.png', 'this is file 2');
     $this->makeFile('testproj'.DIRECTORY_SEPARATOR.'file1.csv', 'this is file 3');
@@ -55,39 +58,74 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-    // remove the directory structure.
+    // remove the directory structure and files
     exec('rmdir /s /q testproj');
+    if(file_exists('barefile.txt')) {
+      exec('DEL /q barefile.txt');
+    }
+    if(file_exists('barefile')) {
+      exec('rmdir /s /q barefile');
+    }
+  }
+  /**
+   * Quick check that set and get for root works.
+   */
+  public function testRoot() {
+    $root = 'testproj';
+    $this->object->set_root($root);
+    $this->assertEquals($root, $this->object->get_root());
+  }
+  
+  /**
+   * @expectedException PathNotFoundException
+   */
+  public function testInvalidRoot() {
+    $root = 'invalidRoot';
+    $this->object->set_root($root);
+  }
+  
+  /**
+   * Test exception is thrown if now path is specified.
+   * @expectedException PathNotFoundException
+   */
+  public function testNoPath() {
+    $this->object->process_dataset();
   }
 
   /**
-   * @todo Implement testSet_root().
+   * 
    */
-  public function testSet_root() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
+  public function testProcess_datasetBareFile() {
+    $this->object->set_root('barefile.txt');
+    $this->object->process_dataset();
+    
+    $this->assertFileExists('barefile'.DIRECTORY_SEPARATOR.'barefile.txt');
+    $this->assertTrue(file_exists('barefile'.DIRECTORY_SEPARATOR.'meta'));
   }
-
-//  /**
-//   * @todo Implement testGet_root().
-//   */
-//  public function testGet_root() {
-//    // Remove the following lines when you implement this test.
-//    $this->markTestIncomplete(
-//            'This test has not been implemented yet.'
-//    );
-//  }
-//
-//  /**
-//   * @todo Implement testProcess_dataset().
-//   */
-//  public function testProcess_dataset() {
-//    // Remove the following lines when you implement this test.
-//    $this->markTestIncomplete(
-//            'This test has not been implemented yet.'
-//    );
-//  }
+  
+  /**
+   * 
+   */
+  public function testProcess_datasetDeepStructure() {
+    $this->object->set_root('testproj');
+    $this->object->process_dataset();
+    
+    $this->assertFileExists('testproj'.DIRECTORY_SEPARATOR.'meta');
+    $this->assertFileExists('testproj'.DIRECTORY_SEPARATOR.
+                            'datadir2'.DIRECTORY_SEPARATOR.'meta');
+    $this->assertFileExists('testproj'.DIRECTORY_SEPARATOR.
+                            'datadir1'.DIRECTORY_SEPARATOR.
+                            'datadir1_2'.DIRECTORY_SEPARATOR.'meta');
+  }
+  
+  /**
+   * 
+   */
+  public function testPopulatedConstructor() {
+    $root = 'testproj';
+    $object = new DirectoryProcessor($root);
+    $this->assertEquals($root, $object->get_root());
+  }
 
 }
 

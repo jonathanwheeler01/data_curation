@@ -1,6 +1,7 @@
 <?php
 /**
- * Description of CurationTool
+ * Description of Processes a data directy inserting a meta directory into each 
+ * folder and creating xfdu files for each directory.
  *
  *
  * @author Rob Olendorf
@@ -92,11 +93,6 @@ class DirectoryProcessor {
     if(!file_exists($path.'/meta')) {
       mkdir($path.'/meta');
     }
-    
-    // Create the xfdu package for this directory.
-    $setting = new XFDUSetup();
-    $setting->root = $path;
-    $package = new XFDUPackage($settings);
 
     $contents = scandir($path);
     $contents = array_diff($contents, $this->exclude);
@@ -119,6 +115,7 @@ class DirectoryProcessor {
    * @param <string> $path
    */
   protected function handle_file($path) {
+    print 'handling file '.$path;
   }
 
   /**
@@ -126,6 +123,7 @@ class DirectoryProcessor {
    * @param <type> $path
    */
   protected function handle_directory($path) {
+    print 'handling directory '.$path;
   }
 }
 ?>
