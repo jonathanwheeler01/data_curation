@@ -23,8 +23,12 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
 
   }
   
+  /**
+   * creates a director system for testing. 
+   */
   protected function create_test_directory() {
         
+    // check the operating system to handle permissions correctly
     if(preg_match('/windows/i', php_uname('s'))) {
       $perms = 0;
     }
@@ -61,7 +65,12 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
 
   }
   
+  /**
+   * Remove the test directory.
+   */
   protected function remove_test_directory() {
+    
+    // test the operating system to excecute the correct shell command
     if(preg_match('/windows/i', php_uname('s'))) {
       exec('rmdir investigator /s /q');
     }
@@ -70,6 +79,9 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
     }
   }
   
+  /**
+   * 
+   */
   public function testRoot() {
     $this->create_test_directory();
     $path = 'investigator/project/';
