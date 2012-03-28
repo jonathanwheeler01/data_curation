@@ -73,6 +73,7 @@ class XFDU extends aXFDUElement{
    * Sets default version to the most recent XFDU version
    */
   public function  __construct() {
+    print 'constructor called.';
     $this->version = 1.0;
   }
 

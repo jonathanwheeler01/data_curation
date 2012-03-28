@@ -34,7 +34,7 @@ abstract class aDCElement extends aXMLElement{
    * @param string $prefix 
    */
   public function set_prefix($prefix) {
-    $this->prefix = $prefix;
+    $this->classNamePrefix = $prefix;
   }
   
   /**
@@ -42,7 +42,7 @@ abstract class aDCElement extends aXMLElement{
    * @return string 
    */
   public function get_prefix() {
-    return $this->prefix;
+    return $this->classNamePrefix;
   }
   
   /**
@@ -50,7 +50,7 @@ abstract class aDCElement extends aXMLElement{
    * @return boolean 
    */
   public function isset_prefix() {
-    return (isset($this->prefix) && !empty($this->prefix));
+    return (isset($this->classNamePrefix) && !empty($this->classNamePrefix));
   }
   
   /**
@@ -117,8 +117,8 @@ abstract class aDCElement extends aXMLElement{
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
     // Add a prefix if one is set
-    if(isset($this->prefix) && !empty($this->prefix)) {
-      $element = $dom->createElement($this->prefix.':'.$this->first_to_lower(get_class($this)), 
+    if(isset($this->classNamePrefix) && !empty($this->classNamePrefix)) {
+      $element = $dom->createElement($this->classNamePrefix.':'.$this->first_to_lower(get_class($this)), 
               $this->value);
     }
     else {

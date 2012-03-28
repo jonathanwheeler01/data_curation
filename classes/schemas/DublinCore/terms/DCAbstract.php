@@ -18,8 +18,8 @@ class DCAbstract extends Description{
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
     // Add a prefix if one is set
-    if(isset($this->prefix) && !empty($this->prefix)) {
-      $element = $dom->createElement($this->prefix.':abstract', 
+    if(isset($this->classNamePrefix) && !empty($this->classNamePrefix)) {
+      $element = $dom->createElement($this->classNamePrefix.':abstract', 
               $this->value);
     }
     else {

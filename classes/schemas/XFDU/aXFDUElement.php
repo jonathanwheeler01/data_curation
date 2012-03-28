@@ -7,6 +7,8 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * @author Rob Olendorf
  * 
  */
-abstract class aXFDUElement extends aXMLElement {}
+abstract class aXFDUElement extends aXMLElement {
+  protected $classNamePrefix = 'XFDU';
+}
 
 ?>

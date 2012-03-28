@@ -34,6 +34,12 @@ abstract class aXMLElement implements iXMLElement{
   protected $namepaces;
   
   /**
+   * By convention all subclasses 
+   * @var string 
+   */
+  protected $classNamePrefix = '';
+  
+  /**
    *  @param string $id
    */
   public function validate_id($id) {
@@ -184,6 +190,10 @@ abstract class aXMLElement implements iXMLElement{
   
   protected function first_to_lower($string){
     return strtolower(substr($string, 0, 1)).  substr($string, 1);
+  }
+  
+  protected function get_element_name($prefix) {
+    return substr(get_class($this), strlen($this->classNamePrefix));
   }
 }
 

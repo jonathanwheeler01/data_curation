@@ -33,6 +33,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testID() {
+    print '===============Invoking '.__METHOD__.'==============';;
     $this->assertFalse($this->object->isset_id());
 
     $id = 'test';
@@ -45,13 +46,16 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * @expectedException InvalidIDTokenException
    */
   public function testInvalidID() {
+    print '===============Invoking '.__METHOD__.'==============';
     $this->object->set_id('0invalid');
+    print '===============Down with '.__METHOD__.'==============';
   }
 
   /**
    * 
    */
   public function testObjID() {
+    print '===============Invoking '.__METHOD__.'==============';
     $this->assertFalse($this->object->isset_objID());
 
     $objID = 'test';
@@ -64,6 +68,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testTextInfo() {
+    print '===============Invoking '.__METHOD__.'==============';
     $this->assertFalse($this->object->isset_textInfo());
 
     $textInfo = 'test';
@@ -303,26 +308,6 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
   public function testMissingInformationPackageMap() {
     $this->object->get_as_DOM();
   }
-  
-  /**
-   * 
-   */
-//  public function testOtherPrefix_get_as_DOM() {
-//    $dom = new DOMDocument('1.0', 'UTF-8');
-//    
-//    $packageHeader = new PackageHeader();
-//    $packageHeader->set_id('test');
-//    
-//    $volumeInfo = new VolumeInfo();
-//    $packageHeader->set_volumeInfo($volumeInfo);
-//    
-//    $this->object->set_packageHeader($packageHeader);
-//    $this->object->set_informationPackageMap(new InformationPackageMap());
-//    
-//    $dom->appendChild($dom->importNode($this->object->get_as_DOM('pre'), TRUE));
-//    
-//    $this->assertXmlStringEqualsXmlFile(__DIR__.'/files/pre-xfdu-test.xml', $dom->saveXML());
-//  }
 }
 
 ?>

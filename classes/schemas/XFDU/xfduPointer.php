@@ -1,7 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 
-
 /**
  * Subclass extending Reference only to keep track of the name difference.
  *
