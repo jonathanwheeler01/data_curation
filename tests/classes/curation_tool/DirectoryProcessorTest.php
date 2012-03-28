@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__FILE__) . '/../../../classes/curation_tool/DirectoryProcessor.php';
+require_once '/../../../curation_tool.inc';
 
 /**
  * Test class for DirectoryProcessor.
@@ -19,46 +20,72 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    */
   protected function setUp() {
     $this->object = new DirectoryProcessor;
+
+  }
+  
+  protected function create_test_directory() {
+        
+    if(preg_match('/windows/i', php_uname('s'))) {
+      $perms = 0;
+    }
+    else {
+      $perms = 0755;
+    }
+    
+    $currentDirectory = 'investigator/project/';
+    mkdir($currentDirectory, $perms, TRUE);
+    touch($currentDirectory.'data1.txt');
+    touch($currentDirectory.'data2.csv');
+    
+    $dir1 = $currentDirectory.'images/';
+    mkdir($dir1, $perms, TRUE);
+    touch($dir1.'image1.png');
+    touch($dir1.'image2.jpg');
+    touch($dir1.'image3.gif');
+    touch($dir1.'image4.tif');    
+    
+    $dir2 = $currentDirectory.'filetypes/';
+    mkdir($dir2, $perms, TRUE);
+    touch($dir2.'matlab.m');
+    touch($dir2.'powerpoint.pptx');
+    touch($dir2.'word.docx');
+    touch($dir2.'xcel.xls');
   }
 
   /**
    * Tears down the fixture, for example, closes a network connection.
    * This method is called after a test is executed.
    */
-  protected function tearDown() {
+  protected function tearDown() {    
     
+
+  }
+  
+  protected function remove_test_directory() {
+    if(preg_match('/windows/i', php_uname('s'))) {
+      exec('rmdir investigator /s /q');
+    }
+    else {
+      exec('rm -r investigator');
+    }
+  }
+  
+  public function testRoot() {
+    $this->create_test_directory();
+    $path = 'investigator/project/';
+    $this->object->set_root($path);
+    
+    $this->remove_test_directory();
+    $this->assertEquals($path, $this->object->get_root());
   }
 
   /**
-   * @todo Implement testSet_root().
+   * @expectedException PathNotFoundException
    */
-  public function testSet_root() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
+  public function testInvalidRoot() {
+    $path = '/path1/path2';
+    $this->object->set_root($path);
   }
-
-  /**
-   * @todo Implement testGet_root().
-   */
-  public function testGet_root() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
-  }
-
-  /**
-   * @todo Implement testProcess_dataset().
-   */
-  public function testProcess_dataset() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
-  }
-
 }
 
 ?>
