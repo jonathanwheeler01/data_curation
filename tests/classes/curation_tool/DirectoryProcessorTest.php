@@ -36,7 +36,7 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
       $perms = 0755;
     }
     
-    $currentDirectory = 'investigator/project/';
+    $currentDirectory = '/investigator/project/';
     mkdir($currentDirectory, $perms, TRUE);
     touch($currentDirectory.'data1.txt');
     touch($currentDirectory.'data2.csv');
@@ -61,8 +61,7 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {    
-    
-
+    $this->remove_test_directory();
   }
   
   /**
@@ -72,10 +71,10 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
     
     // test the operating system to excecute the correct shell command
     if(preg_match('/windows/i', php_uname('s'))) {
-      exec('rmdir investigator /s /q');
+      exec('rmdir "/investigator" /s /q');
     }
     else {
-      exec('rm -r investigator');
+      exec('rm -r /investigator');
     }
   }
   
@@ -84,10 +83,9 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    */
   public function testRoot() {
     $this->create_test_directory();
-    $path = 'investigator/project/';
+    $path = '/investigator/project/';
     $this->object->set_root($path);
-    
-    $this->remove_test_directory();
+   
     $this->assertEquals($path, $this->object->get_root());
   }
 
@@ -98,6 +96,33 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
     $path = '/path1/path2';
     $this->object->set_root($path);
   }
+  
+  /**
+   * 
+   */
+  public function testProcessDataSet() {
+    $this->create_test_directory();
+    
+    $path = '/investigator/project/';
+    $this->object->set_root($path)
+            ->process_dataset();
+    
+    $this->assertTrue(is_dir($path.DIRECTORY_SEPARATOR.'meta'));
+    $this->assertTrue(is_dir($path.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'meta'));
+  }
+  
+  public function testProcessDataSetBareFile() {
+    mkdir('/investigator');
+    touch('/investigator/data.txt');
+    
+    $this->object->set_root('/investigator/data.txt')
+            ->process_dataset();
+    
+    $this->assertTrue(is_dir('/investigator/data'));
+    $this->assertTrue(is_file('/investigator/data/data.txt'));
+    $this->assertTrue(is_dir('/investigator/data/meta'));
+  }
+
 }
 
 ?>

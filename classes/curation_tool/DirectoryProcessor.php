@@ -21,7 +21,7 @@ class DirectoryProcessor {
    * @todo Impliment exclusion - should allow exclusion based on file type file name or partial file names. Most likely a dynamic implementation of regular expresssions.
    * @var type 
    */
-  protected $exclude;                                                           
+  protected $exclude;     
 
   public function  __construct($path = '') {
     if($path != '') {
@@ -44,6 +44,7 @@ class DirectoryProcessor {
       $message = 'Unable to find the path "'.$path.'". Check the path exists and try again.';
       throw new PathNotFoundException($message, E_WARNING);
     }
+    return $this;
   }
 
   /**
@@ -96,15 +97,14 @@ class DirectoryProcessor {
     }
     
     // Create the xfdu package for this directory.
-    $setting = new XFDUSetup();
-    $setting->root = $path;
+    $settings = new XFDUSetup();
+    $settings->root = $path;
     $package = new XFDUPackage($settings);
 
     $contents = scandir($path);
     $contents = array_diff($contents, $this->exclude);
 
     foreach($contents as $item) {
-      
       if(is_file($path.DIRECTORY_SEPARATOR.$item)) {
         $this->handle_file($path.DIRECTORY_SEPARATOR.$item);
       }
@@ -128,6 +128,8 @@ class DirectoryProcessor {
    * @param <type> $path
    */
   protected function handle_directory($path) {
-  }
+    if(!is_dir($path.DIRECTORY_SEPARATOR.'meta'))
+      mkdir($path.DIRECTORY_SEPARATOR.'meta');
+    }
 }
 ?>
