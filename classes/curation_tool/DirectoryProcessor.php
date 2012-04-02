@@ -17,16 +17,27 @@ class DirectoryProcessor {
   protected $root;
   
   /**
+   * Settings for directory processing. This includes any extension, volume info
+   * or metadata to be included across all objects.This would typically include
+   * dublin core descriptive metadata.
+   * @var XFDUSetup
+   */
+  protected $settings;
+  
+  /**
    * Files to exclude. This is not implemented yet.
    * @todo Impliment exclusion - should allow exclusion based on file type file name or partial file names. Most likely a dynamic implementation of regular expresssions.
    * @var type 
    */
   protected $exclude;     
 
-  public function  __construct($path = '') {
-    if($path != '') {
-      $this->set_root($path);
-    }
+  public function  __construct(XFDUSetup $settings) {
+
+      $this->settings = $settings;
+      
+      if($settings->root != '') {
+        $this->set_root($path);
+      }
 
     $this->exclude = array('.', '..', 'meta');
   }
@@ -108,7 +119,6 @@ class DirectoryProcessor {
       if(is_file($path.DIRECTORY_SEPARATOR.$item)) {
         $this->handle_file($path.DIRECTORY_SEPARATOR.$item);
       }
-      
       else if(is_dir($path.DIRECTORY_SEPARATOR.$item)) {
         $this->handle_directory($path.DIRECTORY_SEPARATOR.$item);
         $this->process_path($path.DIRECTORY_SEPARATOR.$item);                   // Recursive call

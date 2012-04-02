@@ -35,12 +35,16 @@ class XMLDataTest extends PHPUnit_Framework_TestCase {
   public function testAny() {
     $this->assertFalse($this->object->isset_any());
     
-    $value = 'test';
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $value = $dom->createElement('testElement');
     $this->object->set_any($value);
     $this->assertTrue($this->object->isset_any());
     $this->assertEquals($value, $this->object->get_any());
   }
   
+  /**
+   * 
+   */
   public function testGet_as_DOM () {
     $dom = new DOMDocument('1.0', 'UTF-8');
     

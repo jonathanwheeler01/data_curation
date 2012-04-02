@@ -17,7 +17,7 @@ class XMLData extends aXFDUElement{
    *
    * @param string $any 
    */
-  public function set_any($any) {
+  public function set_any(DOMelement $any) {
     $this->any = $any;
   }
   

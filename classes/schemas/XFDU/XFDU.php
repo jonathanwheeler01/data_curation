@@ -38,7 +38,7 @@ class XFDU extends aXFDUElement{
    * thats 1.0.
    * @var float
    */
-  protected $version;
+//  protected $version;
 
   /**
    * @var PackageHeader
@@ -153,30 +153,30 @@ class XFDU extends aXFDUElement{
   public function isset_textInfo() {
     return (isset($this->textInfo) && !empty($this->textInfo));
   }
+//
+//  /**
+//   *
+//   * @param any $version
+//   */
+//  public function set_version($version) {
+//    $this->version = $version;
+//  }
 
-  /**
-   *
-   * @param any $version
-   */
-  public function set_version($version) {
-    $this->version = $version;
-  }
+//  /**
+//   *
+//   * @return float
+//   */
+//  public function get_version() {
+//    return $this->version;
+//  }
 
-  /**
-   *
-   * @return float
-   */
-  public function get_version() {
-    return $this->version;
-  }
-
-  /**
-   *
-   * @return boolean
-   */
-  public function isset_version() {
-    return (isset($this->version) && !empty($this->version));
-  }
+//  /**
+//   *
+//   * @return boolean
+//   */
+//  public function isset_version() {
+//    return (isset($this->version) && !empty($this->version));
+//  }
 
   /**
    *

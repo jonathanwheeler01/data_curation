@@ -77,17 +77,17 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($textInfo, $this->object->get_textInfo());
   }
 
-  /**
-   * 
-   */
-  public function testVersion() {
-    $this->assertTrue($this->object->isset_version());
-    $this->assertEquals(1.0, $this->object->get_version());
-
-    $version = 2.0;
-    $this->object->set_version($version);
-    $this->assertEquals($version, $this->object->get_version());
-  }
+//  /**
+//   * 
+//   */
+//  public function testVersion() {
+//    $this->assertTrue($this->object->isset_version());
+//    $this->assertEquals(1.0, $this->object->get_version());
+//
+//    $version = 2.0;
+//    $this->object->set_version($version);
+//    $this->assertEquals($version, $this->object->get_version());
+//  }
 
   /**
    * 
