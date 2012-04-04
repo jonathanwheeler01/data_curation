@@ -79,6 +79,27 @@ class XMLDataTest extends PHPUnit_Framework_TestCase {
     
     $this->assertEqualXMLStructure($expectedElement, $this->object->get_as_DOM(), TRUE);
   }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOMWithNodeList() {$dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expected = $dom->createElement('xmlData');
+    $expected->appendChild($child1 = $dom->createElement('child1'));
+    $expected->appendChild($child2 = $dom->createElement('child2'));
+    $expected->appendChild($child3 = $dom->createElement('child3'));
+    $dom->appendChild($expected);
+    
+    // Gets a node list from the document
+    $xpath = new DOMXPath($dom);
+    $query = '/xmlData/*';
+    $nodeList = $xpath->query($query);
+    
+    $this->object->set_any($nodeList);
+    
+    $this->assertEqualXMLStructure($expected, $this->object->get_as_DOM());
+  }
 
 }
 
