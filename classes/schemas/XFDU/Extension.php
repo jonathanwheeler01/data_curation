@@ -14,14 +14,20 @@ class Extension extends aXFDUElement{
   protected $any;
   
   public function set_any($any) {
-    if(get_class($any) != 'DOMElement') {
+    if(get_class($any) != 'DOMElement' && get_class($any) != 'DOMNodeList') {
       $message = 'The XFDU Exception element must be an instance of a DOMNode, '.
                  'instance of '.  get_class($any).' given.';
       $code = 0;
       $previous = NULL;
       throw new InvalidArgumentException($message, $code, $previous);
     }
-    $this->any = $any;
+    
+    if(get_class($any) == 'DOMNodeList') {
+      
+    }
+    else {
+      $this->any = $any;
+    }
   }
   
   /**

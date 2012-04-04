@@ -32,7 +32,7 @@ class XMLDataTest extends PHPUnit_Framework_TestCase {
   /**
    * 
    */
-  public function testAny() {
+  public function testAnyDOMElement() {
     $this->assertFalse($this->object->isset_any());
     
     $dom = new DOMDocument('1.0', 'UTF-8');
@@ -40,6 +40,30 @@ class XMLDataTest extends PHPUnit_Framework_TestCase {
     $this->object->set_any($value);
     $this->assertTrue($this->object->isset_any());
     $this->assertEquals($value, $this->object->get_any());
+  }
+  
+  /**
+   * 
+   */
+  public function testAnyDOMNodeList() {
+    $this->assertFalse($this->object->isset_any());
+    
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $root = $dom->createElement('root');
+    $root->appendChild($child1 = $dom->createElement('child1'));
+    $root->appendChild($child2 = $dom->createElement('child2'));
+    $root->appendChild($child3 = $dom->createElement('child3'));
+    $dom->appendChild($root);
+    
+    // Gets a node list from the document
+    $xpath = new DOMXPath($dom);
+    $query = '/*';
+    $nodeList = $xpath->query($query);
+    
+    $this->object->set_any($nodeList);
+    $this->assertTrue($this->object->isset_any());
+    $this->assertEquals($nodeList, $this->object->get_any());
   }
   
   /**

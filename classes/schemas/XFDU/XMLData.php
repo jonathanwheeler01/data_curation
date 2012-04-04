@@ -17,13 +17,20 @@ class XMLData extends aXFDUElement{
    *
    * @param string $any 
    */
-  public function set_any(DOMelement $any) {
-    $this->any = $any;
+  public function set_any($any) {
+    if(get_class($any) == 'DOMElement' || get_class($any) == 'DOMNodeList') {
+      $this->any = $any;
+    }
+    else {
+      $message = "Invalid input into ".__METHOD__.". DOMElement or DOMNodeList ".
+              " expected, ".  get_class($any)." found.";
+      throw new InvalidArgumentException($message, $code, $previous);
+    }
   }
   
   /**
    *
-   * @return string
+   * @return Mixed
    */
   public function get_any() {
     return $this->any;
