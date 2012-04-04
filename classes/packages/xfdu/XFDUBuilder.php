@@ -12,12 +12,12 @@ class XFDUBuilder {
     $packageHeader = new PackageHeader();
     $packageHeader->set_volumeInfo($this->build_volumeInfo($settings));
     
-    if($settings->extension != '' || $settings->xmlData != '') {
-      $environmentInfo = new EnvironmentInfo();
-      
-      if($settings->extension != '') {
-      }
-    }
+//    if($settings->extension != '' || $settings->xmlData != '') {
+//      $environmentInfo = new EnvironmentInfo();
+//      
+//      if($settings->extension != '') {
+//      }
+//    }
     
     $xfdu = new XFDU();
     $xfdu->set_packageHeader($packageHeader);
@@ -33,13 +33,14 @@ class XFDUBuilder {
     $volumeInfo = new VolumeInfo();
     $volumeInfo->set_specificationVersion($settings->version);
     
-    if($settings->sequenceSize != '' && $settings->sequencePosition) {
+    if($settings->sequenceSize != '' && $settings->sequencePosition != '') {
       $sequenceInformation = new SequenceInformation();
       $sequenceInformation->set_sequenceSize($settings->sequenceSize);
       $sequenceInformation->set_sequencePosition($settings->sequencePosition);
       if($settings->sequenceInfoText != '') {
         $sequenceInformation->set_value($settings->sequenceInfoText);
       }
+      $volumeInfo->set_sequenceInformation($sequenceInformation);
     }
     return $volumeInfo;
   }
@@ -67,7 +68,6 @@ class XFDUBuilder {
     
     for($i = 0; $i < $elements->length; $i++) {
     }
-    
     return $extension;
   }
 }
