@@ -37,7 +37,7 @@ class DirectoryProcessor {
       $this->settings = $settings;
       
       if($settings->root != '') {
-        $this->set_root($path);
+        $this->set_root($settings->root);
       }
 
     $this->exclude = array('.', '..', 'meta');
