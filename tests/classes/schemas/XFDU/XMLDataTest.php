@@ -67,6 +67,21 @@ class XMLDataTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testInvalidXMLData() {
+    $this->object->set_any('invalidData');
+  }
+  
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testXMLDataInvalidObject() {
+    $this->object->set_any(new stdClass());
+  }
+  
+  /**
    * 
    */
   public function testGet_as_DOM () {
@@ -99,6 +114,14 @@ class XMLDataTest extends PHPUnit_Framework_TestCase {
     $this->object->set_any($nodeList);
     
     $this->assertEqualXMLStructure($expected, $this->object->get_as_DOM());
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   * 
+   */
+  public function testEmptyXMLData() {
+    $this->object->get_as_DOM();
   }
 
 }

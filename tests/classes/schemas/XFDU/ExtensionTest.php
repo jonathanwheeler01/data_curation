@@ -32,7 +32,7 @@ class ExtensionTest extends PHPUnit_Framework_TestCase {
   /**
    * 
    */
-  public function testSet_any() {
+  public function testAny() {
     $this->assertFalse($this->object->isset_any());
     
     $dom = new DOMDocument('1.0', 'UTF-8');
@@ -41,6 +41,20 @@ class ExtensionTest extends PHPUnit_Framework_TestCase {
     
     $this->assertTrue($this->object->isset_any());
     $this->assertEqualXMLStructure($any, $dom->importNode($this->object->get_any()));
+  }
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testAnyNotObject() {
+    $this->object->set_any('not an object');
+  }
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testAnyInvalidObject() {
+    $this->object->set_any(new stdClass());
   }
 
   /**
@@ -62,6 +76,37 @@ class ExtensionTest extends PHPUnit_Framework_TestCase {
     
     
     $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
+  }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOMWithNodeList() {$dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $expected = $dom->createElement('extension');
+    $expected->appendChild($child1 = $dom->createElement('child1'));
+    $expected->appendChild($child2 = $dom->createElement('child2'));
+    $expected->appendChild($child3 = $dom->createElement('child3'));
+    $dom->appendChild($expected);
+    
+    // Gets a node list from the document
+    $xpath = new DOMXPath($dom);
+    $query = '/extension/*';
+    $nodeList = $xpath->query($query);
+    
+    print "listlength = ".$nodeList->length;
+    
+    $this->object->set_any($nodeList);
+    
+    $this->assertEqualXMLStructure($expected, $this->object->get_as_DOM());
+  }
+  
+  /**
+   * @expectedException RequiredElementException
+   * 
+   */
+  public function testEmptyXMLData() {
+    $this->object->get_as_DOM();
   }
 }
 
