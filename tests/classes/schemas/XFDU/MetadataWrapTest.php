@@ -72,9 +72,12 @@ class MetadataWrapTest extends PHPUnit_Framework_TestCase {
     $dom = new DOMDocument('1.0', 'UTF-8');
     
     $expectedElement = $dom->createElement('metadataWrap');
-    $expectedElement->appendChild($dom->createElement('xmlData'));
+    $expectedElement->appendChild($data = $dom->createElement('xmlData'));
+    $data->appendChild($any = $dom->createElement('stuff'));
     
-    $this->object->set_XMLData(new XMLData());
+    $xmlData = new XMLData();
+    $xmlData->set_any($any);
+    $this->object->set_XMLData($xmlData);
     
     $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
   }

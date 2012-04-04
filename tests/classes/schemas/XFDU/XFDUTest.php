@@ -169,7 +169,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     
     // Child of volumeInfo
     $expectedSpecificationVersion = $dom->createElement('specificationVersion');
-    $expectedSpecificationVersion->appendChild($dom->createTextNode($this->object->get_version()));
+    $expectedSpecificationVersion->appendChild($dom->createTextNode('1.0'));
     
     // Child of volumeInfo
     $expectedSequenceInformation = $dom->createElement('sequenceInformation');
