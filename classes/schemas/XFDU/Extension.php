@@ -20,6 +20,11 @@ class Extension extends aXFDUElement{
     parent::__construct();
   }
   
+  /**
+   * 
+   * @param DOMElement|DOMNodeList $any
+   * @throws InvalidArgumentException 
+   */
   public function set_any($any) {
     $code = 0;
     $previous = null;

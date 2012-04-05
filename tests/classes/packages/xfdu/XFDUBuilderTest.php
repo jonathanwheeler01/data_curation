@@ -34,6 +34,7 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
    */
   public function testBuild_xfdu() {
     $settings = new XFDUSetup();
+    $settings->packageHeaderID = 'packageID';
     $xfdu = new XFDU();
     $xfdu = $this->object->build_xfdu($settings);
     
@@ -43,6 +44,24 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $volumeInfo = $packageHeader->get_volumeInfo();
     $this->assertTrue($volumeInfo->isset_specificationVersion());
     $this->assertEquals('1.0', $volumeInfo->get_specificationVersion());
+    $this->assertEquals('packageID', $packageHeader->get_id());
+  }
+  
+  /**
+   * 
+   */
+  public function testBuild_xfduNoPackageID() {
+    $settings = new XFDUSetup();
+    $xfdu = new XFDU();
+    $xfdu = $this->object->build_xfdu($settings);
+    
+    $this->assertTrue($xfdu->isset_packageHeader());
+    $packageHeader = $xfdu->get_packageHeader();
+    $this->assertTrue($packageHeader->isset_volumeInfo());
+    $volumeInfo = $packageHeader->get_volumeInfo();
+    $this->assertTrue($volumeInfo->isset_specificationVersion());
+    $this->assertEquals('1.0', $volumeInfo->get_specificationVersion());
+    $this->assertEquals('packageHeader', $packageHeader->get_id());
   }
   
   /**
@@ -72,28 +91,64 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
             $xfdu->get_packageHeader()->get_volumeInfo()->get_sequenceInformation()->get_value());
   }
   
+  /**
+   * 
+   */
   public function testBuild_xfduWithExtension() {
-    
-    $settings = new XFDUSetup();
-    $settings->extension = $any;
-    $settings->extensionNamespace = 'http://example.com';
+    $namespace = new XMLNameSpace();
+    $namespace->set_prefix('ns1');
+    $namespace->set_uri('namespace1');
     
     $dom = new DOMDocument('1.0', 'UTF-8');
-    $extension = $dom->createElement('extension');
-    $dom->appendChild($extension = $dom->createElement('root'));
+    $dom->appendChild($extension = $dom->createElement('extension'));
     $extension->appendChild($dom->createElement('child1'));
     $extension->appendChild($dom->createElement('child2'));
     $extension->appendChild($dom->createElement('child3'));
-    $extension->setAttribute('xmlns:dc', $settings->extensionNamespace);
+    $extension->setAttribute('xmlns:'.$namespace->get_prefix(), $namespace->get_uri());
+    
     
     $xpath = new DOMXPath($dom);
-    $query = '/*';
+    $query = '/extension/*';
     $any = $xpath->query($query);
+    
+    $settings = new XFDUSetup();
+    $settings->extension = $any;
+    $settings->extensionNamespaces = array($namespace);
     
     $xfdu = $this->object->build_xfdu($settings);
     
-            $xfdu->get_packageHeader()->get_environmentInfo()->get_extension();
+    $this->assertEqualXMLStructure(
+            $extension, 
+            $this->object->
+                         build_xfdu($settings)->
+                         get_packageHeader()->
+                         get_environmentInfo()->
+                         get_extension()->
+                         get_as_DOM(), 
+            TRUE);
+  }
+  
+  public function testBuild_xfduWithXMLData() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $dom->appendChild($xmlData = $dom->createElement('xmlData'));
+    $xmlData->appendChild($dom->createElement('child1'));
+    $xmlData->appendChild($dom->createElement('child2'));
+    $xmlData->appendChild($dom->createElement('child3'));    
     
+    $xpath = new DOMXPath($dom);
+    $query = '/xmlData/*';
+    $any = $xpath->query($query);    
+    
+    $settings = new XFDUSetup();
+    $settings->xmlData = $any;
+    
+    $actual = $this->object->build_xfdu($settings)->
+                         get_packageHeader()->
+                         get_environmentInfo()->
+                         get_xmlData()->
+                         get_as_DOM();
+    
+                 $this->assertEqualXMLStructure($xmlData, $actual, TRUE);
   }
 
 }

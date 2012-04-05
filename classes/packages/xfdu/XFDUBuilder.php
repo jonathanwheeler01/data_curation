@@ -9,15 +9,37 @@
  */
 class XFDUBuilder {
   public function build_xfdu(XFDUSetup $settings) {
-    $packageHeader = new PackageHeader();
+    $packageHeader = $this->build_PackageHeader($settings);
     $packageHeader->set_volumeInfo($this->build_volumeInfo($settings));
     
     if($settings->extension != '' || $settings->xmlData != '') {
+      $environmentInfo = new EnvironmentInfo();
+      
+      if($settings->extension != '') {
+        $environmentInfo->set_extension($this->build_extension($settings));
+      }
+      
+      if($settings->xmlData != '') {
+        $environmentInfo->set_xmlData($this->build_XMLdata($settings));
+      }
+      
+      $packageHeader->set_environmentInfo($environmentInfo);
     }
     
     $xfdu = new XFDU();
     $xfdu->set_packageHeader($packageHeader);
     return $xfdu;
+  }
+  
+  protected function build_PackageHeader(XFDUSetup $settings) {
+    $packageHeader = new PackageHeader();
+    if ($settings->packageHeaderID == '') {
+      $packageHeader->set_id('packageHeader');
+    }
+    else {
+      $packageHeader->set_id($settings->packageHeaderID);
+    }
+    return $packageHeader;
   }
   
   /**
@@ -42,29 +64,22 @@ class XFDUBuilder {
   }
   
   protected function build_extension(XFDUSetup $settings) {
-    $dom = new DOMDocument($settings->xmlVersion, $settings->xmlEncoding);
     $extension = new Extension();
-
-    if($settings->extensionNamespace != '') {
-      $namespace = new XMLNameSpace();
-      $namespace->set_uri($settings->extensionNamespace);
-      $namespace->set_prefix($settings->extensionPrefix);
-      $namespace->set_location($settings->extensionNamespaceLocation);
-
-      $extension->add_namespace($namespace);
-    }
     
-    // load the XML but turn off warnings as working with 
-    $dom = new DOMDocument($settings->xmlVersion, $settings->xmlEncoding);
-    @$dom->loadXML($settings->extension);
+    if(sizeof($settings->extensionNamespaces) > 0) {
+      foreach ($settings->extensionNamespaces as $namespace) {
+        $extension->add_namespace($namespace);
+      }
+    }
 
-    // Xpath gets the nodelist
-    $xpath = new DOMXPath($dom);
-    $query = '/*';
-    $elements = $xpath->query($query);
-    $extension->set_any($elements);
+    $extension->set_any($settings->extension);
     
     return $extension;
+  }
+  
+  protected function build_XMLdata(XFDUSetup $settings) {
+    $xmlData = new XMLData();
+    return $xmlData->set_any($settings->xmlData);
   }
 }
 

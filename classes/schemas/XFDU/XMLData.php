@@ -34,6 +34,7 @@ class XMLData extends aXFDUElement{
               " expected, ".  get_class($any)." found.";
       throw new InvalidArgumentException($message, $code, $previous);
     }
+    return $this;
   }
   
   /**

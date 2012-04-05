@@ -98,21 +98,16 @@ class XFDUSetup {
    * If the root element of the the <strong>$extension</strong> does not contain
    * a namespace attribute this must be set or an exception is thrown when the 
    * <strong>get_as_DOM()</strong> method is called.
-   * @var string 
+   * @var array<XMLNamespace>
    */
-  public $extensionNamespace;
+  public $extensionNamespaces;
   
   /**
-   * Specify the prefix for the namespace if needed.
-   * @var string 
+   * 
    */
-  public $extensionPrefix;
-  
-  /**
-   * The location for the namespace if desired.
-   * @var string
-   */
-  public $extensionNamespaceLocation;
+  public function __construct() {
+    $this->extensionNamespaces = array();
+  }
   
 }
 
