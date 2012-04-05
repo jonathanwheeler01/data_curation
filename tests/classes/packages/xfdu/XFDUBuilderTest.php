@@ -73,14 +73,27 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testBuild_xfduWithExtension() {
+    
+    $settings = new XFDUSetup();
+    $settings->extension = $any;
+    $settings->extensionNamespace = 'http://example.com';
+    
     $dom = new DOMDocument('1.0', 'UTF-8');
-    $dom->appendChild($root = $dom->createElement('root'));
-    $root->appendChild($dom->createElement('child1'));
-    $root->appendChild($dom->createElement('child1'));
-    $root->appendChild($dom->createElement('child1'));
+    $extension = $dom->createElement('extension');
+    $dom->appendChild($extension = $dom->createElement('root'));
+    $extension->appendChild($dom->createElement('child1'));
+    $extension->appendChild($dom->createElement('child2'));
+    $extension->appendChild($dom->createElement('child3'));
+    $extension->setAttribute('xmlns:dc', $settings->extensionNamespace);
     
     $xpath = new DOMXPath($dom);
     $query = '/*';
+    $any = $xpath->query($query);
+    
+    $xfdu = $this->object->build_xfdu($settings);
+    
+            $xfdu->get_packageHeader()->get_environmentInfo()->get_extension();
+    
   }
 
 }

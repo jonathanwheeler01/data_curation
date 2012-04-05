@@ -12,6 +12,9 @@ class XFDUBuilder {
     $packageHeader = new PackageHeader();
     $packageHeader->set_volumeInfo($this->build_volumeInfo($settings));
     
+    if($settings->extension != '' || $settings->xmlData != '') {
+    }
+    
     $xfdu = new XFDU();
     $xfdu->set_packageHeader($packageHeader);
     return $xfdu;

@@ -81,7 +81,8 @@ class ExtensionTest extends PHPUnit_Framework_TestCase {
   /**
    * 
    */
-  public function testGet_as_DOMWithNodeList() {$dom = new DOMDocument('1.0', 'UTF-8');
+  public function testGet_as_DOMWithNodeList() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
     
     $expected = $dom->createElement('extension');
     $expected->appendChild($child1 = $dom->createElement('child1'));
@@ -99,6 +100,45 @@ class ExtensionTest extends PHPUnit_Framework_TestCase {
     $this->object->set_any($nodeList);
     
     $this->assertEqualXMLStructure($expected, $this->object->get_as_DOM());
+  }
+  
+  /**
+   * 
+   */
+  public function testGet_as_DOMWithNamespaces() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    
+    $namespace1 = new XMLNameSpace();
+    $namespace1->set_uri('namespace1');
+    $namespace1->set_prefix('ns1');
+    
+    $namespace2 = new XMLNameSpace();
+    $namespace2->set_uri('namespace2');
+    $namespace2->set_location('http://example.com');
+    
+    $this->object->add_namespace($namespace1);
+    $this->object->add_namespace($namespace2);
+    
+    
+    $expected = $dom->createElement('extension');
+    $expected->appendChild($child1 = $dom->createElement('child1'));
+    $expected->appendChild($child2 = $dom->createElement('child2'));
+    $expected->appendChild($child3 = $dom->createElement('child3'));
+    $expected->setAttribute('xmlns:ns1', $namespace1->get_uri());
+    $expected->setAttribute('xmlns', $namespace2->get_uri());
+    $expected->setAttribute('schemaLocation', $namespace2->get_uri().' '.$namespace2->get_location());
+    $dom->appendChild($expected);
+    
+    // Gets a node list from the document
+    $xpath = new DOMXPath($dom);
+    $query = '/extension/*';
+    $nodeList = $xpath->query($query);
+    
+    $this->object->set_any($nodeList);
+    $this->object->add_namespace($namespace2);
+    $this->object->add_namespace($namespace1);
+    
+    $this->assertEqualXMLStructure($expected, $this->object->get_as_DOM(), TRUE);
   }
   
   /**

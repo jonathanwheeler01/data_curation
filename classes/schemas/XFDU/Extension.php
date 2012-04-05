@@ -13,6 +13,13 @@ class Extension extends aXFDUElement{
    */
   protected $any;
   
+  /**
+   * 
+   */
+  public function __construct() {
+    parent::__construct();
+  }
+  
   public function set_any($any) {
     $code = 0;
     $previous = null;
@@ -59,6 +66,27 @@ class Extension extends aXFDUElement{
     
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     $extension = $dom->createElement($this->first_to_lower(get_class($this)));
+    
+    // Handle any namespaces that have been set.
+    if(sizeof($this->namepaces) > 0) {
+      $namespace = new XMLNameSpace();
+      foreach($this->namepaces as $namespace) {
+        if($namespace->get_prefix() != '') {
+          $extension->setAttribute('xmlns:'.$namespace->get_prefix(), $namespace->get_uri());
+        }
+        else {
+          $extension->setAttribute('xmlns', $namespace->get_uri());
+        }
+        
+        // If locations are specified for a namespace add those.
+        if($namespace->get_location() != '') {
+          $extension->setAttribute(
+                  'schemaLocation', 
+                  $extension->getAttribute('schemaLocation').
+                    ' '.$namespace->get_uri().' '.$namespace->get_location());
+        }
+      }
+    }
     
     if(get_class($this->any) == 'DOMNodeList') {
       for($i = 0; $i < $this->any->length; $i++) {
