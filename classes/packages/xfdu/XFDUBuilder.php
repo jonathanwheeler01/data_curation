@@ -33,12 +33,7 @@ class XFDUBuilder {
   
   protected function build_PackageHeader(XFDUSetup $settings) {
     $packageHeader = new PackageHeader();
-    if ($settings->packageHeaderID == '') {
-      $packageHeader->set_id('packageHeader');
-    }
-    else {
-      $packageHeader->set_id($settings->packageHeaderID);
-    }
+    $packageHeader->set_id($settings->packageHeaderID);
     return $packageHeader;
   }
   
