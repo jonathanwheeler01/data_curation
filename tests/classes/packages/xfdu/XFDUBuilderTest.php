@@ -45,6 +45,9 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals('1.0', $volumeInfo->get_specificationVersion());
   }
   
+  /**
+   * 
+   */
   public function testBuild_xfduWithSequence() {
     $settings = new XFDUSetup();
     $settings->sequenceSize = 3;
@@ -67,6 +70,17 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals(
             $settings->sequenceInfoText, 
             $xfdu->get_packageHeader()->get_volumeInfo()->get_sequenceInformation()->get_value());
+  }
+  
+  public function testBuild_xfduWithExtension() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $dom->appendChild($root = $dom->createElement('root'));
+    $root->appendChild($dom->createElement('child1'));
+    $root->appendChild($dom->createElement('child1'));
+    $root->appendChild($dom->createElement('child1'));
+    
+    $xpath = new DOMXPath($dom);
+    $query = '/*';
   }
 
 }

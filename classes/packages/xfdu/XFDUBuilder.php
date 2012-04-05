@@ -12,13 +12,6 @@ class XFDUBuilder {
     $packageHeader = new PackageHeader();
     $packageHeader->set_volumeInfo($this->build_volumeInfo($settings));
     
-//    if($settings->extension != '' || $settings->xmlData != '') {
-//      $environmentInfo = new EnvironmentInfo();
-//      
-//      if($settings->extension != '') {
-//      }
-//    }
-    
     $xfdu = new XFDU();
     $xfdu->set_packageHeader($packageHeader);
     return $xfdu;
@@ -58,6 +51,7 @@ class XFDUBuilder {
       $extension->add_namespace($namespace);
     }
     
+    // load the XML but turn off warnings as working with 
     $dom = new DOMDocument($settings->xmlVersion, $settings->xmlEncoding);
     @$dom->loadXML($settings->extension);
 
@@ -65,9 +59,8 @@ class XFDUBuilder {
     $xpath = new DOMXPath($dom);
     $query = '/*';
     $elements = $xpath->query($query);
+    $extension->set_any($elements);
     
-    for($i = 0; $i < $elements->length; $i++) {
-    }
     return $extension;
   }
 }
