@@ -19,10 +19,8 @@ class InvalidIDTokenExceptionTest extends PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    print 'setting up test.';
     $message = 'test';
     $this->object = new InvalidIDTokenException($message);
-    print 'object created';
   }
 
   /**
@@ -37,7 +35,6 @@ class InvalidIDTokenExceptionTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testConstruct() {
-    print '===============Invoking '.__METHOD__.'==============';
     $this->assertTrue(TRUE);
   }
 

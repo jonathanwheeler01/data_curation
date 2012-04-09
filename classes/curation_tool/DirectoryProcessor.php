@@ -31,6 +31,16 @@ class DirectoryProcessor {
    * @var type 
    */
   protected $exclude;     
+  
+  /**
+   *
+   * @var XFDUBuilder 
+   */
+  protected $builder;
+  
+  private $contentUnitCount = 0;
+  
+  private $dataObjectCount = 0;
 
   public function  __construct(XFDUSetup $settings) {
 
@@ -41,6 +51,8 @@ class DirectoryProcessor {
       }
 
     $this->exclude = array('.', '..', 'meta');
+    
+    $this->builder = new XFDUBuilder();
   }
 
   /**
@@ -111,14 +123,20 @@ class DirectoryProcessor {
     // Create the xfdu package for this directory.
     $settings = new XFDUSetup();
     $settings->root = $path;
-    $package = new XFDUPackage($settings);
+    $package = new XFDUPackage();
+    $package->create_package($settings);
 
     $contents = scandir($path);
     $contents = array_diff($contents, $this->exclude);
 
     foreach($contents as $item) {
       if(is_file($path.DIRECTORY_SEPARATOR.$item)) {
-        $this->handle_file($path.DIRECTORY_SEPARATOR.$item);
+        /**
+         *@todo call to builder->build_contentUnity();
+         * @todo call to $package->add($contentUnit)
+         * @todo call to builder->build_dataobject()
+         * @todo call to $package->add($dataobject)
+         */
       }
       else if(is_dir($path.DIRECTORY_SEPARATOR.$item)) {
         $this->handle_directory($path.DIRECTORY_SEPARATOR.$item);
@@ -132,7 +150,7 @@ class DirectoryProcessor {
    * @param <string> $path
    */
   protected function handle_file($path) {
-    print 'handling file '.$path;
+//    print 'handling file '.$path;
   }
 
   /**

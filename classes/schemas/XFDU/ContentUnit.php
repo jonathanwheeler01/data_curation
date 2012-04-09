@@ -445,9 +445,9 @@ class ContentUnit extends aXFDUElement{
   
   /**
    *
-   * @param xfduPointer $xfduPointer 
+   * @param Reference $xfduPointer 
    */
-  public function set_XFDUPointer (xfduPointer $xfduPointer) {
+  public function set_XFDUPointer (Reference $xfduPointer) {
     $this->XFDUPointer = $xfduPointer;
   }
   
@@ -483,7 +483,13 @@ class ContentUnit extends aXFDUElement{
     }
     
     // Handle the long list of attributes.
-    if($this->isset_id()) {$contentUnit->setAttribute('ID', $this->id);}
+    if($this->isset_id()) {
+      $id = $dom->createAttribute('ID');
+      $id->value = $this->id;
+      
+      $contentUnit->appendChild($id);
+      $contentUnit->setIdAttribute('ID', TRUE);
+    }
     if($this->isset_anyMdID()) {$contentUnit->setAttribute('anyMdID', $this->anyMdID);}
     if($this->isset_behaviorID()) {$contentUnit->setAttribute('behaviorID', $this->behaviorID);}
     if($this->isset_dmdID()) {$contentUnit->setAttribute('dmdID', $this->dmdID);}

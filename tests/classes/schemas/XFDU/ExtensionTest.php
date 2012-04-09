@@ -95,8 +95,6 @@ class ExtensionTest extends PHPUnit_Framework_TestCase {
     $query = '/extension/*';
     $nodeList = $xpath->query($query);
     
-    print "listlength = ".$nodeList->length;
-    
     $this->object->set_any($nodeList);
     
     $this->assertEqualXMLStructure($expected, $this->object->get_as_DOM());

@@ -80,13 +80,6 @@ class DataObjectSectionTest extends PHPUnit_Framework_TestCase {
     
     $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
   }
-  
-  /**
-   * @expectedException RequiredElementException
-   */
-  public function testMissingDataObjects() {
-    $this->object->get_as_DOM();
-  }
 
 }
 

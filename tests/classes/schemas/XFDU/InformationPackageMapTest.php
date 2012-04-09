@@ -146,13 +146,6 @@ class InformationPackageMapTest extends PHPUnit_Framework_TestCase {
     
     $this->assertEqualXMLStructure($expectedElement, $this->object->get_as_DOM(), TRUE);
   }
-  
-  /**
-   * @expectedException RequiredElementException
-   */
-  public function testMissingContentUnitInGet_as_DOM() {
-    $this->object->get_as_DOM();
-  }
 }
 
 ?>

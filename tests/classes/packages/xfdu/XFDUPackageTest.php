@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../../classes/packages/xfdu/XFDUPackage.php';
+require_once dirname(__FILE__) . '/../../../../curation_tool.inc';
 
 /**
  * Test class for XFDUPackage.
@@ -26,6 +26,55 @@ class XFDUPackageTest extends PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
+    
+  }
+  
+  /**
+   * 
+   */
+  public function testCreate_package() {
+    $settings = new XFDUSetup();
+    
+    $this->object->create_package($settings);
+    
+    $document = $this->object->get_document();
+    $this->assertEquals('DOMDocument', get_class($document));
+    
+    $this->assertTrue($document->getElementsByTagName('packageHeader')->length == 1, "length found ".$document->getElementsByTagName('packageHeader')->length);
+    $this->assertTrue($document->getElementsByTagName('informationPackageMap')->length == 1);
+    $this->assertTrue($document->getElementsByTagName('metadataSection')->length == 1);
+    $this->assertTrue($document->getElementsByTagName('dataObjectSection')->length == 1);
+    $this->assertTrue($document->getElementsByTagName('behaviorSection')->length == 1);
+    ;
+  }
+  
+  public function testAddContentUnit() {
+    $settings = new XFDUSetup();
+    $doID = 'do0';
+    $cuID = 'cu0';
+    $doID2 = 'do1';
+    $cuID2 = 'cu1';    
+    $this->object->create_package($settings);
+    
+    $dataObjectPointer1 = new DataObjectPointer();
+    $dataObjectPointer1->set_dataObjectID($doID);
+    
+    $contentUnit1 = new ContentUnit();
+    $contentUnit1->set_id($cuID);
+    $contentUnit1->set_dataObjectPointer($dataObjectPointer1);
+    
+    $this->object->add_element($contentUnit1);
+    
+    $dataObjectPointer2 = new DataObjectPointer();
+    $dataObjectPointer2->set_dataObjectID($doID2);
+    
+    $contentUnit2 = new ContentUnit();
+    $contentUnit2->set_id($cuID2);
+    $contentUnit2->set_dataObjectPointer($dataObjectPointer1, $cuID);
+    
+    print $this->object->get_document()->saveXML();
+    
+    $this->object->add_element($contentUnit2, $cuID);
     
   }
 

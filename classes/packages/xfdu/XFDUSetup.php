@@ -30,7 +30,7 @@ class XFDUSetup {
    *
    * @var float 
    */
-  public $xmlVersion = 1.0;
+  public $xmlVersion = '1.0';
   
   /**
    *

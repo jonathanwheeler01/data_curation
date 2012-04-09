@@ -57,9 +57,9 @@ class DataObjectSection extends aXFDUElement{
    * @return DOMElement;
    */
   public function get_as_DOM($prefix = NULL) {
-    if(!$this->isset_dataObjects()) {
-      throw new RequiredElementException('dataObjects');
-    }
+//    if(!$this->isset_dataObjects()) {
+//      throw new RequiredElementException('dataObjects');
+//    }
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
     $dataObjectSection = $dom->createElement('dataObjectSection');

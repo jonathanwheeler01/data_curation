@@ -45,6 +45,10 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($volumeInfo->isset_specificationVersion());
     $this->assertEquals('1.0', $volumeInfo->get_specificationVersion());
     $this->assertEquals('packageID', $packageHeader->get_id());
+    $this->assertTrue($xfdu->isset_informationPackageMap());
+    $this->assertTrue($xfdu->isset_metadataSection());
+    $this->assertTrue($xfdu->isset_dataObjectSection());
+    $this->assertTrue($xfdu->isset_behaviorSection());
   }
   
   /**
@@ -115,8 +119,6 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $settings->extension = $any;
     $settings->extensionNamespaces = array($namespace);
     
-    $xfdu = $this->object->build_xfdu($settings);
-    
     $this->assertEqualXMLStructure(
             $extension, 
             $this->object->
@@ -148,7 +150,67 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
                          get_xmlData()->
                          get_as_DOM();
     
-                 $this->assertEqualXMLStructure($xmlData, $actual, TRUE);
+    $this->assertEqualXMLStructure($xmlData, $actual, TRUE);
+  }
+  
+  /**
+   * 
+   */
+  public function testBuild_dataObjectPointer() {
+    $doID = 'do1';
+    
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $expected = $dom->createElement('dataObjectPointer');
+    $expected->setAttribute('dataObjectID', $doID);
+    
+    $this->assertEqualXMLStructure($expected, $this->object->build_dataObjectPointer($doID)->get_as_DOM());
+  }
+  
+  /**
+   * 
+   */
+  public function testBuild_dataObjectPointerWithID() {
+    $doID = 'do1';
+    $id = 'id';
+    
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $expected = $dom->createElement('dataObjectPointer');
+    $expected->setAttribute('dataObjectID', $doID);
+    $expected->setAttribute('ID', $id);
+    
+    $this->assertEqualXMLStructure($expected, $this->object->build_dataObjectPointer($doID, $id)->get_as_DOM());
+  }
+  
+  /**
+   * 
+   */
+  public function testBuild_contentUnitDataObjectPointer() {
+    $doID = 'do1';
+    $cuID = 'cu1';
+    $id = 'id';
+    
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $expected = $dom->createElement('xfdu:contentUnit');
+    $expected->setAttribute('ID', $cuID);
+    
+    $expectedDO = $dom->createElement('dataObjectPointer');
+    $expectedDO->setAttribute('ID', $id);
+    $expectedDO->setAttribute('dataObjectID', $doID);
+    
+    $expected->appendChild($expectedDO);
+    
+    $dataObjectPointer = new DataObjectPointer();
+    $dataObjectPointer->set_dataObjectID($doID);
+    $dataObjectPointer->set_id($id);
+    
+    $this->assertEqualXMLStructure($expected, $this->object->build_contentUnit($cuID, $dataObjectPointer)->get_as_DOM());
+  }
+  
+  /**
+   *@expectedException InvalidArgumentException 
+   */
+  public function testBuild_contentUnitInvalidObject() {
+    $this->object->build_contentUnit('id', new VolumeInfo());
   }
 
 }

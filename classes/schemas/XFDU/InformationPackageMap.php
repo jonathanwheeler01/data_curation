@@ -181,9 +181,11 @@ class InformationPackageMap extends aXFDUElement{
         $informationPackageMap->appendChild($dom->importNode($contentUnit->get_as_DOM()));
       }
     }
-    else {
-      throw new RequiredElementException('contentUnit');
-    }
+    // Removed this to allow incomplete packagemaps. Because we verify that 
+    // a root has been sent previously this is probably not required.
+//    else {
+//      throw new RequiredElementException('contentUnit');
+//    }
     
     if($this->isset_id()) {
       $informationPackageMap->setAttribute('ID', $this->get_id());
