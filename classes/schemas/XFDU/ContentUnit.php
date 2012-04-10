@@ -476,10 +476,13 @@ class ContentUnit extends aXFDUElement{
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
     if($prefix !== NULL) {
-      $contentUnit = $dom->createElement($prefix.':'.$this->first_to_lower(get_class($this)));
+      $contentUnit = $dom->createElement('urn:ccsds:schema:xfdu:1', $prefix.':'.$this->first_to_lower(get_class($this)));
+//      $contentUnit->setAttribute('xmlns:'.$prefix, 'urn:ccsds:schema:xfdu:1');
     }
     else {
-      $contentUnit = $dom->createElement('xfdu:'.$this->first_to_lower(get_class($this)));
+//      $contentUnit = $dom->createElement('xfdu:'.$this->first_to_lower(get_class($this)));
+      $contentUnit = $dom->createElementNS('urn:ccsds:schema:xfdu:1', 'xfdu:'.$this->first_to_lower(get_class($this)));
+//      $contentUnit->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
     }
     
     // Handle the long list of attributes.

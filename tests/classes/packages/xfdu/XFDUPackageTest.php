@@ -48,6 +48,9 @@ class XFDUPackageTest extends PHPUnit_Framework_TestCase {
     ;
   }
   
+  /**
+   * 
+   */
   public function testAddContentUnit() {
     $settings = new XFDUSetup();
     $doID = 'do0';
@@ -72,10 +75,46 @@ class XFDUPackageTest extends PHPUnit_Framework_TestCase {
     $contentUnit2->set_id($cuID2);
     $contentUnit2->set_dataObjectPointer($dataObjectPointer1, $cuID);
     
-    print $this->object->get_document()->saveXML();
-    
     $this->object->add_element($contentUnit2, $cuID);
     
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $dom = $this->object->get_document();
+    
+    $xpath = new DOMXPath($dom);
+    $query = '//xfdu:contentUnit[@ID="cu1"]';
+    $this->assertEquals(1, $xpath->query($query)->length);
+    
+    
+    $query = '//informationPackageMap/xfdu:contentUnit[@ID="cu0"]//xfdu:contentUnit[@ID="cu1"]';
+    $this->assertEquals(1, $xpath->query($query)->length);
+    
+    
+  }
+  
+  /**
+   *@expectedException XFDUException 
+   */
+  public function testAddContentParentInvalidParent() {
+    $settings = new XFDUSetup();
+    $doID = 'do0';
+    $cuID = 'cu0';   
+    $this->object->create_package($settings);
+    
+    $dataObjectPointer1 = new DataObjectPointer();
+    $dataObjectPointer1->set_dataObjectID($doID);
+    
+    $contentUnit1 = new ContentUnit();
+    $contentUnit1->set_id($cuID);
+    $contentUnit1->set_dataObjectPointer($dataObjectPointer1);
+    
+    $this->object->add_element($contentUnit1, 'cu3');
+  }
+  
+  /**
+   *@expectedException InvalidArgumentException 
+   */
+  public function testAddInvalidClass() {
+    $this->object->add_element(new XFDU());
   }
 
 }

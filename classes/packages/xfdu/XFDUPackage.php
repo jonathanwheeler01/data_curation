@@ -57,6 +57,10 @@ class XFDUPackage {
       $parent = $this->xfdu->getElementsByTagName('informationPackageMap')->item(0);
     }
     else {
+      $xpath = new DOMXPath($this->xfdu);
+      $xpath->registerNamespace('xfdu', 'urn:ccsds:schema:xfdu:1');
+      $query = "//xfdu:contentUnit[@ID='".$parentID."']";
+      $parent = $xpath->query($query)->item(0);
     }
     
     if($parent == NULL) {
@@ -69,6 +73,18 @@ class XFDUPackage {
   
   /**
    *
+   * @param DataObject $dataObject
+   * @return DOMElement 
+   */
+  private function add_DataObject(DataObject $dataObject) {
+    $doDOM = $dataObject->get_as_DOM();
+    $dataObjectSection = $this->xfdu->getElementsByTagName('dataObjectSection')->item(0);
+    return $dataObjectSection->appendChild($this->xfdu->importNode($doDOM));
+  }
+  
+  /**
+   * Adds the element to the appropriate place in the xfdu document.
+   * 
    * @param aXFDUElement $element
    * @param string $parentID
    * @throws InvalidArgumentException 
@@ -80,6 +96,9 @@ class XFDUPackage {
     switch(get_class($element)) {
       case 'ContentUnit':
         $return = $this->add_contentUnit($element, $parentID);
+        break;
+      case 'DataObject':
+        $return = $this->add_DataObject($dataObject);
         break;
       default:
         $message = 'Invalid class "'.get_class($element).'. Argument must be one '.

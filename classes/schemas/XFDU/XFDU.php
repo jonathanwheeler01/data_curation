@@ -309,11 +309,13 @@ class XFDU extends aXFDUElement{
     // attribute.
     if($prefix !== NULL) {
       $xfdu = $dom->createElement($prefix.':'.get_class($this));
-      $xfdu->setAttribute('xmlns:'.$prefix, 'urn:ccsds:schema:xfdu:1');
+      $xfdu = $dom->createElementNS('urn:ccsds:schema:xfdu:1', $prefix.':XFDU');
+//      $xfdu->setAttribute('xmlns:'.$prefix, 'urn:ccsds:schema:xfdu:1');
     }
     else {
-      $xfdu = $dom->createElement('xfdu:'.get_class($this));
-      $xfdu->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
+//      $xfdu = $dom->createElement('xfdu:'.get_class($this));
+      $xfdu = $dom->createElementNS('urn:ccsds:schema:xfdu:1', 'xfdu:XFDU');
+//      $xfdu->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
     }
     $xfdu->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
     $xfdu->setAttribute('xsi:schemaLocation', 'urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd');

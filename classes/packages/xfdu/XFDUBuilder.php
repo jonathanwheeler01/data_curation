@@ -102,6 +102,13 @@ class XFDUBuilder {
     return $dataObjectPointer;
   }
   
+  /**
+   *
+   * @param string $contentUnitID
+   * @param DataOjbectPointer|Reference $content
+   * @return ContentUnit
+   * @throws InvalidArgumentException 
+   */
   public function build_contentUnit($contentUnitID, aXMLElement $content) {
     if(get_class($content) != 'DataObjectPointer' && get_class($content) != 'Reference') {
       $message = 'Invalid element type '.get_class($content).
@@ -118,7 +125,10 @@ class XFDUBuilder {
       $contentUnit->set_dataObjectPointer($content);
     }
     else {
-      $contentUnit->set_XFDUPointer($xfduPointer);
+      /**
+       * @todo Work on XFDUPOinter or Reference Builder. 
+       */
+      $contentUnit->set_XFDUPointer($content);
     }
     
     return $contentUnit;
