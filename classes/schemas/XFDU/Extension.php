@@ -14,7 +14,7 @@ class Extension extends aXFDUElement{
   protected $any;
   
   public function set_any($any) {
-    if(get_class($any) != 'DOMElement') {
+    if(get_class($any) != 'DOMElement' && get_class($any) != 'DOMNodeList') {
       $message = 'The XFDU Exception element must be an instance of a DOMNode, '.
                  'instance of '.  get_class($any).' given.';
       $code = 0;
@@ -50,7 +50,14 @@ class Extension extends aXFDUElement{
 
     $extension = $dom->createElement($this->first_to_lower(get_class($this)));
 
-    $extension->appendChild($dom->importNode($this->any, TRUE));
+    if(get_class($this->any) == 'DOMNode' || get_class($this->any) == 'DOMElement' ) {
+      $extension->appendChild($dom->importNode($this->any, TRUE));
+    }
+    else {
+      for($i = 0; $i < $$this->any->length; $i++) {
+        $extension->appendChild($dom->importNode($this->any->item($i), TRUE));
+      }
+    }
 
     return $extension;
   }

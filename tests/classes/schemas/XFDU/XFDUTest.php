@@ -33,7 +33,6 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testID() {
-    print '===============Invoking '.__METHOD__.'==============';;
     $this->assertFalse($this->object->isset_id());
 
     $id = 'test';
@@ -46,16 +45,13 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * @expectedException InvalidIDTokenException
    */
   public function testInvalidID() {
-    print '===============Invoking '.__METHOD__.'==============';
     $this->object->set_id('0invalid');
-    print '===============Down with '.__METHOD__.'==============';
   }
 
   /**
    * 
    */
   public function testObjID() {
-    print '===============Invoking '.__METHOD__.'==============';
     $this->assertFalse($this->object->isset_objID());
 
     $objID = 'test';
@@ -68,7 +64,6 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testTextInfo() {
-    print '===============Invoking '.__METHOD__.'==============';
     $this->assertFalse($this->object->isset_textInfo());
 
     $textInfo = 'test';
@@ -169,7 +164,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     
     // Child of volumeInfo
     $expectedSpecificationVersion = $dom->createElement('specificationVersion');
-    $expectedSpecificationVersion->appendChild($dom->createTextNode($this->object->get_version()));
+    $expectedSpecificationVersion->appendChild($dom->createTextNode('1.0'));
     
     // Child of volumeInfo
     $expectedSequenceInformation = $dom->createElement('sequenceInformation');

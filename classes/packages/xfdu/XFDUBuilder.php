@@ -12,10 +12,14 @@ class XFDUBuilder {
     $packageHeader = new PackageHeader();
     $packageHeader->set_volumeInfo($this->build_volumeInfo($settings));
     
-    if($settings->extension != '' || $settings->xmlData != '') {
+    if(isset($settings->extension) || isset($settings->xmlData)) {
       $environmentInfo = new EnvironmentInfo();
+      if(isset($settings->extension)) {
+        $environmentInfo->set_extension($this->build_extension($settings));
+      }
       
-      if($settings->extension != '') {
+      if(isset($settings->xmlData)) {
+        $environmentInfo->set_xmlData($this->build_XMLData($settings));
       }
     }
     
@@ -33,19 +37,19 @@ class XFDUBuilder {
     $volumeInfo = new VolumeInfo();
     $volumeInfo->set_specificationVersion($settings->version);
     
-    if($settings->sequenceSize != '' && $settings->sequencePosition) {
+    if($settings->sequenceSize != '' && $settings->sequencePosition != '') {
       $sequenceInformation = new SequenceInformation();
       $sequenceInformation->set_sequenceSize($settings->sequenceSize);
       $sequenceInformation->set_sequencePosition($settings->sequencePosition);
       if($settings->sequenceInfoText != '') {
         $sequenceInformation->set_value($settings->sequenceInfoText);
       }
+      $volumeInfo->set_sequenceInformation($sequenceInformation);
     }
     return $volumeInfo;
   }
   
   protected function build_extension(XFDUSetup $settings) {
-    $dom = new DOMDocument($settings->xmlVersion, $settings->xmlEncoding);
     $extension = new Extension();
 
     if($settings->extensionNamespace != '') {
@@ -57,6 +61,7 @@ class XFDUBuilder {
       $extension->add_namespace($namespace);
     }
     
+    // load the XML but turn off warnings as working with 
     $dom = new DOMDocument($settings->xmlVersion, $settings->xmlEncoding);
     @$dom->loadXML($settings->extension);
 
@@ -64,51 +69,26 @@ class XFDUBuilder {
     $xpath = new DOMXPath($dom);
     $query = '/*';
     $elements = $xpath->query($query);
-    
-    for($i = 0; $i < $elements->length; $i++) {
-    }
+    $extension->set_any($elements);
     
     return $extension;
   }
   
-  /**
-   *
-   * @param string $locatorType Either &quote;URL&quote; or &quote;OTHER&qutoe;
-   * @param string $locator Either the url or other locator string.
-   * @param string  $textInfo Any text info you want associated with the element.
-   * @param string  $otherLocatorType Required of the $locatorType is &quote;OTHER&qutoe;
-   * @return XFDUPointer 
-   * @throws InvalidArgumentException 
-   */
-  public function build_XFDUPointer($locatorType, 
-                                    $locator, 
-                                    $textInfo = NULL, 
-                                    $otherLocatorType = NULL
-                                    ) {
-    $xfduPointer = new XFDUPointer();
-    $xfduPointer->set_locatorType($locatorType);
-    if($textInfo == NULL) {
-      $xfduPointer->set_textInfo($textInfo);
-    }
+  protected function build_XMLData(XFDUSetup $settings) {
+    $dom = new DOMDocument($settings->xmlVersion, $settings->xmlEncoding);
+    $xmlData = new XMLData();
     
-    // Handle locator type. It must be either URL or OTHER. If it is OTHER
-    // then $otherLocatorType must not be null.
-    if($locatorType == 'URL') {
-      $xfduPointer->set_href($locator);
-    }
-    else if($locatorType == "OTHER") {
-      $xfduPointer->set_locator($locator);
-      $xfduPointer->set_otherLocatorType($otherLocatorType);
-    }
-    else {
-      $message = 'Invalid locatorType. Expecting a value of URL or OTHER, '.
-              $locatorType.' given.';
-      $code = 0;
-      $previous = NULL;
-      throw new InvalidArgumentException($message, $code, $previous);
-    }
+    // load the XML but turn off warnings as working with 
+    $dom = new DOMDocument($settings->xmlVersion, $settings->xmlEncoding);
+    @$dom->loadXML($settings->xmlData);
     
-    return $xfduPointer;
+    // Xpath gets the nodelist
+    $xpath = new DOMXPath($dom);
+    $query = '/*';
+    $elements = $xpath->query($query);
+    $xmlData->set_any($elements);
+    
+    return $xmlData;
   }
 }
 

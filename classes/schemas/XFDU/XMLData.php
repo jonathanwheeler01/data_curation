@@ -15,9 +15,16 @@ class XMLData extends aXFDUElement{
   
   /**
    *
-   * @param string $any 
+   * @param string $any XML as DOMElement or DOMNodeList
    */
-  public function set_any(DOMelement $any) {
+  public function set_any($any) {
+    if(get_class($any) != 'DOMElement' && get_class($any) != 'DOMNodeList') {
+      $message = 'The XFDU Exception element must be an instance of a DOMNode, '.
+                 'instance of '.  get_class($any).' given.';
+      $code = 0;
+      $previous = NULL;
+      throw new InvalidArgumentException($message, $code, $previous);
+    }
     $this->any = $any;
   }
   
@@ -44,12 +51,18 @@ class XMLData extends aXFDUElement{
    */
   public function get_as_DOM($prefix = NULL) {
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
-    
+
     $xmlData = $dom->createElement('xmlData');
-    if($this->isset_any()) {
+
+    if(get_class($this->any) == 'DOMNode' || get_class($this->any) == 'DOMElement' ) {
       $xmlData->appendChild($dom->importNode($this->any, TRUE));
     }
-    
+    else if(get_class($this->any) == 'DOMElementList'){
+      for($i = 0; $i < $$this->any->length; $i++) {
+        $xmlData->appendChild($dom->importNode($this->any->item($i), TRUE));
+      }
+    }
+
     return $xmlData;
   }
 }
