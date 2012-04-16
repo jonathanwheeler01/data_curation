@@ -70,6 +70,46 @@ class XFDUBuilder {
     
     return $extension;
   }
+  
+  /**
+   *
+   * @param string $locatorType Either &quote;URL&quote; or &quote;OTHER&qutoe;
+   * @param string $locator Either the url or other locator string.
+   * @param string  $textInfo Any text info you want associated with the element.
+   * @param string  $otherLocatorType Required of the $locatorType is &quote;OTHER&qutoe;
+   * @return XFDUPointer 
+   * @throws InvalidArgumentException 
+   */
+  public function build_XFDUPointer($locatorType, 
+                                    $locator, 
+                                    $textInfo = NULL, 
+                                    $otherLocatorType = NULL
+                                    ) {
+    $xfduPointer = new XFDUPointer();
+    $xfduPointer->set_locatorType($locatorType);
+    if($textInfo == NULL) {
+      $xfduPointer->set_textInfo($textInfo);
+    }
+    
+    // Handle locator type. It must be either URL or OTHER. If it is OTHER
+    // then $otherLocatorType must not be null.
+    if($locatorType == 'URL') {
+      $xfduPointer->set_href($locator);
+    }
+    else if($locatorType == "OTHER") {
+      $xfduPointer->set_locator($locator);
+      $xfduPointer->set_otherLocatorType($otherLocatorType);
+    }
+    else {
+      $message = 'Invalid locatorType. Expecting a value of URL or OTHER, '.
+              $locatorType.' given.';
+      $code = 0;
+      $previous = NULL;
+      throw new InvalidArgumentException($message, $code, $previous);
+    }
+    
+    return $xfduPointer;
+  }
 }
 
 ?>

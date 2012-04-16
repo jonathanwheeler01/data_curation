@@ -115,6 +115,13 @@ class DirectoryProcessor {
 
     $contents = scandir($path);
     $contents = array_diff($contents, $this->exclude);
+    
+    //Used to create paths
+    $parsedPath = explode('/', $path);
+    
+    
+    
+    
 
     foreach($contents as $item) {
       if(is_file($path.DIRECTORY_SEPARATOR.$item)) {
