@@ -72,6 +72,9 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
             $xfdu->get_packageHeader()->get_volumeInfo()->get_sequenceInformation()->get_value());
   }
   
+  /**
+   * 
+   */
   public function testBuild_xfduWithExtension() {
     
     $dom = new DOMDocument('1.0', 'UTF-8');
@@ -87,6 +90,9 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $this->object->build_xfdu($settings);
   }
   
+  /**
+   * 
+   */
   public function testBuild_xfduWithXMLData() {
     
     $dom = new DOMDocument('1.0', 'UTF-8');
@@ -101,10 +107,70 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $this->object->build_xfdu($settings);
   }
   
-  public function testBuild_XFDUPointer() {
+  /**
+   * 
+   */
+  public function testBuild_XFDUPointerURL() {
+    $locatorType = 'URL';
+    $href = 'example.com';
+    $id = 'id1';
+    $textInfo = 'textInfo';
     
+    $xfduPointer = new XFDUPointer();
+    $xfduPointer = $this->object->build_XDFUPointer($locatorType, $href, $textInfo, NULL, $id);
+    
+    $this->assertEquals($locatorType, $xfduPointer->get_locatorType());
+    $this->assertEquals($href, $xfduPointer->get_href());
+    $this->assertEquals($id, $xfduPointer->get_id());
+    $this->assertEquals($textInfo, $xfduPointer->get_textInfo());
   }
-
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testBuild_XFDUPointerInvalidLocatorType() {
+    $locatorType = 'INVALID';
+    $href = 'example.com';
+    $id = 'id1';
+    $textInfo = 'textInfo';
+    
+    $xfduPointer = new XFDUPointer();
+    $xfduPointer = $this->object->build_XDFUPointer($locatorType, $href, $textInfo, NULL, $id);
+  }
+  
+  /**
+   * 
+   */
+  public function testBuild_XFDUPointerOTHER() {
+    $locatorType = 'OTHER';
+    $locator = 'example.com';
+    $otherLocatorType = 'badone';
+    $id = 'id1';
+    $textInfo = 'textInfo';
+    
+    $xfduPointer = new XFDUPointer();
+    $xfduPointer = $this->object->build_XDFUPointer($locatorType, $locator, $textInfo, $otherLocatorType, $id);
+    
+    $this->assertEquals($locatorType, $xfduPointer->get_locatorType());
+    $this->assertEquals($locator, $xfduPointer->get_locator());
+    $this->assertEquals($id, $xfduPointer->get_id());
+    $this->assertEquals($textInfo, $xfduPointer->get_textInfo());
+    $this->assertEquals($otherLocatorType, $xfduPointer->get_otherLocatorType());
+  }
+  
+  
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testBuild_XFDUPointerOTHERMissingType() {
+    $locatorType = 'OTHER';
+    $locator = 'example.com';
+    $id = 'id1';
+    $textInfo = 'textInfo';
+    
+    $xfduPointer = new XFDUPointer();
+    $xfduPointer = $this->object->build_XDFUPointer($locatorType, $locator, $textInfo, NULL, $id);
+  }
 }
 
 ?>

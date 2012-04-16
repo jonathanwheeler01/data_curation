@@ -57,8 +57,8 @@ class XMLData extends aXFDUElement{
     if(get_class($this->any) == 'DOMNode' || get_class($this->any) == 'DOMElement' ) {
       $xmlData->appendChild($dom->importNode($this->any, TRUE));
     }
-    else if(get_class($this->any) == 'DOMElementList'){
-      for($i = 0; $i < $$this->any->length; $i++) {
+    else if(get_class($this->any) == 'DOMNodeList'){
+      for($i = 0; $i < $this->any->length; $i++) {
         $xmlData->appendChild($dom->importNode($this->any->item($i), TRUE));
       }
     }

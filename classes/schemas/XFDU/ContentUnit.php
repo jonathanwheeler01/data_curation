@@ -477,9 +477,10 @@ class ContentUnit extends aXFDUElement{
     
     if($prefix !== NULL) {
       $contentUnit = $dom->createElement($prefix.':'.$this->first_to_lower(get_class($this)));
+      $contentUnit = $dom->createElementNS('urn:ccsds:schema:xfdu:1', $prefix.':contentUnit');
     }
     else {
-      $contentUnit = $dom->createElement('xfdu:'.$this->first_to_lower(get_class($this)));
+      $contentUnit = $dom->createElementNS('urn:ccsds:schema:xfdu:1', 'xfdu:'.$this->first_to_lower(get_class($this)));
     }
     
     // Handle the long list of attributes.
