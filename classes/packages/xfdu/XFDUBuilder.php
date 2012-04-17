@@ -144,6 +144,34 @@ class XFDUBuilder {
     
     return $XFDUPointer;
   }
+  
+  /**
+   *
+   * @param aXFDUElement $content
+   * @param string $id
+   * @param string $unitType
+   * @param string $textInfo
+   * @return ContentUnit
+   * @throws InvalidArgumentException 
+   */
+  public function build_contentUnit(aXFDUElement $content, $id = NULL, $unitType = NULL, $textInfo = NULL) {
+    if(get_class($content) != 'XFDUPointer' && get_class($content) != 'DataObjectPointer') {
+      $message = 'Invalid content type. Expected an XFDUPointer or dataObjectPointer expected. '.
+              'Encounter '.get_class($content);
+      $code = 0;
+      $previous = NULL;
+      throw new InvalidArgumentException($message, $code,$previous);
+    }
+    
+    $contentUnit = new ContentUnit();
+    if(get_class($content) == 'XFDUPointer') {$contentUnit->set_XFDUPointer($content);}
+    if(get_class($content) == 'DataObjectPointer') {$contentUnit->set_dataObjectPointer($content);}
+    if($id) {$contentUnit->set_id($id);}
+    if($unitType) {$contentUnit->set_unitType($unitType);}
+    if($textInfo) {$contentUnit->set_textInfo($textInfo);}
+    
+    return $contentUnit;
+  }
 }
 
 ?>

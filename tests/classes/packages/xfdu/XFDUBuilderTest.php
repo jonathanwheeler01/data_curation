@@ -171,6 +171,50 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $xfduPointer = new XFDUPointer();
     $xfduPointer = $this->object->build_XDFUPointer($locatorType, $locator, $textInfo, NULL, $id);
   }
+  
+  /**
+   * 
+   */
+  public function testBuild_ContentUnitXFDUPointer() {
+    $content = new XFDUPointer();
+    $id = 'id';
+    $textInfo = 'textInfo';
+    $unitType = 'unitType';
+    
+    $contentUnit = $this->object->build_contentUnit($content, $id, $unitType, $textInfo);
+    
+    $this->assertEquals(get_class($content), get_class($contentUnit->get_XFDUPointer()));
+    $this->assertEquals($id, $contentUnit->get_id());
+    $this->assertEquals($textInfo, $contentUnit->get_textInfo());
+    $this->assertEquals($unitType, $contentUnit->get_unitType());
+  }
+  
+  
+  /**
+   * 
+   */
+  public function testBuild_ContentUnitDataObjectPointer() {
+    $content = new DataObjectPointer();
+    $id = NULL;
+    $unitType = 'unitType';
+    
+    $contentUnit = $this->object->build_contentUnit($content, $id, $unitType);
+    
+    $this->assertEquals(get_class($content), get_class($contentUnit->get_dataObjectPointer()));
+    $this->assertNull($content->get_id());
+    $this->assertEquals($unitType, $contentUnit->get_unitType());
+    $this->assertNULL($contentUnit->get_textInfo());
+  }
+  
+  /**
+   *@expectedException InvalidArgumentException 
+   */
+  public function testBuild_ContentUnitInvalidContent() {
+    $content = new XFDU();
+    
+    $this->object->build_contentUnit($content);
+  }
+  
 }
 
 ?>

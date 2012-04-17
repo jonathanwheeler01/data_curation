@@ -98,12 +98,15 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @expectedException PathNotFoundException
+   *@todo test this  
    */
-  public function testInvalidRoot() {
-    $path = '/path1/path2';
-    $this->object->set_root($path);
-  }
+//  /**
+//   * @expectedException PathNotFoundException
+//   */
+//  public function testInvalidRoot() {
+//    $path = '/path1/path2';
+//    $this->object->set_root($path);
+//  }
   
   /**
    * 

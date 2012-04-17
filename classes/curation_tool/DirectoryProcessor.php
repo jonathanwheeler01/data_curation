@@ -12,10 +12,10 @@
 class DirectoryProcessor {
   
   /**
-   *  Root directory for the data, or the data file itself.
-   * @var type 
+   *
+   * @var XFDUBuilder 
    */
-  protected $root;
+  protected $builder;
   
   /**
    * Settings for directory processing. This includes any extension, volume info
@@ -33,30 +33,13 @@ class DirectoryProcessor {
   protected $exclude;     
 
   public function  __construct(XFDUSetup $settings) {
-
-      $this->settings = $settings;
-      
-      if($settings->root != '') {
-        $this->set_root($settings->root);
-      }
+    $this->builder = new XFDUBuilder();
+    
+    $this->settings = $settings;
 
     $this->exclude = array('.', '..', 'meta');
-  }
-
-  /**
-   * Sets the root directory to the data set.
-   *
-   * @param <string> $path Path to the root directory for the data set
-   */
-  public function set_root($path) {
-    if(file_exists($path)) {
-      $this->root = $path;
-    }
-    else {
-      $message = 'Unable to find the path "'.$path.'". Check the path exists and try again.';
-      throw new PathNotFoundException($message, E_WARNING);
-    }
-    return $this;
+    
+    
   }
 
   /**
@@ -64,7 +47,7 @@ class DirectoryProcessor {
    * @return <string>
    */
   public function get_root() {
-    return $this->root;
+    return $this->settings->root;
   }
 
   /**
@@ -74,26 +57,29 @@ class DirectoryProcessor {
   public function process_dataset() {
 //    $this->oldcwd = getcwd();
 
-    if($this->root == '') {
+    /**
+     *@todo test file or diretory exists. 
+     */
+    if($this->settings->root == '') {
       throw new PathNotFoundException('No path has been specified', E_ERROR);
     }
 
     // If it's a bare file, moves the file into a same named directory.
     // This provides a consistent structure across all data sets.
-    if(is_file($this->root)) {
+    if(is_file($this->settings->root)) {
       // Get the required info from the file
-      $pathInfo = pathinfo($this->root);
-      $fileName = basename($this->root, $pathInfo['extension']);
+      $pathInfo = pathinfo($this->settings->root);
+      $fileName = basename($this->settings->root, $pathInfo['extension']);
 
       mkdir($pathInfo['dirname'].DIRECTORY_SEPARATOR.$fileName);                // make the new directory
-      rename($this->root, $pathInfo['dirname'].                                 // Move the file into the new directory
+      rename($this->settings->root, $pathInfo['dirname'].                                 // Move the file into the new directory
                                      DIRECTORY_SEPARATOR.$fileName.
                                      DIRECTORY_SEPARATOR.$pathInfo['basename']);
 
-      $this->root = $pathInfo['dirname'].DIRECTORY_SEPARATOR.$pathInfo['filename']; // Set root to the directory not file
+      $this->settings->root = $pathInfo['dirname'].DIRECTORY_SEPARATOR.$pathInfo['filename']; // Set root to the directory not file
     }
 
-    $this->process_path($this->root);                                           // Start processing the data.
+    $this->process_path($$this->settings->root);                                           // Start processing the data.
   }
 
   /**
@@ -107,11 +93,25 @@ class DirectoryProcessor {
     if(!file_exists($path.'/meta')) {
       mkdir($path.'/meta');
     }
-    
-    // Create the xfdu package for this directory.
-    $settings = new XFDUSetup();
-    $settings->root = $path;
+      
     $package = new XFDUPackage($settings);
+    
+    if($path != $this->settings->root) {
+      $parsedPath = explode('/', $path);
+      
+      $xfduPointer = new XFDUPointer();
+      $xfduPointer->set_locatorType('URL');
+      $xfduPointer->set_href('../meta/'.$parsedPath[sizeof($parsedPath) - 2].'_xfdu.xml');
+      $xfduPointer->set_textInfo($parsedPath[sizeof($parsedPath) - 2]);
+      
+      $backLink = $this->
+                   builder->
+                    build_contentUnit($xfduPointer, 
+                                       'backlink', 
+                                        'backlink', 
+                                        $parsedPath[sizeof($parsedPath) - 2]);
+      $package->add($backLink);
+    }
 
     $contents = scandir($path);
     $contents = array_diff($contents, $this->exclude);
