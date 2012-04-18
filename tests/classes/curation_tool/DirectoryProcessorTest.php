@@ -98,15 +98,17 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   *@todo test this  
+   * @expectedException PathNotFoundException
    */
-//  /**
-//   * @expectedException PathNotFoundException
-//   */
-//  public function testInvalidRoot() {
-//    $path = '/path1/path2';
-//    $this->object->set_root($path);
-//  }
+  public function testInvalidRoot() {
+    $path = '/path1/path2';
+    $settings = new XFDUSetup();
+    $settings->root = $path;
+    
+    $this->object = new DirectoryProcessor($settings);
+    
+    $this->object->process_dataset();
+  }
   
   /**
    * 
@@ -124,23 +126,16 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
     mkdir('/investigator');
     touch('/investigator/data.txt');
     
-    $this->object->set_root('/investigator/data.txt')
-            ->process_dataset();
+    $settings = new XFDUSetup();
+    $settings->root = '/investigator/data.txt';
+    $this->object = new DirectoryProcessor($settings);
+    
+    $this->object->process_dataset();
     
     $this->assertTrue(is_dir('/investigator/data'));
     $this->assertTrue(is_file('/investigator/data/data.txt'));
     $this->assertTrue(is_dir('/investigator/data/meta'));
   }
-  
-  /**
-   * Test exception is thrown if now path is specified.
-   * @expectedException PathNotFoundException
-   */
-  public function testNoPath() {
-    $this->object->set_root('');
-    $this->object->process_dataset();
-  }
-
 }
 
 ?>

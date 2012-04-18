@@ -63,6 +63,10 @@ class DirectoryProcessor {
     if($this->settings->root == '') {
       throw new PathNotFoundException('No path has been specified', E_ERROR);
     }
+    
+    if(!is_file($this->settings->root) && !is_dir($this->settings->root)) {
+      throw new PathNotFoundException($this->settings->root.' was not found.', E_ERROR);
+    }
 
     // If it's a bare file, moves the file into a same named directory.
     // This provides a consistent structure across all data sets.
@@ -79,7 +83,7 @@ class DirectoryProcessor {
       $this->settings->root = $pathInfo['dirname'].DIRECTORY_SEPARATOR.$pathInfo['filename']; // Set root to the directory not file
     }
 
-    $this->process_path($$this->settings->root);                                           // Start processing the data.
+    $this->process_path($this->settings->root);                                           // Start processing the data.
   }
 
   /**
@@ -94,7 +98,7 @@ class DirectoryProcessor {
       mkdir($path.'/meta');
     }
       
-    $package = new XFDUPackage($settings);
+    $package = new XFDUPackage($this->settings);
     
     if($path != $this->settings->root) {
       $parsedPath = explode('/', $path);
