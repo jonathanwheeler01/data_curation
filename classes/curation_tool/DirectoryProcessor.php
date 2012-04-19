@@ -150,11 +150,16 @@ class DirectoryProcessor {
                                                    $parsedPath[sizeof($parsedPath) -1]);
     $package->add($currentCU);
 
+    // Get the contents of the directory then
     $contents = scandir($path);
     $contents = array_diff($contents, $this->exclude);
-
+    
+    // If the content item is a file, create a content unit containing a 
+    // data object pointer that refers to a dataObject within this xfdu document. 
+    // If its a directory create a contentUnit containing an XFDUPointer that
+    // refers to the appropriate xfdu document in another subdirectory.
     foreach($contents as $item) {
-      if(is_file($path.DIRECTORY_SEPARATOR.$item)) {
+      if(is_file($path.DIRECTORY_SEPARATOR.$item)) {                                   
         $this->handle_file($path.DIRECTORY_SEPARATOR.$item);
       }
       else if(is_dir($path.DIRECTORY_SEPARATOR.$item)) {
@@ -163,6 +168,7 @@ class DirectoryProcessor {
       }
     }
     
+    // Write the package.
     $package->write($path.'/meta/'.$parsedPath[sizeof($parsedPath) -1].'_xfdu.xml');
   }
 
