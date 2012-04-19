@@ -6,9 +6,23 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  */
 
 class XFDUPackage {
+  
+  /**
+   *
+   * @var DomElement 
+   */
   protected $xfdu;
+  
+  /**
+   *
+   * @var XFDUBuilder 
+   */
   protected $builder;
   
+  /**
+   *
+   * @param XFDUSetup $settings 
+   */
   public function __construct(XFDUSetup $settings) {
     $this->builder = new XFDUBuilder();
     
@@ -16,6 +30,16 @@ class XFDUPackage {
     $this->xfdu->appendChild($this->xfdu->importNode($this->builder->build_xfdu($settings)->get_as_DOM(), TRUE));
   }
   
+  public function write($filename) {
+    $this->xfdu->save($filename);
+  }
+  
+  /**
+   *
+   * @param ContentUnit $contentUnit
+   * @param type $parent
+   * @return type 
+   */
   private function ContentUnit(ContentUnit $contentUnit, $parent) {
     if($parent == NULL) {
       $ipmDOM = $this->xfdu->getElementsByTagName('informationPackageMap')->item(0);
@@ -31,6 +55,13 @@ class XFDUPackage {
     }
   }
   
+  /**
+   * Adds the object to the XFDU document.
+   * @param aXFDUElement $xfduElement The element to be added
+   * @param Mixed $parent Specify the parent element. If null, the highest allowable element is used.
+   * @return mixed The object added. The object added is returned on success, false otherwise.
+   * @throws InvalidArgumentException Thrown if adding the element is not supported, or the parent does not exist.
+   */
   public function add(aXFDUElement $xfduElement, $parent = NULL) {
     if(method_exists($this, $methodName = get_class($xfduElement))) {
       return $this->$methodName($xfduElement, $parent);

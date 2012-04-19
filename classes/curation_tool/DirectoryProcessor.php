@@ -30,7 +30,24 @@ class DirectoryProcessor {
    * @todo Impliment exclusion - should allow exclusion based on file type file name or partial file names. Most likely a dynamic implementation of regular expresssions.
    * @var type 
    */
-  protected $exclude;     
+  protected $exclude;  
+  
+  /**
+   * The number of content units created for the project.
+   * @var integer 
+   */
+  protected $contentUnitCount;
+  
+  /**
+   * The number of data objects in the data set.
+   * @var integer 
+   */
+  protected $dataObjectCount;
+  
+  /**
+   *
+   * @param XFDUSetup $settings 
+   */
 
   public function  __construct(XFDUSetup $settings) {
     $this->builder = new XFDUBuilder();
@@ -38,6 +55,9 @@ class DirectoryProcessor {
     $this->settings = $settings;
 
     $this->exclude = array('.', '..', 'meta');
+    
+    $this->contentUnitCount = 0;
+    $this->dataObjectCount = 0;
     
     
   }
@@ -97,25 +117,38 @@ class DirectoryProcessor {
     if(!file_exists($path.'/meta')) {
       mkdir($path.'/meta');
     }
-      
-    $package = new XFDUPackage($this->settings);
     
+    // Sets up the basic XFDU package
+    $package = new XFDUPackage($this->settings);
+    $parsedPath = explode('/', $path);
+    
+    // For all content units but the first, there should be a backlink to the
+    // previous directory's XFDU file.
     if($path != $this->settings->root) {
-      $parsedPath = explode('/', $path);
       
-      $xfduPointer = new XFDUPointer();
-      $xfduPointer->set_locatorType('URL');
-      $xfduPointer->set_href('../meta/'.$parsedPath[sizeof($parsedPath) - 2].'_xfdu.xml');
-      $xfduPointer->set_textInfo($parsedPath[sizeof($parsedPath) - 2]);
+      $xfduPointerBackLink = new XFDUPointer();
+      $xfduPointerBackLink->set_locatorType('URL');
+      $xfduPointerBackLink->set_href('../meta/'.$parsedPath[sizeof($parsedPath) - 2].'_xfdu.xml');
+      $xfduPointerBackLink->set_textInfo($parsedPath[sizeof($parsedPath) - 2]);
       
-      $backLink = $this->
+      $backLinkCU = $this->
                    builder->
-                    build_contentUnit($xfduPointer, 
+                    build_contentUnit($xfduPointerBackLink, 
                                        'backlink', 
                                         'backlink', 
                                         $parsedPath[sizeof($parsedPath) - 2]);
-      $package->add($backLink);
+      $package->add($backLinkCU);
+      
     }
+    
+    // Set the id for the current content unit to allow the child content units
+    // to reference and create the current directory's contentUnit.
+    $currentID = 'cu'.$this->contentUnitCount;
+    $currentCU = $this->builder->build_contentUnit(NULL, 
+                                                   $currentID, 
+                                                   'directory', 
+                                                   $parsedPath[sizeof($parsedPath) -1]);
+    $package->add($currentCU);
 
     $contents = scandir($path);
     $contents = array_diff($contents, $this->exclude);
@@ -129,6 +162,8 @@ class DirectoryProcessor {
         $this->process_path($path.DIRECTORY_SEPARATOR.$item);                   // Recursive call
       }
     }
+    
+    $package->write($path.'/meta/'.$parsedPath[sizeof($parsedPath) -1].'_xfdu.xml');
   }
 
   /**

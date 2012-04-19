@@ -201,7 +201,24 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $contentUnit = $this->object->build_contentUnit($content, $id, $unitType);
     
     $this->assertEquals(get_class($content), get_class($contentUnit->get_dataObjectPointer()));
-    $this->assertNull($content->get_id());
+    $this->assertNull($contentUnit->get_id());
+    $this->assertEquals($unitType, $contentUnit->get_unitType());
+    $this->assertNULL($contentUnit->get_textInfo());
+  }
+  
+  /**
+   * 
+   */
+  public function testBuild_ContentUnitNoContent() {
+    $content = NULL;
+    $id = NULL;
+    $unitType = 'unitType';
+    
+    $contentUnit = $this->object->build_contentUnit($content, $id, $unitType);
+    
+    $this->assertNull($contentUnit->get_dataObjectPointer());
+    $this->assertNull($contentUnit->get_XFDUPointer());
+    $this->assertNull($contentUnit->get_id());
     $this->assertEquals($unitType, $contentUnit->get_unitType());
     $this->assertNULL($contentUnit->get_textInfo());
   }
