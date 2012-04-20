@@ -96,11 +96,11 @@ class DirectoryProcessor {
       $fileName = basename($this->settings->root, $pathInfo['extension']);
 
       mkdir($pathInfo['dirname'].DIRECTORY_SEPARATOR.$fileName);                // make the new directory
-      rename($this->settings->root, $pathInfo['dirname'].                                 // Move the file into the new directory
+      rename($this->settings->root, $pathInfo['dirname'].                       // Move the file into the new directory
                                      DIRECTORY_SEPARATOR.$fileName.
                                      DIRECTORY_SEPARATOR.$pathInfo['basename']);
 
-      $this->settings->root = $pathInfo['dirname'].DIRECTORY_SEPARATOR.$pathInfo['filename']; // Set root to the directory not file
+      $this->settings->root = $pathInfo['dirname'].'/'.$pathInfo['filename']; // Set root to the directory not file
     }
 
     $this->process_path($this->settings->root);                                           // Start processing the data.
@@ -159,12 +159,12 @@ class DirectoryProcessor {
     // If its a directory create a contentUnit containing an XFDUPointer that
     // refers to the appropriate xfdu document in another subdirectory.
     foreach($contents as $item) {
-      if(is_file($path.DIRECTORY_SEPARATOR.$item)) {                                   
+      if(is_file($path.DIRECTORY_SEPARATOR.$item)) {
         $this->handle_file($path.DIRECTORY_SEPARATOR.$item);
       }
       else if(is_dir($path.DIRECTORY_SEPARATOR.$item)) {
         $this->handle_directory($path.DIRECTORY_SEPARATOR.$item);
-        $this->process_path($path.DIRECTORY_SEPARATOR.$item);                   // Recursive call
+        $this->process_path($path.'/'.$item);                   // Recursive call
       }
     }
     
@@ -177,7 +177,7 @@ class DirectoryProcessor {
    * @param <string> $path
    */
   protected function handle_file($path) {
-    print 'handling file '.$path;
+//    print 'handling file '.$path;
   }
 
   /**

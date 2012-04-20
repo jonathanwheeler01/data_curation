@@ -107,6 +107,47 @@ class XFDUBuilder {
   }
   
   /**
+   * Since XFDU subtypes the base refernce type extensively wiht no modification
+   * this class does all the work. Calling classes just set the subclass
+   * @param string $locatorType either URL or OTHER
+   * @param string $location The location of the referenced resource.
+   * @param string $textInfo Text in user readable format about the reference
+   * @param string $otherLocatorType If locator type is OTHER, this must be set.
+   * @param string $id
+   * @param string $refType one of the Subclasses of reference
+   * @return Reference
+   * @throws InvalidArgumentException 
+   */
+  private function build_ReferenceSubtype($locatorType,
+                                    $location, 
+                                    $textInfo = NULL, 
+                                    $otherLocatorType = NULL, 
+                                    $id = NULL,
+                                    $refType = 'Reference') {
+    $reference = new $refType();
+    $reference->set_locatorType($locatorType);
+    
+    if($locatorType == 'URL') {
+      $reference->set_href($location);
+    }
+    else if($locatorType == "OTHER"){
+      $reference->set_locator($location);
+      if(!$otherLocatorType) {
+        $message = 'You must define an "otherLocatorType" if the locatoryType is "OTHER"';
+        $code = 0;
+        $previous = NULL;
+        throw new InvalidArgumentException($message, $code, $previous);
+      }
+      $reference->set_otherLocatorType($otherLocatorType);
+    }
+    
+    if($textInfo) {$reference->set_textInfo($textInfo);}
+    if($id) {$reference->set_id($id);}
+    
+    return $reference;
+  }
+  
+  /**
    *
    * @param string $locatorType Should be either URL or OTHER
    * @param string $location The location of the resource
@@ -117,32 +158,12 @@ class XFDUBuilder {
    * @return XFDUPointer
    * @throws InvalidArgumentException 
    */
-  public function build_XDFUPointer($locatorType,
+  public function build_XFDUPointer($locatorType,
                                     $location, 
                                     $textInfo = NULL, 
                                     $otherLocatorType = NULL, 
                                     $id = NULL) {
-    $XFDUPointer = new XFDUPointer();
-    $XFDUPointer->set_locatorType($locatorType);
-    
-    if($locatorType == 'URL') {
-      $XFDUPointer->set_href($location);
-    }
-    else if($locatorType == "OTHER"){
-      $XFDUPointer->set_locator($location);
-      if(!$otherLocatorType) {
-        $message = 'You must define an "otherLocatorType" if the locatoryType is "OTHER"';
-        $code = 0;
-        $previous = NULL;
-        throw new InvalidArgumentException($message, $code, $previous);
-      }
-      $XFDUPointer->set_otherLocatorType($otherLocatorType);
-    }
-    
-    if($textInfo) {$XFDUPointer->set_textInfo($textInfo);}
-    if($id) {$XFDUPointer->set_id($id);}
-    
-    return $XFDUPointer;
+    return $this->build_ReferenceSubtype($locatorType, $location, $textInfo, $otherLocatorType, $id, 'XFDUPointer');
   }
   
   /**
@@ -174,6 +195,38 @@ class XFDUBuilder {
     if($textInfo) {$contentUnit->set_textInfo($textInfo);}
     
     return $contentUnit;
+  }
+  
+  public function build_fileLocation($locatorType,
+                                    $location, 
+                                    $textInfo = NULL, 
+                                    $otherLocatorType = NULL, 
+                                    $id = NULL) {
+    return $this->build_ReferenceSubtype($locatorType, $location, $textInfo, $otherLocatorType, $id, 'FileLocation');
+  }
+  
+  private function build_checksumInformation($data, $checksumName = 'SHA1') {
+    $checksum = new ChecksumInformation();
+    $checksum->set_checksumName($checksumName);
+    switch($checksumName) {
+      case 'SHA1':
+        if(is_file($data)){$checksum->set_value(sha1_file($data));}
+        else {$checksum->set_value(sha1($data));}
+        break;
+      case 'MD5':
+        if(is_file($data)){$checksum->set_value(md5_file($data));}
+        else {$checksum->set_value(md5($data));}
+        break;
+      default:
+        $message = 'ChecksumName should be one of SHA1 or MD5. '.$checksumName.' found.';
+        $code = 0;
+        $prevoius = NULL;
+        throw new InvalidArgumentException($message, $code, $prevoius);
+    }
+    return $checksum;
+  }
+  
+  private function build_byteStream() {
   }
 }
 

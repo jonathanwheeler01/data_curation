@@ -27,6 +27,7 @@ class ChecksumInformation extends aXFDUElement {
    */
   public function set_checksumName($checksumName) {
     $this->checksumName = $checksumName;
+    return $this;
   }
   
   /**
@@ -51,6 +52,7 @@ class ChecksumInformation extends aXFDUElement {
    */
   public function set_value($value) {
     $this->value = $value;
+    return $this;
   }
   
   /**

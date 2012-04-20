@@ -117,7 +117,8 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $textInfo = 'textInfo';
     
     $xfduPointer = new XFDUPointer();
-    $xfduPointer = $this->object->build_XDFUPointer($locatorType, $href, $textInfo, NULL, $id);
+    $xfduPointer = $this->object->build_XFDUPointer($locatorType, $href, $textInfo, NULL, $id);
+//    $xfduPointer = $this->object->build_XDFUPointer($locatorType, $href, $textInfo, NULL, $id);
     
     $this->assertEquals($locatorType, $xfduPointer->get_locatorType());
     $this->assertEquals($href, $xfduPointer->get_href());
@@ -135,7 +136,7 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $textInfo = 'textInfo';
     
     $xfduPointer = new XFDUPointer();
-    $xfduPointer = $this->object->build_XDFUPointer($locatorType, $href, $textInfo, NULL, $id);
+    $xfduPointer = $this->object->build_XFDUPointer($locatorType, $href, $textInfo, NULL, $id);
   }
   
   /**
@@ -149,7 +150,7 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $textInfo = 'textInfo';
     
     $xfduPointer = new XFDUPointer();
-    $xfduPointer = $this->object->build_XDFUPointer($locatorType, $locator, $textInfo, $otherLocatorType, $id);
+    $xfduPointer = $this->object->build_XFDUPointer($locatorType, $locator, $textInfo, $otherLocatorType, $id);
     
     $this->assertEquals($locatorType, $xfduPointer->get_locatorType());
     $this->assertEquals($locator, $xfduPointer->get_locator());
@@ -169,7 +170,7 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $textInfo = 'textInfo';
     
     $xfduPointer = new XFDUPointer();
-    $xfduPointer = $this->object->build_XDFUPointer($locatorType, $locator, $textInfo, NULL, $id);
+    $xfduPointer = $this->object->build_XFDUPointer($locatorType, $locator, $textInfo, NULL, $id);
   }
   
   /**

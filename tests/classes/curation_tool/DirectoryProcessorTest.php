@@ -22,7 +22,7 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->create_test_directory();
     $settings = new XFDUSetup();
-    $settings->root = '/investigator/project/';
+    $settings->root = '/investigator/project';
     $this->object = new DirectoryProcessor($settings);
   }
   
@@ -92,7 +92,7 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testRoot() {
-    $path = '/investigator/project/';
+    $path = '/investigator/project';
    
     $this->assertEquals($path, $this->object->get_root());
   }
@@ -114,11 +114,14 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testProcessDataSet() {    
-    $path = '/investigator/project/';
+    $path = '/investigator/project';
     $this->object->process_dataset();
     
     $this->assertTrue(is_dir($path.DIRECTORY_SEPARATOR.'meta'));
     $this->assertTrue(is_dir($path.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'meta'));
+    
+    $this->assertFileExists('/investigator/project/meta/project_xfdu.xml');
+    $this->assertFileExists('/investigator/project/images/meta/images_xfdu.xml');
   }
   
   public function testProcessDataSetBareFile() {
