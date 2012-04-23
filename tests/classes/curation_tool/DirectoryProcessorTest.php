@@ -111,7 +111,8 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * 
+   * @todo Add testing to ensure the xfdu xml files are of the correct structure.
+   * They should be given all the other testing, but good to test final output.
    */
   public function testProcessDataSet() {    
     $path = '/investigator/project';

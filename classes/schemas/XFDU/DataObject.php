@@ -97,6 +97,7 @@ class DataObject extends aXFDUElement{
    */
   public function add_bytstream(ByteStream $bytestream) {
     $this->byteStreams[] = $bytestream;
+    return $this;
   }
   
   /**
@@ -128,6 +129,7 @@ class DataObject extends aXFDUElement{
    */
   public function set_checksum(ChecksumInformation $checksum) {
     $this->checksum = $checksum;
+    return $this;
   }
   
   /**
@@ -160,6 +162,7 @@ class DataObject extends aXFDUElement{
       $code = 0;
       throw new InvalidArgumentException($message, $code);
     }
+    return $this;
   }
   
   /**
@@ -189,6 +192,7 @@ class DataObject extends aXFDUElement{
     else {
       throw new InvalidIDTokenException($id);
     }
+    return $this;
   }
   
   /**
@@ -213,6 +217,7 @@ class DataObject extends aXFDUElement{
    */
   public function set_mimeType($mimeType) {
     $this->mimeType = $mimeType;
+    return $this;
   }
   
   /**
@@ -237,6 +242,7 @@ class DataObject extends aXFDUElement{
    */
   public function set_registeredID($registeredID) {
     $this->registeredID = $registeredID;
+    return $this;
   }
   
   /**
@@ -261,6 +267,7 @@ class DataObject extends aXFDUElement{
    */
   public function set_registrationAuthority($registrationAuthority) {
     $this->registrationAuthority = $registrationAuthority;
+    return $this;
   }
   
   /**
@@ -290,6 +297,7 @@ class DataObject extends aXFDUElement{
     else {
       throw new InvalidIDTokenException($repId);
     }
+    return $this;
   }
   
   /**
@@ -321,6 +329,7 @@ class DataObject extends aXFDUElement{
       $code = 0;
       throw new InvalidArgumentException($message, $code);
     }
+    return $this;
   }
   
   /**
@@ -345,6 +354,7 @@ class DataObject extends aXFDUElement{
    */
   public function set_transformObject(TransformObject $transformObject) {
     $this->transformObject = $transformObject;
+    return $this;
   }
   
   /**

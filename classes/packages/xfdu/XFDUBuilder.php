@@ -226,7 +226,24 @@ class XFDUBuilder {
     return $checksum;
   }
   
-  private function build_byteStream() {
+  /**
+   *
+   * @param FileLocation $fileLocation
+   * @param string $file
+   * @param type $id
+   * @return ByteStream 
+   */
+  public function build_byteStream_from_fileLocation(FileLocation $fileLocation, $file ,$id = NULL, $checksumName = 'SHA1') {    
+    $byteStream = new ByteStream();
+    
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $byteStream->set_mimeType($finfo->file($file))
+            ->set_size(filesize($file))
+            ->add_fileLocation($fileLocation)
+            ->set_checksum($this->build_checksumInformation($file, $checksumName));
+    if($id){$byteStream->set_id($id);}
+    
+    return $byteStream;
   }
 }
 

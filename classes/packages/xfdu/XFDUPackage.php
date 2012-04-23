@@ -37,8 +37,8 @@ class XFDUPackage {
   /**
    *
    * @param ContentUnit $contentUnit
-   * @param type $parent
-   * @return type 
+   * @param string $parent
+   * @return mixed ContentUnit on success, FALSE on failure.
    */
   private function ContentUnit(ContentUnit $contentUnit, $parent) {
     if($parent == NULL) {
@@ -48,10 +48,24 @@ class XFDUPackage {
     else {
       $xpath = new DOMXPath($this->xfdu);
       $query = '//xfdu:contentUnit[@ID="'.$parent.'"]';
-      print __FILE__.':'.__LINE__.' - '.$query;
       $xpath->registerNamespace('xfdu', 'urn:ccsds:schema:xfdu:1');
       $parentNode = $xpath->query($query)->item(0);
+      if($parentNode == NULL) {
+        return FALSE;
+      }
       return $parentNode->appendChild($this->xfdu->importNode($contentUnit->get_as_DOM(), TRUE));
+    }
+  }
+  
+  private function DataObject(DataObject $dataObject) {
+    $xpath = new DOMXPath($this->xfdu);
+    $query = '//dataObjectSection';
+    $dataObjectSection = $xpath->query($query)->item(0);
+    if($dataObjectSection == NULL) {
+      return FALSE;     // This shouldn't happen, but just in case.
+    }
+    else {
+      return $dataObjectSection->appendChild($this->xfdu->importNode($dataObject->get_as_DOM(), TRUE));
     }
   }
   

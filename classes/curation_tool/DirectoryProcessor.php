@@ -159,11 +159,12 @@ class DirectoryProcessor {
     // If its a directory create a contentUnit containing an XFDUPointer that
     // refers to the appropriate xfdu document in another subdirectory.
     foreach($contents as $item) {
-      if(is_file($path.DIRECTORY_SEPARATOR.$item)) {
-        $this->handle_file($path.DIRECTORY_SEPARATOR.$item);
+      $this->contentUnitCount++;  
+      if(is_file($path.DIRECTORY_SEPARATOR.$item)) {        
+        $this->handle_file($path, $item, $package, $currentID);
       }
       else if(is_dir($path.DIRECTORY_SEPARATOR.$item)) {
-        $this->handle_directory($path.DIRECTORY_SEPARATOR.$item);
+        $this->handle_directory($path.DIRECTORY_SEPARATOR.$item, $package);
         $this->process_path($path.'/'.$item);                   // Recursive call
       }
     }
@@ -172,22 +173,62 @@ class DirectoryProcessor {
     $package->write($path.'/meta/'.$parsedPath[sizeof($parsedPath) -1].'_xfdu.xml');
   }
 
-  /**
-   * @todo Implement handle file function
-   * @param <string> $path
-   */
-  protected function handle_file($path) {
-//    print 'handling file '.$path;
+/**
+ *
+ * @param string $path path to the directory containing the file
+ * @param string $file file name
+ * @param XFDUPackage $package the package passed by reference
+ * @param string $parent ID of the parent contentUnit
+ */
+  protected function handle_file($path, $item, XFDUPackage &$package, $parent) {
+        $dataObjectID = 'do'.$this->dataObjectCount;
+        $contentUnitID = 'cu'.  $this->contentUnitCount;
+        
+        $fileLocation = new FileLocation();
+        $fileLocation->set_locatorType('URL')
+                ->set_href($path.'/'.$item)
+                ->set_textInfo($item);
+        
+        $dataObject = new DataObject();
+        $dataObject->add_bytstream(
+                $this->builder->build_byteStream_from_fileLocation(
+                        $fileLocation, 
+                        $path.DIRECTORY_SEPARATOR.$item
+                        )
+                )
+                ->set_id($dataObjectID);
+        
+        $package->add($dataObject);
+        
+        $dataObjectPointer = new DataObjectPointer();
+        $dataObjectPointer->set_dataObjectID($dataObjectID);
+        
+        $contentUnit = $this->builder->build_contentUnit(
+                $dataObjectPointer, 
+                $contentUnitID, 'directory', $item);
+        $package->add($contentUnit, $parent);
+        
+        $this->dataObjectCount++;      
   }
 
   /**
-   * @todo Implement handle directory function
-   * @param <type> $path
+   *
+   * @param string $path Path to the directy to be handled.
+   * @param XFDUPackage $package th epackage passed by reference.
    */
-  protected function handle_directory($path) {
-    if(!is_dir($path.DIRECTORY_SEPARATOR.'meta')) {
-      mkdir($path.DIRECTORY_SEPARATOR.'meta');
-    }
+  protected function handle_directory($path, XFDUPackage &$package) {
+    $contentUnitID = 'cu'.  $this->contentUnitCount;
+    
+    $parsedPath = explode('/', $path);
+    $xfduPointer = $this->builder->build_XFDUPointer('URL', $path, $parsedPath[sizeof($parsedPath) - 1]);
+    
+    $contentUnit = $this->builder->build_contentUnit(
+                                          $xfduPointer, 
+                                          $contentUnitID, 
+                                          'directory', 
+                                          $parsedPath[sizeof($parsedPath) - 1]);
+    
+    $package->add($contentUnit);
   }
 }
 ?>

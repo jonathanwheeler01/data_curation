@@ -233,6 +233,22 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $this->object->build_contentUnit($content);
   }
   
+  public function testBuild_byteStream_from_fileLocation() {
+    $fileLocation = new FileLocation();
+    
+    $file = 'test.txt';
+    $id = 'id';
+    touch($file);
+    
+    $fileInfo = new finfo(FILEINFO_MIME_TYPE);
+    
+    $byteStream = $this->object->build_byteStream_from_fileLocation($fileLocation, $file, $id);
+    
+    $this->assertEquals(0, $byteStream->get_size());
+    $this->assertEquals($fileInfo->file($file), $byteStream->get_mimeType());
+    $this->assertEquals(sha1_file($file), $byteStream->get_checksum()->get_value());
+  }
+  
 }
 
 ?>

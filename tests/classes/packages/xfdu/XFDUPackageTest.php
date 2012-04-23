@@ -33,16 +33,39 @@ class XFDUPackageTest extends PHPUnit_Framework_TestCase {
   /**
    * 
    */
-  public function testAddContentUnit() {
+  public function testAddContentUnitNoParent() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
     $contentUnit = new ContentUnit();
     
-    $dom = new DOMDocument('1.0', 'UTF-8');
-    
-//    $this->assertTrue($this->object->add($contentUnit));
     $this->assertEquals(get_class($contentUnit->get_as_DOM()), get_class($this->object->add($contentUnit)));
-    print get_class($this->object->add($contentUnit));
     $this->assertEqualXMLStructure($dom->importNode($contentUnit->get_as_DOM(), TRUE), 
-            $dom->importNode($this->object->add($contentUnit)));
+            $dom->importNode($this->object->add($contentUnit), TRUE));
+  }
+  
+  /**
+   * 
+   */
+  public function testAddContentUnitWithParent() {
+    $parentID = 'parentID';
+    $contentUnitParent = new ContentUnit();
+    $contentUnitParent->set_id($parentID);
+    $this->object->add($contentUnitParent);
+    
+    $contentUnitChild = new ContentUnit();
+    $this->assertEquals(get_class($contentUnitChild->get_as_DOM()), get_class($this->object->add($contentUnitChild, $parentID)));
+    
+  }
+
+  public function testAddDataObject() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $doID = 'doID';
+    
+    $dataObject = new DataObject();
+    $dataObject->set_id($doID)
+            ->add_bytstream(new ByteStream());
+    
+    $this->assertEqualXMLStructure($dom->importNode($dataObject->get_as_DOM(), TRUE), 
+            $dom->importNode($this->object->add($dataObject), TRUE));
   }
   
   /**
@@ -53,7 +76,6 @@ class XFDUPackageTest extends PHPUnit_Framework_TestCase {
     
     $this->assertTrue($this->object->add($contentUnit));
   }
-
 }
 
 ?>
