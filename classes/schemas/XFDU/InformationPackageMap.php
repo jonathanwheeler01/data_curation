@@ -181,9 +181,6 @@ class InformationPackageMap extends aXFDUElement{
         $informationPackageMap->appendChild($dom->importNode($contentUnit->get_as_DOM()));
       }
     }
-    else {
-      throw new RequiredElementException('contentUnit');
-    }
     
     if($this->isset_id()) {
       $informationPackageMap->setAttribute('ID', $this->get_id());

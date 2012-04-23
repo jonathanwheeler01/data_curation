@@ -50,6 +50,7 @@ class Reference extends aXFDUElement{
    */
   public function set_href($href) {
     $this->href = $href;
+    return $this;
   }
   
   /**
@@ -79,6 +80,7 @@ class Reference extends aXFDUElement{
     else {
       throw new InvalidIDTokenException($id);
     }
+    return $this;
   }
   
   /**
@@ -103,6 +105,7 @@ class Reference extends aXFDUElement{
    */
   public function set_locator($locator) {
     $this->locator = $locator;
+    return $this;
   }
   
   /**
@@ -137,6 +140,7 @@ class Reference extends aXFDUElement{
       $code = 0;
       throw new InvalidArgumentException($message, $code);
     }
+    return $this;
   }
   
   /**
@@ -161,6 +165,7 @@ class Reference extends aXFDUElement{
    */
   public function set_otherLocatorType($otherLocatorType) {
     $this->otherLocatorType = $otherLocatorType;
+    return $this;
   }
   
   /**
@@ -185,6 +190,7 @@ class Reference extends aXFDUElement{
    */
   public function set_textInfo($textInfo) {
     $this->textInfo = $textInfo;
+    return $this;
   }
   
   /**

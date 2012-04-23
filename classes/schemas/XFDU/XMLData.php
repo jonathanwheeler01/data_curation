@@ -15,25 +15,17 @@ class XMLData extends aXFDUElement{
   
   /**
    *
-   * @param string $any 
+   * @param string $any XML as DOMElement or DOMNodeList
    */
   public function set_any($any) {
-    $code = 0;
-    $previous = null;
-    if(!is_object($any)) {
-      $message = "Invalid input into ".__METHOD__.". DOMElement or DOMNodeList ".
-              " expected, ".  gettype($any)." found.";
+    if(get_class($any) != 'DOMElement' && get_class($any) != 'DOMNodeList') {
+      $message = 'The XFDU Exception element must be an instance of a DOMNode, '.
+                 'instance of '.  get_class($any).' given.';
+      $code = 0;
+      $previous = NULL;
       throw new InvalidArgumentException($message, $code, $previous);
     }
-    
-    if(get_class($any) == 'DOMElement' || get_class($any) == 'DOMNodeList') {
-      $this->any = $any;
-    }
-    else {
-      $message = "Invalid input into ".__METHOD__.". DOMElement or DOMNodeList ".
-              " expected, ".  get_class($any)." found.";
-      throw new InvalidArgumentException($message, $code, $previous);
-    }
+    $this->any = $any;
   }
   
   /**
@@ -58,19 +50,16 @@ class XMLData extends aXFDUElement{
    * @return DOMElement;
    */
   public function get_as_DOM($prefix = NULL) {
-    if(!$this->isset_any()) {
-      throw new RequiredElementException('anyXML');
-    }
-    
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+
     $xmlData = $dom->createElement('xmlData');
-    
-    if(get_class($this->any) == 'DOMElement') {
+
+    if(get_class($this->any) == 'DOMNode' || get_class($this->any) == 'DOMElement' ) {
       $xmlData->appendChild($dom->importNode($this->any, TRUE));
     }
-    else {
+    else if(get_class($this->any) == 'DOMNodeList'){
       for($i = 0; $i < $this->any->length; $i++) {
-        $xmlData->appendChild($dom->importNode($this->any->item($i)));
+        $xmlData->appendChild($dom->importNode($this->any->item($i), TRUE));
       }
     }
     

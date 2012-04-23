@@ -14,17 +14,19 @@ class Extension extends aXFDUElement{
   protected $any;
   
   public function set_any($any) {
-    $code = 0;
-    $previous = null;
     if(!is_object($any)) {
-      $message = "Invalid input into ".__METHOD__.". DOMElement or DOMNodeList ".
-              " expected, ".  gettype($any)." found.";
+      $message = 'The XFDU Exception element must be an instance of a DOMNode, '.
+                 'instance of '. gettype($any).' given.';
+      $code = 0;
+      $previous = null;
       throw new InvalidArgumentException($message, $code, $previous);
     }
     
     if(get_class($any) != 'DOMElement' && get_class($any) != 'DOMNodeList') {
       $message = 'The XFDU Exception element must be an instance of a DOMNode, '.
                  'instance of '.  get_class($any).' given.';
+      $code = 0;
+      $previous = null;
       throw new InvalidArgumentException($message, $code, $previous);
     }
     
@@ -53,20 +55,17 @@ class Extension extends aXFDUElement{
    * @return DOM Object 
    */
   public function get_as_DOM($prefix = NULL) {
-    if(!isset($this->any)) {
-      throw new RequiredElementException('anyXML');
-    }
-    
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+
     $extension = $dom->createElement($this->first_to_lower(get_class($this)));
-    
-    if(get_class($this->any) == 'DOMNodeList') {
-      for($i = 0; $i < $this->any->length; $i++) {
-        $extension->appendChild($dom->importNode($this->any->item($i)));
-      }
+
+    if(get_class($this->any) == 'DOMNode' || get_class($this->any) == 'DOMElement' ) {
+      $extension->appendChild($dom->importNode($this->any, TRUE));
     }
     else {
-      $extension->appendChild($dom->importNode($this->any, TRUE));
+      for($i = 0; $i < $$this->any->length; $i++) {
+        $extension->appendChild($dom->importNode($this->any->item($i), TRUE));
+      }
     }
 
     return $extension;

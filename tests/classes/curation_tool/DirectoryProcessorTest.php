@@ -22,7 +22,7 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->create_test_directory();
     $settings = new XFDUSetup();
-    $settings->root = '/investigator/project/';
+    $settings->root = '/investigator/project';
     $this->object = new DirectoryProcessor($settings);
   }
   
@@ -92,7 +92,7 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testRoot() {
-    $path = '/investigator/project/';
+    $path = '/investigator/project';
    
     $this->assertEquals($path, $this->object->get_root());
   }
@@ -102,18 +102,27 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    */
   public function testInvalidRoot() {
     $path = '/path1/path2';
-    $this->object->set_root($path);
+    $settings = new XFDUSetup();
+    $settings->root = $path;
+    
+    $this->object = new DirectoryProcessor($settings);
+    
+    $this->object->process_dataset();
   }
   
   /**
-   * 
+   * @todo Add testing to ensure the xfdu xml files are of the correct structure.
+   * They should be given all the other testing, but good to test final output.
    */
-  public function testProcessDataSet() {    
-    $path = '/investigator/project/';
+  public function testProcessDataSet() { 
+    $path = '/investigator/project';
     $this->object->process_dataset();
     
     $this->assertTrue(is_dir($path.DIRECTORY_SEPARATOR.'meta'));
     $this->assertTrue(is_dir($path.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'meta'));
+    
+    $this->assertFileExists('/investigator/project/meta/project_xfdu.xml');
+    $this->assertFileExists('/investigator/project/images/meta/images_xfdu.xml');
   }
   
   public function testProcessDataSetBareFile() {
@@ -121,23 +130,16 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
     mkdir('/investigator');
     touch('/investigator/data.txt');
     
-    $this->object->set_root('/investigator/data.txt')
-            ->process_dataset();
+    $settings = new XFDUSetup();
+    $settings->root = '/investigator/data.txt';
+    $this->object = new DirectoryProcessor($settings);
+    
+    $this->object->process_dataset();
     
     $this->assertTrue(is_dir('/investigator/data'));
     $this->assertTrue(is_file('/investigator/data/data.txt'));
     $this->assertTrue(is_dir('/investigator/data/meta'));
   }
-  
-  /**
-   * Test exception is thrown if now path is specified.
-   * @expectedException PathNotFoundException
-   */
-  public function testNoPath() {
-    $this->object->set_root('');
-    $this->object->process_dataset();
-  }
-
 }
 
 ?>

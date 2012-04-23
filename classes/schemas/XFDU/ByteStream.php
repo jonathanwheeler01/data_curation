@@ -59,6 +59,7 @@ class ByteStream extends aXFDUElement{
    */
   public function set_checksum(ChecksumInformation $checksum) {
     $this->checksum = $checksum;
+    return $this;
   }
   
   /**
@@ -83,6 +84,7 @@ class ByteStream extends aXFDUElement{
    */
   public function set_fileContent(FileContent $filecontent) {
     $this->fileContent = $filecontent;
+    return $this;
   }
   
   /**
@@ -107,6 +109,7 @@ class ByteStream extends aXFDUElement{
    */
   public function add_fileLocation(fileLocation $fileLocation) {
     $this->fileLocations[] = $fileLocation;
+    return $this;
   }
   
   
@@ -144,6 +147,7 @@ class ByteStream extends aXFDUElement{
     else {
       throw new InvalidIDTokenException($id);
     }
+    return $this;
   }
   
   /**
@@ -168,6 +172,7 @@ class ByteStream extends aXFDUElement{
    */
   public function set_mimeType($mimeType) {
     $this->mimeType = $mimeType;
+    return $this;
   }
   
   /**
@@ -199,6 +204,7 @@ class ByteStream extends aXFDUElement{
       $code = 0;
       throw new InvalidArgumentException($message, $code);
     }
+    return $this;
   }
   
   /**

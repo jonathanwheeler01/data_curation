@@ -6,7 +6,8 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob
  */
-class XFDUPointer extends Reference{  /**
+class XFDUPointer extends Reference{  
+  /**
    *
    * @param type $prefix 
    * @return DOMElement;

@@ -45,39 +45,30 @@ class XMLDataTest extends PHPUnit_Framework_TestCase {
   /**
    * 
    */
-  public function testAnyDOMNodeList() {
-    $this->assertFalse($this->object->isset_any());
-    
+  public function testAnyNodeList() {
     $dom = new DOMDocument('1.0', 'UTF-8');
     
-    $root = $dom->createElement('root');
-    $root->appendChild($child1 = $dom->createElement('child1'));
-    $root->appendChild($child2 = $dom->createElement('child2'));
-    $root->appendChild($child3 = $dom->createElement('child3'));
-    $dom->appendChild($root);
+    $dom->appendChild($xmlData = $dom->createElement('xmlData'));
+    $xmlData->appendChild($dom->createElement('element1'));
+    $xmlData->appendChild($dom->createElement('element2'));
+    $xmlData->appendChild($dom->createElement('element3'));
+    $xmlData->appendChild($dom->createElement('element4'));
     
-    // Gets a node list from the document
     $xpath = new DOMXPath($dom);
-    $query = '/*';
-    $nodeList = $xpath->query($query);
+    $query = '/xmlData/*';
     
-    $this->object->set_any($nodeList);
-    $this->assertTrue($this->object->isset_any());
-    $this->assertEquals($nodeList, $this->object->get_any());
+    $elementList = $xpath->query($query);
+    
+    $this->object->set_any($elementList);
+    
+    $this->assertEqualXMLStructure($xmlData, $dom->importNode($this->object->get_as_DOM(), TRUE));
+    
   }
   
   /**
-   * @expectedException InvalidArgumentException
+   *@expectedException InvalidArgumentException 
    */
-  public function testInvalidXMLData() {
-    $this->object->set_any('invalidData');
-  }
-  
-  
-  /**
-   * @expectedException InvalidArgumentException
-   */
-  public function testXMLDataInvalidObject() {
+  public function testInvalidAny() {
     $this->object->set_any(new stdClass());
   }
   
@@ -114,14 +105,6 @@ class XMLDataTest extends PHPUnit_Framework_TestCase {
     $this->object->set_any($nodeList);
     
     $this->assertEqualXMLStructure($expected, $this->object->get_as_DOM());
-  }
-  
-  /**
-   * @expectedException RequiredElementException
-   * 
-   */
-  public function testEmptyXMLData() {
-    $this->object->get_as_DOM();
   }
 
 }
