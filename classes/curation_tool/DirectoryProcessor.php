@@ -220,7 +220,11 @@ class DirectoryProcessor {
     $contentUnitID = 'cu'.  $this->contentUnitCount;
     
     $parsedPath = explode('/', $path);
-    $xfduPointer = $this->builder->build_XFDUPointer('URL', $path, $parsedPath[sizeof($parsedPath) - 1]);
+    $xfduPointer = $this->builder->build_XFDUPointer(
+            'URL', 
+            $path.'meta/'.$parsedPath[sizeof($parsedPath) - 1].'_xfdu.xml', 
+            $parsedPath[sizeof($parsedPath) - 1]
+            );
     
     $contentUnit = $this->builder->build_contentUnit(
                                           $xfduPointer, 
