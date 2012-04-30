@@ -44,6 +44,8 @@ class DirectoryProcessor {
    */
   protected $dataObjectCount;
   
+  protected $metadataObjectCount;
+  
   /**
    *
    * @param XFDUSetup $settings 
@@ -58,8 +60,7 @@ class DirectoryProcessor {
     
     $this->contentUnitCount = 0;
     $this->dataObjectCount = 0;
-    
-    
+    $this->metadataObjectCount = 0;
   }
 
   /**
@@ -118,7 +119,8 @@ class DirectoryProcessor {
       mkdir($path.'/meta');
     }
     
-    // Sets up the basic XFDU package
+    // Sets up the basic XFDU package. If extension or anyXML are 
+    // sent with setup they are also handled here.
     $package = new XFDUPackage($this->settings);
     $parsedPath = explode('/', $path);
     
@@ -206,6 +208,21 @@ class DirectoryProcessor {
         $contentUnit = $this->builder->build_contentUnit(
                 $dataObjectPointer, 
                 $contentUnitID, 'directory', $item);
+        
+        // Add high level descriptive metadata if it exists
+        if($this->settings->descriptiveMetadata != NULL) {
+          $id = 'dmd'.$this->metadataObjectCount;
+          $metadataObject = $this->builder->build_metadataObject(
+                  $this->settings->descriptiveMetadata, 
+                  $id, 
+                  'DMD', 
+                  'DESCRIPTION');
+          
+          $package->add($metadataObject);
+          
+          $contentUnit->set_dmdID($id);
+        }
+        
         $package->add($contentUnit, $parent);
         
         $this->dataObjectCount++;      

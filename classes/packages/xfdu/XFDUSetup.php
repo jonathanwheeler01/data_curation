@@ -83,11 +83,12 @@ class XFDUSetup {
   public $xmlData;
   
   /**
-   * XML data to be included with all XFDU documents in the dataset. If the XML data
-   * doesn't have a root element that is also namespaced, the additional 
-   * <strong>$extensionNamespace</strong> attribute must be defined with the 
-   * namespace. The <strong>$extensionNamespaceLocation</strong> is optional
-   * but allows validation.
+   * XML data to be included int the packageHeader of all XFDU documents in the 
+   * dataset. If the XML data doesn't have a root element that is also 
+   * namespaced, the additional <strong>$extensionNamespace</strong> attribute 
+   * must be defined with the namespace. The 
+   * <strong>$extensionNamespaceLocation</strong> is optional but allows 
+   * validation.  
    * 
    
    * @var string
@@ -113,6 +114,17 @@ class XFDUSetup {
    * @var string
    */
   public $extensionNamespaceLocation;
+  
+  /**
+   * Either a metadataReference, metadataPointer or a dataObjectPointer that
+   * gives descriptive metadata to be included in with every file in the data
+   * set. The data, should be high level and applicable to all files and 
+   * directories.
+   * @var mixed  
+   */
+  public $descriptiveMetadata;
+  
+  
   
 }
 

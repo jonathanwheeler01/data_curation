@@ -233,6 +233,9 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $this->object->build_contentUnit($content);
   }
   
+  /**
+   * 
+   */
   public function testBuild_byteStream_from_fileLocation() {
     $fileLocation = new FileLocation();
     
@@ -247,6 +250,57 @@ class XFDUBuilderTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals(0, $byteStream->get_size());
     $this->assertEquals($fileInfo->file($file), $byteStream->get_mimeType());
     $this->assertEquals(sha1_file($file), $byteStream->get_checksum()->get_value());
+  }
+  
+  /**
+   * 
+   */
+  public function testBuild_metadataObjectMetadataReference() {
+    $metadata = new MetadataReference();
+    $class = 'DESCRIPTION';
+    $category = 'DMD';
+    $id = 'md0';
+    
+    $metdataObject = $this->object->build_metadataObject($metadata, $id, $category, $class);
+    
+    $this->assertEquals($class, $metdataObject->get_classification());
+    $this->assertEquals($category, $metdataObject->get_category());
+    $this->assertEquals($id, $metdataObject->get_id());
+    $this->assertNull($metdataObject->get_otherCategory());
+    $this->assertNull($metdataObject->get_otherClass());
+    $this->assertInstanceOf('MetadataReference', $metdataObject->get_metadataReference());
+  }
+  
+  /**
+   * 
+   */
+  public function testBuild_metadataObjectMetadataWrap() {
+    $metadata = new MetadataWrap();
+    $class = 'NONSTANDARD';
+    $category = 'NONSTANDARD';
+    
+    $metdataObject = $this->object->build_metadataObject($metadata, NULL, $category, $class);
+    
+    $this->assertEquals('OTHER', $metdataObject->get_classification());
+    $this->assertEquals('OTHER', $metdataObject->get_category());
+    $this->assertNull($metdataObject->get_id());
+    $this->assertEquals($class, $metdataObject->get_otherClass());
+    $this->assertEquals($category, $metdataObject->get_otherCategory());
+    $this->assertInstanceOf('MetadataWrap', $metdataObject->get_metadataWrap());
+  }
+  
+  /**
+   * 
+   */
+  public function testBuild_metadataObjectDataObjectPointer() {
+    $metadata = new DataObjectPointer();
+    
+    $metdataObject = $this->object->build_metadataObject($metadata, NULL, NULL, NULL);
+    
+    $this->assertNull($metdataObject->get_classification());
+    $this->assertNull($metdataObject->get_category());
+    $this->assertNull($metdataObject->get_id());;
+    $this->assertInstanceOf('DataObjectPointer', $metdataObject->get_dataObjectPointer());
   }
 }
 

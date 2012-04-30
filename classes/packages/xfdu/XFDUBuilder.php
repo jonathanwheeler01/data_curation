@@ -245,6 +245,49 @@ class XFDUBuilder {
     
     return $byteStream;
   }
+  
+  public function build_metadataObject(aXFDUElement $metadata, $id = NULL, $category = NULL, $class = NULL) {
+    if(get_class($metadata) != 'MetadataReference' && 
+       get_class($metadata) != 'MetadataWrap' &&
+       get_class($metadata) != 'DataObjectPointer') {
+      $message = 'Expected one of MetadataReference or MetadataWrap, '.get_class($metadata).
+                 ' encountered.';
+      $code = 0;
+      $previous = NULL;
+      throw new InvalidArgumentException($message, $code, $previous);
+    }
+    
+    $categories = array('DMD', 'ANY', 'PDI', 'REP');
+    $otherCategory = NULL;
+    if(!in_array($category, $categories) && $category != NULL){
+      $otherCategory = $category;
+      $category = 'OTHER';
+    }
+    
+    $classifications = array('DESCRIPTION', 'CONTEXT', 'DED', 'FIXITY', 'PROVENANCE', 'REFERENCE', 'SYNTAX');
+    $otherClassification = NULL;
+    if(!in_array($class, $classifications) && $class != NULL){
+      $otherClassification = $class;
+      $class = 'OTHER';
+    }
+    
+    $metadataObject = new MetadataObject();
+    if(get_class($metadata) == 'MetadataReference') {
+      $metadataObject->set_metadataReference($metadata);
+    }
+    if(get_class($metadata) == 'MetadataWrap') {
+      $metadataObject->set_metadataWrap($metadata);
+    }
+    if(get_class($metadata) == 'DataObjectPointer') {
+      $metadataObject->set_dataObjectPointer($metadata);
+    }
+    if($category){$metadataObject->set_category($category);}
+    if($otherCategory){$metadataObject->set_otherCategory($otherCategory);}
+    if($class){$metadataObject->set_classification($class);}
+    if($otherClassification){$metadataObject->set_otherClass($otherClassification);}
+    if($id){$metadataObject->set_id($id);}
+    return $metadataObject;
+  }
 }
 
 ?>

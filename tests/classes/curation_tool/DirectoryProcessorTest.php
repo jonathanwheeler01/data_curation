@@ -20,9 +20,11 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
+    $dom = new DOMDocument('1.0', 'UTF-8');
     $this->create_test_directory();
     $settings = new XFDUSetup();
     $settings->root = '/investigator/project';
+    $settings->xmlData = $dom->createElement('anyXML');
     $this->object = new DirectoryProcessor($settings);
   }
   
@@ -125,6 +127,9 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
     $this->assertFileExists('/investigator/project/images/meta/images_xfdu.xml');
   }
   
+  /**
+   * 
+   */
   public function testProcessDataSetBareFile() {
     $this->remove_test_directory();
     mkdir('/investigator');
@@ -139,6 +144,22 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue(is_dir('/investigator/data'));
     $this->assertTrue(is_file('/investigator/data/data.txt'));
     $this->assertTrue(is_dir('/investigator/data/meta'));
+  }
+  
+  /**
+   * 
+   */
+  public function testProcessDataSetWithDMD() {
+    $metadataReference = new MetadataReference();
+    $metadataReference->set_locatorType('URL')
+            ->set_href('example.com');
+    
+    $settings = new XFDUSetup();
+    $settings->root = '/investigator/project';
+    $settings->descriptiveMetadata = $metadataReference;
+    $object = new DirectoryProcessor($settings);
+    
+    $object->process_dataset();
   }
 }
 

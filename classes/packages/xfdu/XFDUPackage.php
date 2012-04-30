@@ -57,16 +57,46 @@ class XFDUPackage {
     }
   }
   
+  /**
+   *
+   * @param DataObject $dataObject
+   * @return type 
+   */
   private function DataObject(DataObject $dataObject) {
     $xpath = new DOMXPath($this->xfdu);
     $query = '//dataObjectSection';
     $dataObjectSection = $xpath->query($query)->item(0);
+    
     if($dataObjectSection == NULL) {
-      return FALSE;     // This shouldn't happen, but just in case.
+      $xpath->registerNamespace('xfdu', 'urn:ccsds:schema:xfdu:1');
+      $query = '//xfdu:XFDU';
+      $xfdu = $xpath->query($query)->item(0);
+      
+      $xfdu->appendChild($dataObjectSection = $this->xfdu->createElement('dataObjectSection'));
     }
-    else {
-      return $dataObjectSection->appendChild($this->xfdu->importNode($dataObject->get_as_DOM(), TRUE));
+    
+    return $dataObjectSection->appendChild($this->xfdu->importNode($dataObject->get_as_DOM(), TRUE));
+  }
+  
+  /**
+   *
+   * @param MetadataObject $metadataObject
+   * @return type 
+   */
+  private function MetadataObject(MetadataObject $metadataObject) {
+    $xpath = new DOMXPath($this->xfdu);
+    $query = '//metadataSection';
+    $metadataSection = $xpath->query($query)->item(0);
+    
+    if($metadataSection == NULL) {
+      $xpath->registerNamespace('xfdu', 'urn:ccsds:schema:xfdu:1');
+      $query = '//xfdu:XFDU';
+      $xfdu = $xpath->query($query)->item(0);
+      
+      $xfdu->appendChild($metadataSection = $this->xfdu->createElement('metadataSection'));
     }
+    
+    return $metadataSection->appendChild($this->xfdu->importNode($metadataObject->get_as_DOM(), TRUE));
   }
   
   /**

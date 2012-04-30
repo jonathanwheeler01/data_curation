@@ -118,6 +118,7 @@ class MetadataObject extends aXFDUElement{
       $code = 0;
       throw new InvalidArgumentException($message, $code);
     }
+    return $this;
   }
   
   /**
@@ -142,6 +143,7 @@ class MetadataObject extends aXFDUElement{
    */
   public function set_otherCategory($otherCategory) {
     $this->otherCategory = $otherCategory;
+    return $this;
   }
   
   /**
@@ -166,6 +168,7 @@ class MetadataObject extends aXFDUElement{
    */
   public function set_otherClass($otherClass) {
     $this->otherClass = $otherClass;
+    return $this;
   }
   
   /**
@@ -190,6 +193,7 @@ class MetadataObject extends aXFDUElement{
    */
   public function set_dataObjectPointer(DataObjectPointer $dataObjectPointer) {
     $this->dataObjectPointer = $dataObjectPointer;
+    return $this;
   }
   
   /**
@@ -219,6 +223,7 @@ class MetadataObject extends aXFDUElement{
     else {
       throw new InvalidIDTokenException($id);
     }
+    return $this;
   }
   
   /**
@@ -243,6 +248,7 @@ class MetadataObject extends aXFDUElement{
    */
   public function set_metadataWrap(MetadataWrap $metadataWrap) {
     $this->metadataWrap = $metadataWrap;
+    return $this;
   }
   
   /**
@@ -267,6 +273,7 @@ class MetadataObject extends aXFDUElement{
    */
   public function set_metadataReference(MetadataReference $metadataReference) {
     $this->metadataReference = $metadataReference;
+    return $this;
   }
   
   /**

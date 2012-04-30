@@ -58,6 +58,9 @@ class XFDUPackageTest extends PHPUnit_Framework_TestCase {
     
   }
 
+  /**
+   * 
+   */
   public function testAddDataObject() {
     $dom = new DOMDocument('1.0', 'UTF-8');
     $doID = 'doID';
@@ -68,6 +71,20 @@ class XFDUPackageTest extends PHPUnit_Framework_TestCase {
     
     $this->assertEqualXMLStructure($dom->importNode($dataObject->get_as_DOM(), TRUE), 
             $dom->importNode($this->object->add($dataObject), TRUE));
+  }
+  
+  /**
+   * 
+   */
+  public function testAddMetadataObject(){
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $mdID = 'mdID';
+    
+    $metadataObject = new MetadataObject();
+    $metadataObject->set_id($mdID);
+    
+    $this->assertEqualXMLStructure($dom->importNode($metadataObject->get_as_DOM(), TRUE), 
+            $dom->importNode($this->object->add($metadataObject), TRUE));
   }
   
   /**
