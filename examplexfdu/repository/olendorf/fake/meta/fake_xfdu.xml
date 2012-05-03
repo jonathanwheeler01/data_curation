@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xfdu:XFDU xmlns:xfdu="urn:ccsds:schema:xfdu:1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd">
+    <packageHeader ID="packageHeader">
+        <volumeInfo>
+            <specificationVersion>1.0</specificationVersion>
+        </volumeInfo>
+        <environmentInfo>
+            <xmlData>
+                <dcWrapper xmlns:dc="foo">
+                    <dc:creator>Jon Wheeler</dc:creator>
+                    <dc:contributor>Lori Townsend</dc:contributor>
+                    <dc:created>today</dc:created>
+                </dcWrapper>
+            </xmlData>
+        </environmentInfo>
+    </packageHeader>
+    <informationPackageMap>
+        <xfdu:contentUnit ID="cu0" textInfo="fake" unitType="directory">
+            <xfdu:contentUnit ID="cu1" unitType="directory" textInfo="images">
+                <XFDUPointer locatorType="URL" href="../images/meta/images_xfdu.xml"/>
+                <xfdu:contentUnit ID="cu2" textInfo="README.txt" unitType="file" anyMdID="anyMD0">
+                    <dataObjectPointer dataObjectID="do0"/>
+                </xfdu:contentUnit>
+            </xfdu:contentUnit>
+        </xfdu:contentUnit>
+    </informationPackageMap>
+    <metadataSection>
+        <metadataObject ID="anyMD0" category="ANY" classification="OTHER">
+            <metadataReference locatorType="URL" href="README_mixx.xml"/>
+        </metadataObject>
+    </metadataSection>
+    <dataObjectSection>
+        <dataObject ID="do0">
+            <byteStream mimeType="text/plain" size="1000">
+                <fileLocation locatorType="URL" href="../README.txt"/>
+                <checksum checksumName="SHA1">blah</checksum>
+            </byteStream>
+        </dataObject>
+    </dataObjectSection>
+    <behaviorSection></behaviorSection>
+</xfdu:XFDU>

@@ -221,6 +221,7 @@ class DirectoryProcessor {
           $package->add($metadataObject);
           
           $contentUnit->set_dmdID($id);
+          $this->metadataObjectCount++;
         }
         
         $package->add($contentUnit, $parent);
@@ -248,6 +249,21 @@ class DirectoryProcessor {
                                           $contentUnitID, 
                                           'directory', 
                                           $parsedPath[sizeof($parsedPath) - 1]);
+        
+    // Add high level descriptive metadata if it exists
+    if($this->settings->descriptiveMetadata != NULL) {
+      $id = 'dmd'.$this->metadataObjectCount;
+      $metadataObject = $this->builder->build_metadataObject(
+              $this->settings->descriptiveMetadata, 
+              $id, 
+              'DMD', 
+              'DESCRIPTION');
+
+      $package->add($metadataObject);
+
+      $contentUnit->set_dmdID($id);
+      $this->metadataObjectCount++;
+    }
     
     $package->add($contentUnit);
   }

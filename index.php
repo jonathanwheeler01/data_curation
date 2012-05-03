@@ -1,16 +1,10 @@
 <?php
 require_once 'curation_tool.inc';
-$element = new XMLElement('parent');
+$dom = new DOMDocument('1.0', 'UTF-8');
+$settings = new XFDUSetup();
+$settings->root = 'c:/repository/olendorf/fake';
+$settings->xmlData = $dom->createElement('stuff');
 
-$child1 = new XMLElement('child1');
-$child2 = new XMLElement('child2');
-
-$element->append_child($child1);
-print sizeof($element->get_children()).'<br/>';
-$element->append_child($child2);
-print sizeof($element->get_children()).'<br/>';
-$element->append_child($child1);
-print sizeof($element->get_children()).'<br/>';
-$element->remove_child($child1);
-print sizeof($element->get_children()).'<br/>';
+$dirProc = new DirectoryProcessor($settings);
+$dirProc->process_dataset();
 ?>
