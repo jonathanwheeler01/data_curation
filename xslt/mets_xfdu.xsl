@@ -5,8 +5,6 @@
     xmlns:premis="info:lc/xmlns/premis-v2" version="2.0">
     <!-- 
         to METS from XFDU
-        style sheet by Jon Wheeler
-        no rights reserved
     -->
     <xsl:strip-space elements="*"/>
 
