@@ -1,32 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xfdu:XFDU xmlns:xfdu="urn:ccsds:schema:xfdu:1"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:dcterms="http://purl.org/dc/terms/" 
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xsi:schemaLocation="urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd
+        http://purl.org/dc/terms/ http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd
+        http://purl.org/dc/elements/1.1/  http://dublincore.org/schemas/xmls/qdc/2008/02/11/dc.xsd">
     <packageHeader ID="packageHeader">
         <volumeInfo>
             <specificationVersion>1.0</specificationVersion>
         </volumeInfo>
         <environmentInfo>
             <xmlData>
-                <dcWrapper xmlns:dc="foo">
-                    <dc:creator>Jon Wheeler</dc:creator>
-                    <dc:contributor>Lori Townsend</dc:contributor>
-                    <dc:created>today</dc:created>
-                </dcWrapper>
+                <dc:creator>Jon Wheeler</dc:creator>
+                <dc:contributor>Lori Townsend</dc:contributor>
+                <dc:created>today</dc:created>
             </xmlData>
         </environmentInfo>
     </packageHeader>
     <informationPackageMap>
         <xfdu:contentUnit ID="cu0" textInfo="fake" unitType="directory">
             <xfdu:contentUnit ID="cu1" unitType="directory" textInfo="images">
-                <XFDUPointer locatorType="URL" href="../images/meta/images_xfdu.xml"/>
+                <xfdu:contentUnit ID="cu3" textInfo="images" unitType="directory">
+                    <XFDUPointer locatorType="URL" href="olendorf/fake/images/meta/images_xfdu.xml"/>
+                </xfdu:contentUnit>
                 <xfdu:contentUnit ID="cu2" textInfo="README.txt" unitType="file" anyMdID="anyMD0">
                     <dataObjectPointer dataObjectID="do0"/>
+                </xfdu:contentUnit>
+                <xfdu:contentUnit ID="cu4" textInfo="misc" unitType="directory">
+                    <XFDUPointer locatorType="URL" href="olendorf/fake/images/meta/misc_xfdu.xml"/>
+                </xfdu:contentUnit>
+                <xfdu:contentUnit ID="cu5" textInfo="software" unitType="directory">
+                    <XFDUPointer locatorType="URL" href="olendorf/fake/images/meta/software_xfdu.xml"/>
                 </xfdu:contentUnit>
             </xfdu:contentUnit>
         </xfdu:contentUnit>
     </informationPackageMap>
     <metadataSection>
+        <metadataObject ID="DMD0" category="DMD" classification="DESCRIPTION">
+            <metadataWrap>
+                <xmlData>
+                    <dc:creator>Robert Olendorf</dc:creator>
+                    <dc:contributor>Jane Doe</dc:contributor>
+                    <dcterms:abstract>Description of the project.</dcterms:abstract>
+                    <dcterms:description>Description of the data</dcterms:description>
+                    <dcterms:created>2012-05-27</dcterms:created>
+                    <dcterms:license>Creative Commons 3.0 Attribution</dcterms:license>
+                    <dc:subject>XFDU</dc:subject>
+                    <dc:subject>Example</dc:subject>
+                    <dc:subject>Metadata</dc:subject>
+                    <dc:subject>Data Model</dc:subject>
+                    <dc:title>Example Data Model with XFDU</dc:title>
+                </xmlData>
+            </metadataWrap>
+        </metadataObject>
         <metadataObject ID="anyMD0" category="ANY" classification="OTHER">
             <metadataReference locatorType="URL" href="README_mixx.xml"/>
         </metadataObject>
@@ -34,10 +61,23 @@
     <dataObjectSection>
         <dataObject ID="do0">
             <byteStream mimeType="text/plain" size="1000">
-                <fileLocation locatorType="URL" href="../README.txt"/>
+                <fileLocation locatorType="URL" href="olendorf/fake/README.txt"/>
                 <checksum checksumName="SHA1">blah</checksum>
             </byteStream>
         </dataObject>
+        <dataObject ID="do1">
+            <byteStream mimeType="application/x-jar" size="7000">
+                <fileLocation locatorType="URL" href="olendorf/fake/software/fontbox-0.1.0.jar"/>
+            </byteStream>
+        </dataObject>
     </dataObjectSection>
-    <behaviorSection></behaviorSection>
+    <behaviorSection>
+        <behaviorObject ID="bo0" contentUnitID="cu2" behaviorType="analysis">
+            <interfaceDefinition locatorType="URL" href="olendorf/fake/README.txt">
+                <inputParameter name="input">
+                    <dataObjectPointer dataObjectID="do1"/>
+                </inputParameter>
+            </interfaceDefinition>
+        </behaviorObject>
+    </behaviorSection>
 </xfdu:XFDU>
