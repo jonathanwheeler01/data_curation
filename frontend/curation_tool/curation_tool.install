@@ -1,0 +1,48 @@
+<?php
+  /**
+   * Install function for curation tool.
+   * 
+   * @author Robert Olendorf
+   * @license Apache License 2.0 
+   */
+
+   function curation_tool_enable() {
+     $curator = new stdClass();
+     $curator->name = 'curator';
+     user_role_save($curator);
+     
+     $authenticatedPermissions = array(
+         'create own project',
+         'edit own project',
+         'delete own project',
+         );
+     
+     $curatorPermissions = array(
+         'create any project',
+         'edit any project', 
+         'delete any project'
+         );
+     
+     $adminPermission = array(
+         'configure curation tools',
+     );
+     
+     $curator = user_role_load_by_name($role->name);
+     $admin = user_role_load_by_name('administrator');
+     user_role_grant_permissions($role->rid, 
+             array_merge(
+                     $curatorPermissions,
+                     $authenticatedPermissions
+                     )
+             );
+     user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, 
+             $authenticatedPermissions);
+     user_role_grant_permissions($admin->rid, 
+             array_merge(
+                     $adminPermission, 
+                     $curatorPermissions, 
+                     $authenticatedPermissions
+                     )
+             );
+   }
+?>
