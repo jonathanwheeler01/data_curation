@@ -76,7 +76,8 @@ class XFDUSetup {
   public $sequenceInfoText;
   
   /**
-   * XML data to be included with all XFDU documents in the dataset. For more
+   * XML data about the metadata package, ie. the curator and date metadata was created.
+   * To be included with all XFDU documents in the dataset. For more
    * structure XML metadata use extension.
    * @var string 
    */
@@ -116,7 +117,7 @@ class XFDUSetup {
   public $extensionNamespaceLocation;
   
   /**
-   * Either a metadataReference, metadataPointer or a dataObjectPointer that
+   * Either a metadataReference, metadataWrap or a dataObjectPointer that
    * gives descriptive metadata to be included in with every file in the data
    * set. The data, should be high level and applicable to all files and 
    * directories.

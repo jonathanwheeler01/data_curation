@@ -14,7 +14,7 @@
             <xmlData>
                 <dc:creator>Jon Wheeler</dc:creator>
                 <dc:contributor>Lori Townsend</dc:contributor>
-                <dc:created>today</dc:created>
+                <dcterms:created>2012-05-27</dcterms:created>
             </xmlData>
         </environmentInfo>
     </packageHeader>
@@ -56,6 +56,9 @@
         </metadataObject>
         <metadataObject ID="anyMD0" category="ANY" classification="OTHER">
             <metadataReference locatorType="URL" href="README_mixx.xml"/>
+        </metadataObject>
+        <metadataObject ID="repMD0" category="REP">
+            <dataObjectPointer dataObjectID="do0"/>
         </metadataObject>
     </metadataSection>
     <dataObjectSection>
