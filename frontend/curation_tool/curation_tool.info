@@ -1,7 +1,0 @@
-name = Curation Tool
-description = A front end for the data curation tools.
-package = Curation Tool
-core = 7.x
-files[] = curation_tool.module
-files[] = curation_tool.install
-php = 5.3
