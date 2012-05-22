@@ -5,13 +5,11 @@
     xmlns:premis="info:lc/xmlns/premis-v2" version="2.0">
     <!-- 
         to METS from XFDU
+        style sheet by Jon Wheeler
+        no rights reserved
     -->
     <xsl:strip-space elements="*"/>
 
-    <!--
-        METS structural map -> XFDU information package map
-        METS file section -> XFDU data object section
-    -->
     <xsl:template match="/">
         <mets:mets xmlns:mets="http://www.loc.gov/METS/"
             xmlns:dc="http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd"
@@ -25,6 +23,7 @@
 
     <!--
         informationPackageMap templates
+        some conditional handling required
     -->
 
     <xsl:template match="informationPackageMap">
