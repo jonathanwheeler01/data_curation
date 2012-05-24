@@ -183,7 +183,7 @@ class DirectoryProcessor {
       }
       else if(is_dir($path.DIRECTORY_SEPARATOR.$item)) {
         $this->handle_directory($path.DIRECTORY_SEPARATOR.$item, $package);
-        $this->process_path($path.DIRECTORY_SEPARATOR.$item);                   // Recursive call
+        $this->process_path($path.DIRECTORY_SEPARATOR.$item, $currentID);                   // Recursive call
       }
     }
     

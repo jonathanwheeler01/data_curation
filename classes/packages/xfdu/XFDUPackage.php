@@ -27,6 +27,7 @@ class XFDUPackage {
     $this->builder = new XFDUBuilder();
     
     $this->xfdu = new DOMDocument($settings->xmlVersion, $settings->xmlEncoding);
+    
     $this->xfdu->appendChild($this->xfdu->importNode($this->builder->build_xfdu($settings)->get_as_DOM(), TRUE));
   }
   
@@ -34,7 +35,7 @@ class XFDUPackage {
     $this->xfdu->save($filename);
   }
   
-  public function read($file) {
+  public function read($filename) {
     $dom = new DOMDocument('1.0', 'UTF-8');
     $this->xfdu = $dom->load($filename);
   }
@@ -68,16 +69,14 @@ class XFDUPackage {
    * @return type 
    */
   private function DataObject(DataObject $dataObject) {
-    $xpath = new DOMXPath($this->xfdu);
-    $query = '//dataObjectSection';
-    $dataObjectSection = $xpath->query($query)->item(0);
-    
-    if($dataObjectSection == NULL) {
-      $xpath->registerNamespace('xfdu', 'urn:ccsds:schema:xfdu:1');
-      $query = '//xfdu:XFDU';
-      $xfdu = $xpath->query($query)->item(0);
+    $nodeList = $this->xfdu->getElementsByTagName('dataObjectSection');
+
+    if($nodeList->length == 0) {
+      $xfdu = $this->xfdu->getElementsByTagName('xfdu:XFDU')->item(0);
+      $dataObjectSection = $this->xfdu->createElement('dataObjectSection');
+      $metadataSection = $this->xfdu->getElementsByTagName('metadataSection')->item(0);
       
-      $xfdu->appendChild($dataObjectSection = $this->xfdu->createElement('dataObjectSection'));
+      $xfdu->insertBefore($dataObjectSection, $metadataSection);
     }
     
     return $dataObjectSection->appendChild($this->xfdu->importNode($dataObject->get_as_DOM(), TRUE));

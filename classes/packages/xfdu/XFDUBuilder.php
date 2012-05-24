@@ -8,6 +8,12 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * 
  */
 class XFDUBuilder {
+  
+  /**
+   *
+   * @param XFDUSetup $settings
+   * @return \XFDU 
+   */
   public function build_xfdu(XFDUSetup $settings) {
     $packageHeader = new PackageHeader();
     $packageHeader->set_id($settings->packageHeaderID);
@@ -33,7 +39,6 @@ class XFDUBuilder {
     $xfdu->set_packageHeader($packageHeader);
     $xfdu->set_informationPackageMap($informationPackageMap);
     $xfdu->set_metadataSection($metadataSection);
-    $xfdu->set_dataObjectSection($dataObjectSection);
     $xfdu->set_behaviorSection($behaviorSection);
     return $xfdu;
   }

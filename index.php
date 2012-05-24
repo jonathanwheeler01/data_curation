@@ -2,7 +2,8 @@
 require_once 'curation_tool.inc';
 $dom = new DOMDocument('1.0', 'UTF-8');
 $settings = new XFDUSetup();
-$settings->root = 'c:/repository/olendorf/fake';
+$settings->repository = DIRECTORY_SEPARATOR.'repo';
+$settings->root = 'olendorf'.DIRECTORY_SEPARATOR.'fake';
 
 $xmlData = new XMLData();
 
