@@ -5,6 +5,9 @@
     xmlns:premis="info:lc/xmlns/premis-v2" version="2.0">
     <!-- 
         to METS from XFDU
+        
+        author: Jon Wheeler
+        
     -->
     <xsl:strip-space elements="*"/>
 
@@ -13,9 +16,9 @@
             xmlns:dc="http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
-            
+
             <xsl:apply-templates select="xfdu:XFDU/informationPackageMap"/>
-            
+
         </mets:mets>
     </xsl:template>
 
@@ -26,15 +29,21 @@
 
     <xsl:template match="informationPackageMap">
         <mets:structMap>
-            <xsl:attribute name="ID">
-                <xsl:apply-templates select="./@ID"/>
-            </xsl:attribute>
-            <xsl:attribute name="TYPE">
-                <xsl:apply-templates select="./@packageType"/>
-            </xsl:attribute>
-            <xsl:attribute name="LABEL">
-                <xsl:apply-templates select="./@textInfo"/>
-            </xsl:attribute>
+            <xsl:if test="./@ID != ''">
+                <xsl:attribute name="ID">
+                    <xsl:apply-templates select="./@ID"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./packageType != ''">
+                <xsl:attribute name="TYPE">
+                    <xsl:apply-templates select="./@packageType"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./textInfo != ''">
+                <xsl:attribute name="LABEL">
+                    <xsl:apply-templates select="./@textInfo"/>
+                </xsl:attribute>
+            </xsl:if>
             <xsl:apply-templates/>
         </mets:structMap>
     </xsl:template>
@@ -62,7 +71,7 @@
             <xsl:apply-templates/>
         </mets:div>
     </xsl:template>
-    
+
     <xsl:template match="XFDUPointer">
         <mets:mptr>
             <xsl:attribute name="ID">
