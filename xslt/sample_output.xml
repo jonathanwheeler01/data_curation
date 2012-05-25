@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mets="http://www.loc.gov/METS/" xmlns:xfdu="urn:ccsds:schema:xfdu:1"
+    xmlns:dc="http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd"
+    xmlns:premis="info:lc/xmlns/premis-v2"
+    xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+    <mets:fileSec>
+        <mets:fileGrp>
+            <mets:file ID="do0" MIMETYPE="text/plain" SIZE="1000" CHECKSUMTYPE="SHA-1"
+                CHECKSUM="blah">
+                <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL"
+                    xlink:href="olendorf/fake/README.txt"/>
+            </mets:file>
+            <mets:file ID="do1" MIMETYPE="application/x-jar" SIZE="7000">
+                <mets:FLocat xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL"
+                    xlink:href="olendorf/fake/software/fontbox-0.1.0.jar"/>
+            </mets:file>
+        </mets:fileGrp>
+    </mets:fileSec>
+    <mets:structMap>
+        <mets:div ID="cu0" TYPE="directory" LABEL="fake">
+            <mets:div ID="cu1" TYPE="directory" LABEL="images">
+                <mets:div ID="cu3" TYPE="directory" LABEL="images">
+                    <mets:mptr xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL"
+                        xlink:href="olendorf/fake/images/meta/images_xfdu.xml"/>
+                </mets:div>
+                <mets:div ID="cu2" TYPE="file" LABEL="README.txt">
+                    <mets:fptr FILEID="do0"/>
+                </mets:div>
+                <mets:div ID="cu4" TYPE="directory" LABEL="misc">
+                    <mets:mptr xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL"
+                        xlink:href="olendorf/fake/images/meta/misc_xfdu.xml"/>
+                </mets:div>
+                <mets:div ID="cu5" TYPE="directory" LABEL="software">
+                    <mets:mptr xmlns:xlink="http://www.w3.org/1999/xlink" LOCTYPE="URL"
+                        xlink:href="olendorf/fake/images/meta/software_xfdu.xml"/>
+                </mets:div>
+            </mets:div>
+        </mets:div>
+    </mets:structMap>
+</mets:mets>
