@@ -202,15 +202,17 @@ abstract class aXMLElement implements iXMLElement{
       foreach($this->namepaces as $namespace) {
         // Handle adding of prefix if it is set.
         $qualifiedName = $namespace->isset_prefix() ? 'xmlns:'.$namespace->get_prefix() : 'xmlns';
-        $element->setAttribute( 
+        $element->setAttributeNS( 
+                'http://www.w3.org/2000/xmlns/',
                 $qualifiedName, 
                 $namespace->get_uri());
         
         if($namespace->isset_location()) {
-          $value = $element->getAttribute(
-                  'xsi:schemaLocation'). 
+          $value = $element->getAttributeNS(
+                  'http://www.w3.org/2001/XMLSchema-instance',
+                  'schemaLocation'). 
                     ' '.$namespace->get_uri().' '.$namespace->get_location();
-          $element->setAttribute('xsi:schemaLocation', $value);
+          $element->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $value);
         }
       }
     }

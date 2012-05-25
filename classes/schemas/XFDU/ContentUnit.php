@@ -475,13 +475,18 @@ class ContentUnit extends aXFDUElement{
   public function get_as_DOM($prefix = NULL) {
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
-    if($prefix !== NULL) {
-      $contentUnit = $dom->createElement($prefix.':'.$this->first_to_lower(get_class($this)));
-      $contentUnit = $dom->createElementNS('urn:ccsds:schema:xfdu:1', $prefix.':contentUnit');
+    if($prefix == NULL) {
+      $prefix = 'xfdu';
     }
-    else {
-      $contentUnit = $dom->createElementNS('urn:ccsds:schema:xfdu:1', 'xfdu:'.$this->first_to_lower(get_class($this)));
-    }
+//    $contentUnit = $dom->createElement($prefix.':'.$this->first_to_lower(get_class($this)));
+
+    $contentUnit = $dom->createElementNS(
+                        'urn:ccsds:schema:xfdu:1', 
+                        $prefix.':'.$this->first_to_lower(get_class($this))
+                        );
+//    else {
+//      $contentUnit = $dom->createElementNS('urn:ccsds:schema:xfdu:1', 'xfdu:'.$this->first_to_lower(get_class($this)));
+//    }
     
     // Handle the long list of attributes.
     if($this->isset_id()) {$contentUnit->setAttribute('ID', $this->id);}
@@ -503,9 +508,9 @@ class ContentUnit extends aXFDUElement{
     }
     
     $childContentUnit = new ContentUnit();
-    if($this->isset_contentUnits()) {
+    if(sizeof($this->contentUnits) > 0) {
       foreach($this->contentUnits as $childContentUnit) {
-        $contentUnit->appendChild($dom->importNode($childContentUnit->get_as_DOM($prefix)));
+        $contentUnit->appendChild($dom->importNode($childContentUnit->get_as_DOM($prefix), TRUE));
       }
     }
     

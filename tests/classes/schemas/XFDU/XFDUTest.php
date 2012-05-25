@@ -213,9 +213,9 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     
     // Root xfdu element
     $expectedElement = $dom->createElement('xfdu:XFDU');
-    $expectedElement->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
-    $expectedElement->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-    $expectedElement->setAttribute('xsi:schemaLocation', 'urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd');
+    $expectedElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
+    $expectedElement->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+    $expectedElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', 'urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd');
     $expectedElement->appendChild($expectedPackageHeader);
     $expectedElement->appendChild($expectedInformationPackageMap);
     $expectedElement->appendChild($expectedMetadataSection);
@@ -281,6 +281,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     $this->object->set_behaviorSection(new BehaviorSection());
     
     $dom->appendChild( $dom->importNode($this->object->get_as_DOM(), TRUE) );
+    
     
     $this->assertEqualXMLStructure($expectedElement, $dom->importNode($this->object->get_as_DOM(), TRUE), TRUE);
     

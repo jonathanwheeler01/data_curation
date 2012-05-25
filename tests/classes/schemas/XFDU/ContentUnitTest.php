@@ -252,7 +252,7 @@ class ContentUnitTest extends PHPUnit_Framework_TestCase {
     $locatorType = 'URL';
     $dataObjectID = 'dataObjectID';
     
-    $expectedElement = $dom->createElement('xfdu:contentUnit');
+    $expectedElement = $dom->createElementNS('urn:ccsds:schema:xfdu:1', 'xfdu:contentUnit');
     $expectedElement->setAttribute('ID', $id);
     $expectedElement->setAttribute('anyMdID', $amdID);
     $expectedElement->setAttribute('behaviorID', $behID);

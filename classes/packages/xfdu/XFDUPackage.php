@@ -29,6 +29,23 @@ class XFDUPackage {
     $this->xfdu = new DOMDocument($settings->xmlVersion, $settings->xmlEncoding);
     
     $this->xfdu->appendChild($this->xfdu->importNode($this->builder->build_xfdu($settings)->get_as_DOM(), TRUE));
+    
+    // Because of some weirdness with the DOM, the namespaces in environmentalInfo
+    // such as Dublin Core were being redeclared numerous times. It didn't really
+    // hurt anything I could see, but just to be sure, I remove them here. Also
+    // just makes a nicer document.
+    $envInfo = $this->xfdu->getElementsByTagName('environmentInfo')->item(0);
+    if($envInfo) {
+      $envInfo->removeAttributeNS('http://purl.org/dc/elements/1.1/', 'dc');
+      $envInfo->removeAttributeNS('http://purl.org/dc/terms/', 'dcterms');
+
+      $xmlData = $this->xfdu->getElementsByTagName('xmlData');
+      if($xmlData->length > 0)
+      for($i = 0; $i < $xmlData->length; $i++) {
+        $xmlData->item($i)->removeAttributeNS('http://purl.org/dc/elements/1.1/', 'dc');
+        $xmlData->item($i)->removeAttributeNS('http://purl.org/dc/terms/', 'dcterms');
+      }
+    }
   }
   
   public function write($filename) {
@@ -72,7 +89,8 @@ class XFDUPackage {
     $dataObjectSection = $this->xfdu->getElementsByTagName('dataObjectSection')->item(0);
 
     if($dataObjectSection == NULL) {
-      $xfdu = $this->xfdu->getElementsByTagName('xfdu:XFDU')->item(0);
+//      $xfdu = $this->xfdu->getElementsByTagName('xfdu:XFDU')->item(0);
+      $xfdu = $this->xfdu->getElementsByTagName('XFDU')->item(0);
       $dataObjectSection = $this->xfdu->createElement('dataObjectSection');
       $metadataSection = $this->xfdu->getElementsByTagName('metadataSection')->item(0);
       

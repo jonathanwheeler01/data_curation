@@ -310,14 +310,15 @@ class XFDU extends aXFDUElement{
     if($prefix !== NULL) {
       $prefix = 'xfdu';
     }
-    $xfdu = $dom->createElement('xfdu:'.get_class($this));
+//    $xfdu = $dom->createElement('xfdu:'.get_class($this));
+    $xfdu = $dom->createElementNS('urn:ccsds:schema:xfdu:1', 'xfdu:XFDU');
     
     // Always add these namespace declarations.
-    $xfdu->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+    $xfdu->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
     
-    $xfdu->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
+    $xfdu->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
     
-    $xfdu->setAttribute('xsi:schemaLocation', 
+    $xfdu->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', 
             'urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd');
     
     // Add any additional namespaces set prior to calling this method;

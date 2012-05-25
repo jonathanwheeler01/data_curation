@@ -49,18 +49,18 @@ class XFDUBuilder {
     // Add Dublin Core and Qualified Dublin Core Namespaces at the root XFDU
     // element. Dublin Core is used at least twice in every document so this
     // saves work in namespace declaration.
-//    $dc = new XMLNameSpace(
-//            'http://purl.org/dc/elements/1.1/', 
-//            'http://dublincore.org/schemas/xmls/qdc/2008/02/11/dc.xsd', 
-//            'dc'
-//            );
-//    $dcTerms = new XMLNameSpace(
-//            'http://purl.org/dc/terms/', 
-//            'http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd', 
-//            'dcterms'
-//            );
-//    $xfdu->add_namespace($dc);
-//    $xfdu->add_namespace($dcTerms);
+    $dc = new XMLNameSpace(
+            'http://purl.org/dc/elements/1.1/', 
+            'http://dublincore.org/schemas/xmls/qdc/2008/02/11/dc.xsd', 
+            'dc'
+            );
+    $dcTerms = new XMLNameSpace(
+            'http://purl.org/dc/terms/', 
+            'http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd', 
+            'dcterms'
+            );
+    $xfdu->add_namespace($dc);
+    $xfdu->add_namespace($dcTerms);
     
     
     $xfdu->set_packageHeader($packageHeader);
