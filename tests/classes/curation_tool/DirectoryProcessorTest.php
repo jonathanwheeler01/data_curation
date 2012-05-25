@@ -23,7 +23,8 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
     $dom = new DOMDocument('1.0', 'UTF-8');
     $this->create_test_directory();
     $settings = new XFDUSetup();
-    $settings->root = '/investigator/project';
+    $settings->repository = DIRECTORY_SEPARATOR.'repository';
+    $settings->root = 'investigator'.DIRECTORY_SEPARATOR.'project';
     $settings->xmlData = $dom->createElement('anyXML');
     $this->object = new DirectoryProcessor($settings);
   }
@@ -41,19 +42,19 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
       $perms = 0755;
     }
     
-    $currentDirectory = '/investigator/project/';
+    $currentDirectory = DIRECTORY_SEPARATOR.'repository'.DIRECTORY_SEPARATOR.'investigator'.DIRECTORY_SEPARATOR.'project'.DIRECTORY_SEPARATOR;
     mkdir($currentDirectory, $perms, TRUE);
     touch($currentDirectory.'data1.txt');
     touch($currentDirectory.'data2.csv');
     
-    $dir1 = $currentDirectory.'images/';
+    $dir1 = $currentDirectory.'images'.DIRECTORY_SEPARATOR;
     mkdir($dir1, $perms, TRUE);
     touch($dir1.'image1.png');
     touch($dir1.'image2.jpg');
     touch($dir1.'image3.gif');
     touch($dir1.'image4.tif');    
     
-    $dir2 = $currentDirectory.'filetypes/';
+    $dir2 = $currentDirectory.'filetypes'.DIRECTORY_SEPARATOR;
     mkdir($dir2, $perms, TRUE);
     touch($dir2.'matlab.m');
     touch($dir2.'powerpoint.pptx');
@@ -83,10 +84,10 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
     
     // test the operating system to excecute the correct shell command
     if(preg_match('/windows/i', php_uname('s'))) {
-      exec('rmdir "/investigator" /s /q');
+      exec('rmdir "/repository" /s /q');
     }
     else {
-      exec('rm -r /investigator');
+      exec('rm -r /repository');
     }
   }
   
@@ -94,7 +95,7 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testRoot() {
-    $path = '/investigator/project';
+    $path = 'investigator'.DIRECTORY_SEPARATOR.'project';
    
     $this->assertEquals($path, $this->object->get_root());
   }
@@ -103,7 +104,7 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    * @expectedException PathNotFoundException
    */
   public function testInvalidRoot() {
-    $path = '/path1/path2';
+    $path = '\path1\path2';
     $settings = new XFDUSetup();
     $settings->root = $path;
     
@@ -117,14 +118,23 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    * They should be given all the other testing, but good to test final output.
    */
   public function testProcessDataSet() { 
-    $path = '/investigator/project';
+    $path = DIRECTORY_SEPARATOR.'repository'.DIRECTORY_SEPARATOR.'investigator'.DIRECTORY_SEPARATOR.'project';
     $this->object->process_dataset();
     
     $this->assertTrue(is_dir($path.DIRECTORY_SEPARATOR.'meta'));
     $this->assertTrue(is_dir($path.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'meta'));
     
-    $this->assertFileExists('/investigator/project/meta/project_xfdu.xml');
-    $this->assertFileExists('/investigator/project/images/meta/images_xfdu.xml');
+    $this->assertFileExists(DIRECTORY_SEPARATOR.'repository'.
+                            DIRECTORY_SEPARATOR.'investigator'.
+                            DIRECTORY_SEPARATOR.'project'.
+                            DIRECTORY_SEPARATOR.'meta'.
+                            DIRECTORY_SEPARATOR.'project_xfdu.xml');
+    $this->assertFileExists(DIRECTORY_SEPARATOR.'repository'.
+                            DIRECTORY_SEPARATOR.'investigator'.
+                            DIRECTORY_SEPARATOR.'project'.
+                            DIRECTORY_SEPARATOR.'images'.
+                            DIRECTORY_SEPARATOR.'meta'.
+                            DIRECTORY_SEPARATOR.'images_xfdu.xml');
   }
   
   /**
@@ -132,18 +142,28 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
    */
   public function testProcessDataSetBareFile() {
     $this->remove_test_directory();
-    mkdir('/investigator');
-    touch('/investigator/data.txt');
+    
+        // check the operating system to handle permissions correctly
+    if(preg_match('/windows/i', php_uname('s'))) {
+      $perms = 0;
+    }
+    else {
+      $perms = 0755;
+    }
+    
+    mkdir('/repository/investigator', $perms, TRUE);
+    touch('/repository/investigator/data.txt');
     
     $settings = new XFDUSetup();
-    $settings->root = '/investigator/data.txt';
+    $settings->repository = DIRECTORY_SEPARATOR.'repository';
+    $settings->root = 'investigator/data.txt';
     $this->object = new DirectoryProcessor($settings);
     
     $this->object->process_dataset();
     
-    $this->assertTrue(is_dir('/investigator/data'));
-    $this->assertTrue(is_file('/investigator/data/data.txt'));
-    $this->assertTrue(is_dir('/investigator/data/meta'));
+    $this->assertTrue(is_dir('/repository/investigator/data'));
+    $this->assertTrue(is_file('/repository/investigator/data/data.txt'));
+    $this->assertTrue(is_dir('/repository/investigator/data/meta'));
   }
   
   /**
@@ -155,7 +175,8 @@ class DirectoryProcessorTest extends PHPUnit_Framework_TestCase {
             ->set_href('example.com');
     
     $settings = new XFDUSetup();
-    $settings->root = '/investigator/project';
+    $settings->repository = DIRECTORY_SEPARATOR.'repository';
+    $settings->root = 'investigator'.DIRECTORY_SEPARATOR.'project';
     $settings->descriptiveMetadata = $metadataReference;
     $object = new DirectoryProcessor($settings);
     

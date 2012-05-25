@@ -62,6 +62,10 @@ class DirectoryProcessor {
     $this->dataObjectCount = 0;
     $this->metadataObjectCount = 0;
   }
+  
+  public function get_repository() {
+    return $this->settings->repository;
+  }
 
   /**
    *
@@ -76,35 +80,44 @@ class DirectoryProcessor {
    * and if it is a bare file enclosing it in a directory. 
    */
   public function process_dataset() {
-//    $this->oldcwd = getcwd();
-
-    /**
-     *@todo test file or diretory exists. 
-     */
+    
     if($this->settings->root == '') {
       throw new PathNotFoundException('No path has been specified', E_ERROR);
     }
     
-    if(!is_file($this->settings->root) && !is_dir($this->settings->root)) {
-      throw new PathNotFoundException($this->settings->root.' was not found.', E_ERROR);
+    if(!is_file($this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root) && 
+            !is_dir($this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root)) {
+      throw new PathNotFoundException(
+              $this->settings->repository.
+              DIRECTORY_SEPARATOR.
+              $this->settings->root.
+              ' was not found.', E_ERROR);
     }
 
     // If it's a bare file, moves the file into a same named directory.
     // This provides a consistent structure across all data sets.
-    if(is_file($this->settings->root)) {
+    if(is_file($this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root)) {
       // Get the required info from the file
       $pathInfo = pathinfo($this->settings->root);
-      $fileName = basename($this->settings->root, $pathInfo['extension']);
+      $fileName = basename($this->settings->root, 
+              $pathInfo['extension']);
 
-      mkdir($pathInfo['dirname'].DIRECTORY_SEPARATOR.$fileName);                // make the new directory
-      rename($this->settings->root, $pathInfo['dirname'].                       // Move the file into the new directory
-                                     DIRECTORY_SEPARATOR.$fileName.
-                                     DIRECTORY_SEPARATOR.$pathInfo['basename']);
 
-      $this->settings->root = $pathInfo['dirname'].'/'.$pathInfo['filename']; // Set root to the directory not file
+      mkdir($this->settings->repository.DIRECTORY_SEPARATOR.$pathInfo['dirname'].DIRECTORY_SEPARATOR.$fileName);                // make the new directory
+      rename($this->settings->repository.
+                DIRECTORY_SEPARATOR.
+                $this->settings->root,
+              $this->settings->repository.
+                DIRECTORY_SEPARATOR.$pathInfo['dirname'].                       // Move the file into the new directory
+                DIRECTORY_SEPARATOR.$fileName.
+                DIRECTORY_SEPARATOR.$pathInfo['basename']);
+
+      $this->settings->root = $pathInfo['dirname'].DIRECTORY_SEPARATOR.$pathInfo['filename'];
+      
+      print 'root = '.$this->settings->root.'====';
     }
 
-    $this->process_path($this->settings->root);                                           // Start processing the data.
+    $this->process_path($this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root);                                           // Start processing the data.
   }
 
   /**
@@ -115,22 +128,25 @@ class DirectoryProcessor {
    */
   protected function process_path($path) {
     // Each directory gets meta directory.
-    if(!file_exists($path.'/meta')) {
-      mkdir($path.'/meta');
+    if(!file_exists($path.DIRECTORY_SEPARATOR.'meta')) {
+      mkdir($path.DIRECTORY_SEPARATOR.'meta');
     }
     
     // Sets up the basic XFDU package. If extension or anyXML are 
     // sent with setup they are also handled here.
     $package = new XFDUPackage($this->settings);
-    $parsedPath = explode('/', $path);
+    $parsedPath = explode(DIRECTORY_SEPARATOR, $path);
     
     // For all content units but the first, there should be a backlink to the
     // previous directory's XFDU file.
-    if($path != $this->settings->root) {
+    if($path != $this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root) {
       
       $xfduPointerBackLink = new XFDUPointer();
       $xfduPointerBackLink->set_locatorType('URL');
-      $xfduPointerBackLink->set_href('../meta/'.$parsedPath[sizeof($parsedPath) - 2].'_xfdu.xml');
+      $xfduPointerBackLink->set_href(
+              implode(DIRECTORY_SEPARATOR, array_slice($parsedPath, 0, -1)).
+              DIRECTORY_SEPARATOR.'meta'.
+              DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath)-2].'_xfdu.xml');
       $xfduPointerBackLink->set_textInfo($parsedPath[sizeof($parsedPath) - 2]);
       
       $backLinkCU = $this->
@@ -167,12 +183,12 @@ class DirectoryProcessor {
       }
       else if(is_dir($path.DIRECTORY_SEPARATOR.$item)) {
         $this->handle_directory($path.DIRECTORY_SEPARATOR.$item, $package);
-        $this->process_path($path.'/'.$item);                   // Recursive call
+        $this->process_path($path.DIRECTORY_SEPARATOR.$item);                   // Recursive call
       }
     }
     
     // Write the package.
-    $package->write($path.'/meta/'.$parsedPath[sizeof($parsedPath) -1].'_xfdu.xml');
+    $package->write($path.DIRECTORY_SEPARATOR.'meta'.DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath) - 1].'_xfdu.xml');
   }
 
 /**
@@ -188,7 +204,7 @@ class DirectoryProcessor {
         
         $fileLocation = new FileLocation();
         $fileLocation->set_locatorType('URL')
-                ->set_href($path.'/'.$item)
+                ->set_href($path.DIRECTORY_SEPARATOR.$item)
                 ->set_textInfo($item);
         
         $dataObject = new DataObject();
@@ -240,7 +256,7 @@ class DirectoryProcessor {
     $parsedPath = explode('/', $path);
     $xfduPointer = $this->builder->build_XFDUPointer(
             'URL', 
-            $path.'meta/'.$parsedPath[sizeof($parsedPath) - 1].'_xfdu.xml', 
+            $path.'meta'.DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath) - 1].'_xfdu.xml', 
             $parsedPath[sizeof($parsedPath) - 1]
             );
     

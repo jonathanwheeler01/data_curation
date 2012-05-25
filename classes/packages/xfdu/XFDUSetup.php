@@ -45,8 +45,15 @@ class XFDUSetup {
   public $version = 1.0;
   
   /**
+   * The absolute path the repository the data will reside in.
+   * @var string 
+   */
+  public $repository;
+  
+  /**
    *
-   *the path to the top most directory in the data set to be worked on. 
+   *the path to the top most directory in the data set to be worked on, relative to
+   * the repository root. 
    * @var string
    */
   public $root;

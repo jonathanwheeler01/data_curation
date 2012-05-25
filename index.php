@@ -19,13 +19,32 @@ $xpath->registerNamespace('dc', 'http://purl.org/dc/elements/1.1/');
 $xpath->registerNamespace('dcterms', 'http://purl.org/dc/terms/');
 
 $query = '/dcwrapper/*';
+$settings->xmlData = $xmlData->set_any($xpath->query($query, $dc));
+
+$dom = new DOMDocument('1.0', 'UTF-8');
+$dc = $dom->appendChild($dom->createElement('dcwrapper'));
+$dc->appendChild($dcElement = $dom->createElement('dc:creator'));
+$dcElement->appendChild($dom->createTextNode('Robert Olendorf'));
+$dc->appendChild($dcElement = $dom->createElement('dc:creator'));
+$dcElement->appendChild($dom->createTextNode('Jane Doe'));
+$dc->appendChild($dcElement = $dom->createElement('dc:contributor'));
+$dcElement->appendChild($dom->createTextNode('Johnson J. Johnson Jr. III'));
+$dc->appendChild($dcElement = $dom->createElement('dc:subject'));
+$dcElement->appendChild($dom->createTextNode('example'));
+$dc->appendChild($dcElement = $dom->createElement('dc:subject'));
+$dcElement->appendChild($dom->createTextNode('curation tool'));
+$dc->appendChild($dcElement = $dom->createElement('dc:subject'));
+$dcElement->appendChild($dom->createTextNode('example'));
+
+$xpath = new DOMXPath($dom);
+$xpath->registerNamespace('dc', 'http://purl.org/dc/elements/1.1/');
+$xpath->registerNamespace('dcterms', 'http://purl.org/dc/terms/');
+
+$query = '/dcwrapper/*';
+$settings->descriptiveMetadata = $xmlData->set_any($xpath->query($query, $dc));
 
 
-$elements = $xpath->query($query, $dc);
 
-print $elements->length;
-
-
-//$dirProc = new DirectoryProcessor($settings);
-//$dirProc->process_dataset();
+$dirProc = new DirectoryProcessor($settings);
+$dirProc->process_dataset();
 ?>
