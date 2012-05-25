@@ -40,9 +40,9 @@ class XFDUSetup {
   
   /**
    * The version of XFDU being used.
-   * @var float 
+   * @var string 
    */
-  public $version = 1.0;
+  public $version = '1.0';
   
   /**
    * The absolute path the repository the data will reside in.

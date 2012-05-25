@@ -192,8 +192,28 @@ abstract class aXMLElement implements iXMLElement{
     return strtolower(substr($string, 0, 1)).  substr($string, 1);
   }
   
-  protected function get_element_name($prefix) {
+  protected function get_element_name() {
     return substr(get_class($this), strlen($this->classNamePrefix));
+  }
+  
+  protected function add_namespaces_to_DOM(DOMElement &$element) {
+    if(sizeof($this->namepaces) > 0) {
+      $namespace = new XMLNameSpace();
+      foreach($this->namepaces as $namespace) {
+        // Handle adding of prefix if it is set.
+        $qualifiedName = $namespace->isset_prefix() ? 'xmlns:'.$namespace->get_prefix() : 'xmlns';
+        $element->setAttribute( 
+                $qualifiedName, 
+                $namespace->get_uri());
+        
+        if($namespace->isset_location()) {
+          $value = $element->getAttribute(
+                  'xsi:schemaLocation'). 
+                    ' '.$namespace->get_uri().' '.$namespace->get_location();
+          $element->setAttribute('xsi:schemaLocation', $value);
+        }
+      }
+    }
   }
 }
 

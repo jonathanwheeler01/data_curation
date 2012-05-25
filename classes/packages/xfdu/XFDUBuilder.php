@@ -18,24 +18,51 @@ class XFDUBuilder {
     $packageHeader = new PackageHeader();
     $packageHeader->set_id($settings->packageHeaderID);
     $packageHeader->set_volumeInfo($this->build_volumeInfo($settings));
+    
+    
 
     if(isset($settings->extension) || isset($settings->xmlData)) {
+      
       $environmentInfo = new EnvironmentInfo();
       if(isset($settings->extension)) {
         $environmentInfo->set_extension($this->build_extension($settings));
       }
       
       if(isset($settings->xmlData)) {
-        $environmentInfo->set_xmlData($this->build_XMLData($settings));
+        $xmlData = $this->build_XMLData($settings);
+        
+        $environmentInfo->set_xmlData($xmlData);
+        
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        print $dom->saveXML($dom->importNode($environmentInfo->get_as_DOM(), TRUE));
       }
+      
+      $packageHeader->set_environmentInfo($environmentInfo);
     }
     
     $informationPackageMap = new InformationPackageMap();
     $metadataSection = new MetadataSection();
-    $dataObjectSection = new DataObjectSection();
     $behaviorSection = new BehaviorSection();
     
     $xfdu = new XFDU();
+    
+    // Add Dublin Core and Qualified Dublin Core Namespaces at the root XFDU
+    // element. Dublin Core is used at least twice in every document so this
+    // saves work in namespace declaration.
+//    $dc = new XMLNameSpace(
+//            'http://purl.org/dc/elements/1.1/', 
+//            'http://dublincore.org/schemas/xmls/qdc/2008/02/11/dc.xsd', 
+//            'dc'
+//            );
+//    $dcTerms = new XMLNameSpace(
+//            'http://purl.org/dc/terms/', 
+//            'http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd', 
+//            'dcterms'
+//            );
+//    $xfdu->add_namespace($dc);
+//    $xfdu->add_namespace($dcTerms);
+    
+    
     $xfdu->set_packageHeader($packageHeader);
     $xfdu->set_informationPackageMap($informationPackageMap);
     $xfdu->set_metadataSection($metadataSection);
@@ -100,13 +127,14 @@ class XFDUBuilder {
     
     // load the XML but turn off warnings as working with 
     $dom = new DOMDocument($settings->xmlVersion, $settings->xmlEncoding);
-    @$dom->loadXML($settings->xmlData);
+    $data = @$dom->loadXML($settings->xmlData);
     
     // Xpath gets the nodelist
     $xpath = new DOMXPath($dom);
+    $xpath->registerNamespace('dc', 'http://purl.org/dc/elements/1.1/');
     $query = '/*';
     $elements = $xpath->query($query);
-    $xmlData->set_any($elements);
+    $xmlData->set_any($dom->getElementsByTagName('wrapper'));
     
     return $xmlData;
   }

@@ -308,15 +308,20 @@ class XFDU extends aXFDUElement{
     // conditionally add the prefix to the element name and namespace
     // attribute.
     if($prefix !== NULL) {
-      $xfdu = $dom->createElement($prefix.':'.get_class($this));
-      $xfdu->setAttribute('xmlns:'.$prefix, 'urn:ccsds:schema:xfdu:1');
+      $prefix = 'xfdu';
     }
-    else {
-      $xfdu = $dom->createElement('xfdu:'.get_class($this));
-      $xfdu->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
-    }
+    $xfdu = $dom->createElement('xfdu:'.get_class($this));
+    
+    // Always add these namespace declarations.
     $xfdu->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-    $xfdu->setAttribute('xsi:schemaLocation', 'urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd');
+    
+    $xfdu->setAttribute('xmlns:xfdu', 'urn:ccsds:schema:xfdu:1');
+    
+    $xfdu->setAttribute('xsi:schemaLocation', 
+            'urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd');
+    
+    // Add any additional namespaces set prior to calling this method;
+    $this->add_namespaces_to_DOM($xfdu);
 
     // Required Elements such as packageHeader throw a RequiredElementException if missing.
     if($this->isset_packageHeader()) {

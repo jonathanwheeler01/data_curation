@@ -33,6 +33,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testID() {
+//    print __METHOD__;
     $this->assertFalse($this->object->isset_id());
 
     $id = 'test';
@@ -45,6 +46,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * @expectedException InvalidIDTokenException
    */
   public function testInvalidID() {
+//    print __METHOD__;
     $this->object->set_id('0invalid');
   }
 
@@ -52,6 +54,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testObjID() {
+//    print __METHOD__;
     $this->assertFalse($this->object->isset_objID());
 
     $objID = 'test';
@@ -64,6 +67,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testTextInfo() {
+//    print __METHOD__;
     $this->assertFalse($this->object->isset_textInfo());
 
     $textInfo = 'test';
@@ -72,22 +76,11 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($textInfo, $this->object->get_textInfo());
   }
 
-//  /**
-//   * 
-//   */
-//  public function testVersion() {
-//    $this->assertTrue($this->object->isset_version());
-//    $this->assertEquals(1.0, $this->object->get_version());
-//
-//    $version = 2.0;
-//    $this->object->set_version($version);
-//    $this->assertEquals($version, $this->object->get_version());
-//  }
-
   /**
    * 
    */
   public function testPackageHeader() {
+//    print __METHOD__;
     $this->assertFalse($this->object->isset_packageHeader());
 
     $packageHeader = new PackageHeader();
@@ -100,6 +93,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testInformationPackageMap() {
+//    print __METHOD__;
     $this->assertFalse($this->object->isset_informationPackageMap());
 
     $informationPackageMap = new InformationPackageMap();
@@ -112,6 +106,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testMetadataSection() {
+//    print __METHOD__;
     $this->assertFalse($this->object->isset_metadataSection());
 
     $value = new MetaDataSection();
@@ -124,6 +119,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testDataObjectSection() {
+//    print __METHOD__;
     $this->assertFalse($this->object->isset_dataObjectSection());
 
     $value = new DataObjectSection();
@@ -136,6 +132,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * 
    */
   public function testBehaviorSection() {
+//    print __METHOD__;
     $this->assertFalse($this->object->isset_behaviorSection());
 
     $value = new BehaviorSection();
@@ -150,6 +147,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * document structure.
    */
   public function testDefault_get_as_DOM() {
+//    print __METHOD__;
     // Set the various parameters that will be needed.
     $id = 'test';
     $sequenceSize = 2;
@@ -293,6 +291,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * @expectedException RequiredElementException
    */
   public function testMissingPackageHeader() {
+//    print __METHOD__;
     $this->object->set_packageHeader(new PackageHeader());
     $this->object->get_as_DOM();
   }
@@ -301,6 +300,7 @@ class XFDUTest extends PHPUnit_Framework_TestCase {
    * @expectedException RequiredElementException
    */
   public function testMissingInformationPackageMap() {
+//    print __METHOD__;
     $this->object->get_as_DOM();
   }
 }

@@ -135,6 +135,7 @@ class DirectoryProcessor {
     // Sets up the basic XFDU package. If extension or anyXML are 
     // sent with setup they are also handled here.
     $package = new XFDUPackage($this->settings);
+    
     $parsedPath = explode(DIRECTORY_SEPARATOR, $path);
     
     // For all content units but the first, there should be a backlink to the
@@ -182,8 +183,8 @@ class DirectoryProcessor {
         $this->handle_file($path, $item, $package, $currentID);
       }
       else if(is_dir($path.DIRECTORY_SEPARATOR.$item)) {
-        $this->handle_directory($path.DIRECTORY_SEPARATOR.$item, $package);
-        $this->process_path($path.DIRECTORY_SEPARATOR.$item, $currentID);                   // Recursive call
+        $this->handle_directory($path.DIRECTORY_SEPARATOR.$item, $package, $currentID);
+        $this->process_path($path.DIRECTORY_SEPARATOR.$item);                   // Recursive call
       }
     }
     
@@ -216,7 +217,7 @@ class DirectoryProcessor {
                 )
                 ->set_id($dataObjectID);
         
-        $package->add($dataObject);
+        $package->add($dataObject, $parent);
         
         $dataObjectPointer = new DataObjectPointer();
         $dataObjectPointer->set_dataObjectID($dataObjectID);
@@ -250,13 +251,13 @@ class DirectoryProcessor {
    * @param string $path Path to the directy to be handled.
    * @param XFDUPackage $package th epackage passed by reference.
    */
-  protected function handle_directory($path, XFDUPackage &$package) {
+  protected function handle_directory($path, XFDUPackage &$package, $parent) {
     $contentUnitID = 'cu'.  $this->contentUnitCount;
     
-    $parsedPath = explode('/', $path);
+    $parsedPath = explode(DIRECTORY_SEPARATOR, $path);
     $xfduPointer = $this->builder->build_XFDUPointer(
             'URL', 
-            $path.'meta'.DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath) - 1].'_xfdu.xml', 
+            $path.DIRECTORY_SEPARATOR.'meta'.DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath) - 1].'_xfdu.xml', 
             $parsedPath[sizeof($parsedPath) - 1]
             );
     
@@ -281,7 +282,7 @@ class DirectoryProcessor {
       $this->metadataObjectCount++;
     }
     
-    $package->add($contentUnit);
+    $package->add($contentUnit, $parent);
   }
 }
 ?>

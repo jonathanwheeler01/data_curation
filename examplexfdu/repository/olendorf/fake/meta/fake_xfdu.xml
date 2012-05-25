@@ -4,14 +4,14 @@
     xmlns:dcterms="http://purl.org/dc/terms/" 
     xmlns:dc="http://purl.org/dc/elements/1.1/"
     xsi:schemaLocation="urn:ccsds:schema:xfdu:1 http://sindbad.gsfc.nasa.gov/xfdu/xsd-src/xfdu.xsd
-        http://purl.org/dc/terms/ http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd
-        http://purl.org/dc/elements/1.1/  http://dublincore.org/schemas/xmls/qdc/2008/02/11/dc.xsd">
+        http://purl.org/dc/terms/ http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd">
     <packageHeader ID="packageHeader">
         <volumeInfo>
             <specificationVersion>1.0</specificationVersion>
         </volumeInfo>
         <environmentInfo>
-            <xmlData>
+            <xmlData xmlns:dc="http://purl.org/dc/elements/1.1/"
+                xsi:schemaLocation="http://purl.org/dc/elements/1.1/  http://dublincore.org/schemas/xmls/qdc/2008/02/11/dc.xsd">
                 <dc:creator>Jon Wheeler</dc:creator>
                 <dc:contributor>Lori Townsend</dc:contributor>
                 <dcterms:created>2012-05-27</dcterms:created>

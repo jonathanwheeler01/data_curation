@@ -69,9 +69,9 @@ class XFDUPackage {
    * @return type 
    */
   private function DataObject(DataObject $dataObject) {
-    $nodeList = $this->xfdu->getElementsByTagName('dataObjectSection');
+    $dataObjectSection = $this->xfdu->getElementsByTagName('dataObjectSection')->item(0);
 
-    if($nodeList->length == 0) {
+    if($dataObjectSection == NULL) {
       $xfdu = $this->xfdu->getElementsByTagName('xfdu:XFDU')->item(0);
       $dataObjectSection = $this->xfdu->createElement('dataObjectSection');
       $metadataSection = $this->xfdu->getElementsByTagName('metadataSection')->item(0);
@@ -85,22 +85,18 @@ class XFDUPackage {
   /**
    *
    * @param MetadataObject $metadataObject
-   * @return type 
+   * @return DOMElement 
    */
   private function MetadataObject(MetadataObject $metadataObject) {
-    $xpath = new DOMXPath($this->xfdu);
-    $query = '//metadataSection';
-    $metadataSection = $xpath->query($query)->item(0);
-    
-    if($metadataSection == NULL) {
-      $xpath->registerNamespace('xfdu', 'urn:ccsds:schema:xfdu:1');
-      $query = '//xfdu:XFDU';
-      $xfdu = $xpath->query($query)->item(0);
-      
-      $xfdu->appendChild($metadataSection = $this->xfdu->createElement('metadataSection'));
-    }
+    $metadataSection = $this->xfdu->getElementsByTagName('metadataSection')->item(0);
     
     return $metadataSection->appendChild($this->xfdu->importNode($metadataObject->get_as_DOM(), TRUE));
+  }
+  
+  private function EnvironmentInfo(EnvironmentInfo $environmentInfo) {
+    $packageHeader = $this->xfdu->getElementsByTagName('packageHeader')->item(0);
+    
+    return $packageHeader->appendChild($this->xfdu->importNode($environmentInfo->get_as_DOM(), TRUE));
   }
   
   /**
@@ -119,6 +115,30 @@ class XFDUPackage {
       $code = 0;
       $previous = NULL;
       throw new InvalidArgumentException($message, $code, $previous);
+    }
+  }
+  
+  public function addNamespace(XMLNameSpace $namespace, $elementName = 'xfdu:XFDU') {
+    $elements = $this->xfdu->getElementsByTagName($elementName);
+    
+    if($elements->length == 0) {
+      return FALSE;
+    }
+    $element = $this->xfdu->createElement(' ');
+    for($i = 0; $i < $elements->length; $i++) {
+      $element = $elements->item($i);
+      
+      $qualifiedName = $namespace->isset_prefix() ? 'xmlns:'.$namespace->get_prefix() : 'xmlns';
+      
+      $element->setAttributeNS('http://www.w3.org/2000/xmlns/', $qualifiedName, $namespace->get_uri());
+      
+      if($namespace->isset_location()) {
+        $value = $element->getAttributeNS(
+                'http://www.w3.org/2001/XMLSchema-instance', 
+                'schemaLocation').
+                  ' '.$namespace->get_uri().' '.$namespace->isset_location();
+        $element->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', $value);
+      }
     }
   }
 }
