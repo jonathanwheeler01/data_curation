@@ -401,13 +401,6 @@ class DataObject extends aXFDUElement{
       if($enum->has_value($this->combinationName)) {
         $dataObject->setAttribute('combinationName', $this->combinationName);
       }
-      else {
-        $message = 'Invalid combinationName given on '.
-                __CLASS__.': '.__METHOD__.': line '.__LINE__.
-                '. The locator must be one of '.  implode(', ', $enum->values()).'.';
-        $code = 0;
-        throw new InvalidArgumentException($message, $code);
-      }
     }
     
     $byteStream = new ByteStream();

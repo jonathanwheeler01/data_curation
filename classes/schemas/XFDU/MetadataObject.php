@@ -312,28 +312,12 @@ class MetadataObject extends aXFDUElement{
       if($categories->has_value($this->category)) {
         $metadataObject->setAttribute('category', $this->category);
       }
-      else {
-        $message = 'Invalid metadata category given on '.
-                __CLASS__.': '.__METHOD__.': line '.__LINE__.
-                '. The locator must be one of '.  implode(', ', $categories->values()).'.';
-        $code = 0;
-        $previous = NULL;
-        throw new InvalidArgumentException($message, $code, $previous);
-      }  
     }
     
     if($this->isset_classification()) {
       $classifications = new MetadataClassification();
       if($classifications->has_value($this->classification)) {
         $metadataObject->setAttribute('classification', $this->classification);
-      }
-      else {
-        $message = 'Invalid metadata classification given on '.
-                __CLASS__.': '.__METHOD__.': line '.__LINE__.
-                '. The locator must be one of '.  implode(', ', $classifications->values()).'.';
-        $code = 0;
-        $previous = NULL;
-        throw new InvalidArgumentException($message, $code, $previous);
       }
     }
     

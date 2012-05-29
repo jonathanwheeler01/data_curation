@@ -90,14 +90,6 @@ class MetadataReference extends Reference{
     
     $locatorTypes = new Locator();
     
-    if(!$locatorTypes->has_value($this->locatorType)) {
-      $message = 'Invalid locatorType given on '.
-              __CLASS__.': '.__METHOD__.': line '.__LINE__.
-              '. The locator must be one of '.  implode(', ', $enum->values()).'.';
-      $code = 0;
-      throw new InvalidArgumentException($message, $code);
-    }
-    
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
     $metadataReference = $dom->createElement('metadataReference');

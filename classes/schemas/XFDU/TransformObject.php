@@ -13,6 +13,8 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * valid types are compression, encryption, authentication. 3. order: If there 
  * are more than one transformation elements in an dataObject this integer 
  * indicates the order in which the reversal transformations should be applied.
+ * 
+ * s for now unimplimented as there seems no place for it in the published schema.
  *
  * @author Rob Olendorf
  */
@@ -202,7 +204,9 @@ class TransformObject extends aXMLElement{
    * @param type $prefix 
    * @return DOMElement;
    */
-  public function get_as_DOM($prefix = NULL) {}
+  public function get_as_DOM($prefix = NULL) {
+    throw new UnimplementedMethodException(__CLASS__, __METHOD__);
+  }
 }
 
 ?>

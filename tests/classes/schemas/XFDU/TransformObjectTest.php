@@ -118,5 +118,12 @@ class TransformObjectTest extends PHPUnit_Framework_TestCase
     public function testInvalidTransformType() {
       $this->object->set_transformType('invalid');
     }
+    
+    /**
+     * @expectedException UnimplementedMethodException 
+     */
+    public function testGet_as_DOM() {
+      $this->object->get_as_DOM();
+    }
 }
 ?>

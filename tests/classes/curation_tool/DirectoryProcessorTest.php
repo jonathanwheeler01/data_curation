@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../classes/curation_tool/XFDUDirectoryProcessor.php';
+require_once dirname(__FILE__) . '/../../../classes/curation_tool/directoryProcessor/XFDUDirectoryProcessor.php';
 require_once '/../../../curation_tool.inc';
 
 /**

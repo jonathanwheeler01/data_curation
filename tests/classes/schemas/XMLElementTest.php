@@ -61,6 +61,9 @@ class XMLElementTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($value, $this->object->get_value());
   }
   
+  /**
+   * 
+   */
   public function testChildren() {
     $this->assertFalse($this->object->isset_children());
     
@@ -80,6 +83,17 @@ class XMLElementTest extends PHPUnit_Framework_TestCase {
     $this->object->remove_child($child1);
     $this->assertEquals(1, sizeof($this->object->get_children()));
     
+    $this->object->append_child($child2)->unset_children();
+    
+    $this->assertEquals(0, sizeof($this->object->get_children()));
+    
+  }
+  
+  /**
+   * @expectedException UnimplementedMethodException 
+   */
+  public function testGet_as_DOM() {
+    $this->object->get_as_DOM();
   }
 }
 

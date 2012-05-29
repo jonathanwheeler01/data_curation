@@ -136,6 +136,14 @@ class XFDUPackage {
     }
   }
   
+  /**
+   * Add a namespace to the specified element(s) of the package. Not currently
+   * unit tested.
+   * 
+   * @param XMLNameSpace $namespace
+   * @param string $elementName
+   * @return boolean 
+   */
   public function addNamespace(XMLNameSpace $namespace, $elementName = 'xfdu:XFDU') {
     $elements = $this->xfdu->getElementsByTagName($elementName);
     

@@ -58,6 +58,7 @@ class XMLElement extends aXMLElement{
       $previous = NULL;
       throw new InvalidArgumentException($message, $code, $previous);
     }
+    return $this;
   }
   
   /**
@@ -82,6 +83,7 @@ class XMLElement extends aXMLElement{
    */
   public function set_value($value) {
     $this->value = $value;
+    return $this;
   }
   
   /**
@@ -107,6 +109,7 @@ class XMLElement extends aXMLElement{
    */
   public function append_child(XMLElement $child) {
     $this->children[$child->get_elementID()] = $child;
+    return $this;
   }
   
   /**
@@ -123,6 +126,7 @@ class XMLElement extends aXMLElement{
    */
   public function remove_child(XMLElement $child) {
     $this->children = array_diff_key($this->children, array($child->get_elementID() => $child));
+    return $this;
   }
   
   /**
@@ -130,6 +134,7 @@ class XMLElement extends aXMLElement{
    */
   public function unset_children() {
     $this->children = array();
+    return $this;
   }
   
   /**

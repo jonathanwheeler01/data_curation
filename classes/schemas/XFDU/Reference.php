@@ -236,14 +236,6 @@ class Reference extends aXFDUElement{
     
     $locatorTypes = new Locator();
     
-    if(!$locatorTypes->has_value($this->locatorType)) {
-      $message = 'Invalid locatorType given on '.
-              __CLASS__.': '.__METHOD__.': line '.__LINE__.
-              '. The locator must be one of '.  implode(', ', $enum->values()).'.';
-      $code = 0;
-      throw new InvalidArgumentException($message, $code);
-    }
-    
     $reference->setAttribute('locatorType', $this->locatorType);
     
     if($this->isset_id()) {

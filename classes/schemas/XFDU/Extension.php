@@ -14,21 +14,21 @@ class Extension extends aXFDUElement{
   protected $any;
   
   public function set_any($any) {
-    if(!is_object($any)) {
-      $message = 'The XFDU Exception element must be an instance of a DOMNode, '.
-                 'instance of '. gettype($any).' given.';
-      $code = 0;
-      $previous = null;
-      throw new InvalidArgumentException($message, $code, $previous);
-    }
+//    if(!is_object($any)) {
+//      $message = 'The XFDU Exception element must be an instance of a DOMNode, '.
+//                 'instance of '. gettype($any).' given.';
+//      $code = 0;
+//      $previous = null;
+//      throw new InvalidArgumentException($message, $code, $previous);
+//    }
     
-    if(get_class($any) != 'DOMElement' && get_class($any) != 'DOMNodeList') {
-      $message = 'The XFDU Exception element must be an instance of a DOMNode, '.
-                 'instance of '.  get_class($any).' given.';
-      $code = 0;
-      $previous = null;
-      throw new InvalidArgumentException($message, $code, $previous);
-    }
+//    if(get_class($any) != 'DOMElement' && get_class($any) != 'DOMNodeList') {
+//      $message = 'The XFDU Exception element must be an instance of a DOMNode, '.
+//                 'instance of '.  get_class($any).' given.';
+//      $code = 0;
+//      $previous = null;
+//      throw new InvalidArgumentException($message, $code, $previous);
+//    }
     
     $this->any = $any;
   }
