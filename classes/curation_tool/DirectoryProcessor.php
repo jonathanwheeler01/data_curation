@@ -44,7 +44,19 @@ class DirectoryProcessor {
    */
   protected $dataObjectCount;
   
+  /**
+   * The number of metadata objects created during the 
+   * @var integer 
+   */
   protected $metadataObjectCount;
+  
+  /**
+   * Stores the descriptive metadata url that can be referred to by all other
+   * metadata units.
+   * @var string 
+   */
+  protected $rootDMDLocation;
+  
   
   /**
    *
@@ -127,6 +139,7 @@ class DirectoryProcessor {
    * @param <string> $path
    */
   protected function process_path($path) {
+    $dom = new DOMDocument($this->settings->xmlVersion, $this->settings->xmlEncoding);
     // Each directory gets meta directory.
     if(!file_exists($path.DIRECTORY_SEPARATOR.'meta')) {
       mkdir($path.DIRECTORY_SEPARATOR.'meta');
@@ -158,6 +171,14 @@ class DirectoryProcessor {
                                         $parsedPath[sizeof($parsedPath) - 2]);
       $package->add($backLinkCU);
       
+    }
+    else {
+      // Add high level descriptive metadata if it exists
+      if($this->settings->descriptiveMetadata != NULL) {
+        $dom->loadXML($this->settings->descriptiveMetadata);
+        $this->rootDMDLocation = $path.DIRECTORY_SEPARATOR.'meta'.DIRECTORY_SEPARATOR.'baseDMD.xml';
+        $dom->save($this->rootDMDLocation);
+      }
     }
     
     // Set the id for the current content unit to allow the child content units
@@ -200,50 +221,56 @@ class DirectoryProcessor {
  * @param string $parent ID of the parent contentUnit
  */
   protected function handle_file($path, $item, XFDUPackage &$package, $parent) {
-        $dataObjectID = 'do'.$this->dataObjectCount;
-        $contentUnitID = 'cu'.  $this->contentUnitCount;
-        
-        $fileLocation = new FileLocation();
-        $fileLocation->set_locatorType('URL')
-                ->set_href($path.DIRECTORY_SEPARATOR.$item)
-                ->set_textInfo($item);
-        
-        $dataObject = new DataObject();
-        $dataObject->add_bytstream(
-                $this->builder->build_byteStream_from_fileLocation(
-                        $fileLocation, 
-                        $path.DIRECTORY_SEPARATOR.$item
-                        )
-                )
-                ->set_id($dataObjectID);
-        
-        $package->add($dataObject, $parent);
-        
-        $dataObjectPointer = new DataObjectPointer();
-        $dataObjectPointer->set_dataObjectID($dataObjectID);
-        
-        $contentUnit = $this->builder->build_contentUnit(
-                $dataObjectPointer, 
-                $contentUnitID, 'directory', $item);
-        
-        // Add high level descriptive metadata if it exists
-        if($this->settings->descriptiveMetadata != NULL) {
-          $id = 'dmd'.$this->metadataObjectCount;
-          $metadataObject = $this->builder->build_metadataObject(
-                  $this->settings->descriptiveMetadata, 
-                  $id, 
-                  'DMD', 
-                  'DESCRIPTION');
-          
-          $package->add($metadataObject);
-          
-          $contentUnit->set_dmdID($id);
-          $this->metadataObjectCount++;
-        }
-        
-        $package->add($contentUnit, $parent);
-        
-        $this->dataObjectCount++;      
+    $dom = new DOMDocument($this->settings->xmlVersion, $this->settings->xmlEncoding);
+    $dataObjectID = 'do'.$this->dataObjectCount;
+    $contentUnitID = 'cu'.  $this->contentUnitCount;
+
+    $fileLocation = new FileLocation();
+    $fileLocation->set_locatorType('URL')
+            ->set_href($path.DIRECTORY_SEPARATOR.$item)
+            ->set_textInfo($item);
+
+    $dataObject = new DataObject();
+    $dataObject->add_bytstream(
+            $this->builder->build_byteStream_from_fileLocation(
+                    $fileLocation, 
+                    $path.DIRECTORY_SEPARATOR.$item
+                    )
+            )
+            ->set_id($dataObjectID);
+
+    $package->add($dataObject, $parent);
+
+    $dataObjectPointer = new DataObjectPointer();
+    $dataObjectPointer->set_dataObjectID($dataObjectID);
+
+    $contentUnit = $this->builder->build_contentUnit(
+            $dataObjectPointer, 
+            $contentUnitID, 'directory', $item);
+
+    // Add high level descriptive metadata if it exists
+    if($this->settings->descriptiveMetadata != NULL) {
+      
+      $metadataReference = new MetadataReference();
+      $metadataReference->set_locatorType('URL');
+      $metadataReference->set_href($this->rootDMDLocation);
+      
+      $id = 'dmd'.$this->metadataObjectCount;
+      $metadataObject = $this->builder->build_metadataObject(
+              $metadataReference, 
+              $id, 
+              'DMD', 
+              'DESCRIPTION');
+
+      $package->add($metadataObject);
+
+      $contentUnit->set_dmdID($id);
+      $this->metadataObjectCount++;
+    }
+
+    $package->add($contentUnit, $parent);
+
+    $this->dataObjectCount++;      
   }
 
   /**
@@ -253,6 +280,7 @@ class DirectoryProcessor {
    */
   protected function handle_directory($path, XFDUPackage &$package, $parent) {
     $contentUnitID = 'cu'.  $this->contentUnitCount;
+    $dom = new DOMDocument($this->settings->xmlVersion, $this->settings->xmlEncoding);
     
     $parsedPath = explode(DIRECTORY_SEPARATOR, $path);
     $xfduPointer = $this->builder->build_XFDUPointer(
@@ -269,9 +297,14 @@ class DirectoryProcessor {
         
     // Add high level descriptive metadata if it exists
     if($this->settings->descriptiveMetadata != NULL) {
+      
+      $metadataReference = new MetadataReference();
+      $metadataReference->set_locatorType('URL');
+      $metadataReference->set_href($this->rootDMDLocation);
+      
       $id = 'dmd'.$this->metadataObjectCount;
       $metadataObject = $this->builder->build_metadataObject(
-              $this->settings->descriptiveMetadata, 
+              $metadataReference, 
               $id, 
               'DMD', 
               'DESCRIPTION');

@@ -92,9 +92,9 @@ class XFDUPackage {
 //      $xfdu = $this->xfdu->getElementsByTagName('xfdu:XFDU')->item(0);
       $xfdu = $this->xfdu->getElementsByTagName('XFDU')->item(0);
       $dataObjectSection = $this->xfdu->createElement('dataObjectSection');
-      $metadataSection = $this->xfdu->getElementsByTagName('metadataSection')->item(0);
+      $behaviorSection = $this->xfdu->getElementsByTagName('behaviorSection')->item(0);
       
-      $xfdu->insertBefore($dataObjectSection, $metadataSection);
+      $xfdu->insertBefore($dataObjectSection, $behaviorSection);
     }
     
     return $dataObjectSection->appendChild($this->xfdu->importNode($dataObject->get_as_DOM(), TRUE));
