@@ -9,7 +9,7 @@
  */
 
 
-class DirectoryProcessor {
+class XFDUDirectoryProcessor {
   
   /**
    *

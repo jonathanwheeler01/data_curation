@@ -34,8 +34,8 @@ class CurationAutoLoadTest extends PHPUnit_Framework_TestCase {
    */
   public function testAutoload() {
     $settings = new XFDUSetup();
-    $ctool = new DirectoryProcessor($settings);
-    $this->assertTrue(class_exists('DirectoryProcessor'), 'Autoload of CurationTool.');
+    $ctool = new XFDUDirectoryProcessor($settings);
+    $this->assertTrue(class_exists('XFDUDirectoryProcessor'), 'Autoload of CurationTool.');
 
     $xfdu = new XFDU();
     $this->assertTrue(class_exists('XFDU'), 'Autoload of XFDU.');

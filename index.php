@@ -42,6 +42,6 @@ $settings->descriptiveMetadata = $dom->saveXML($dc);
 
 
 
-$dirProc = new DirectoryProcessor($settings);
+$dirProc = new XFDUDirectoryProcessor($settings);
 $dirProc->process_dataset();
 ?>
