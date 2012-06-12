@@ -2,6 +2,7 @@
 require_once 'curation_tool.inc';
 $dom = new DOMDocument('1.0', 'UTF-8');
 $settings = new XFDUSetup();
+$settings = new METSSetup();
 $settings->root = 'c:/repository/olendorf/fake';
 
 $xmlData = new XMLData();
