@@ -71,12 +71,16 @@ class METS extends aMETSElement {
     /*
      * @var string
      */
-    /*protected $version;*/
+    /*protected $version;
     
-    /*public function __construct() {
+    public function __construct() {
         $this->version = 1.9.1;
-    }*/
+    }
+     */
     
+    public function __construct() {
+        $this->version = '1.9.1';
+    }
     /*
      * @param string $ID
      */
@@ -352,6 +356,50 @@ class METS extends aMETSElement {
             $mets = $dom->createElement('mets'.':'.get_class($hits));
             $mets->setAttribute('xmlns:mets', 'http://www.loc.gov/METS/');
         }
+        $mets->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $mets->setAttribute('xsi:schemaLocation', 'http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd');
+        
+        // handle attributes
+        if($this->isset_ID()) {$mets->setAttribute('ID', $this->ID);}
+        if($this->isset_OBJID()) {$mets->setAttribute('OBJID', $this->OBJID);}
+        if($this->isset_LABEL()) {$mets->setAttribute('LABEL', $this->LABEL);}
+        if($this->isset_TYPE()) {$mets->setAttribute('TYPE', $this->TYPE);}
+        if($this->isset_PROFILE()) {$mets->setAttribute('PROFILE', $this->PROFILE);}
+
+        // required element structMap throws an exception if missing
+        
+        if($this->isset_structMap()){
+            $mets->appendChild($dom->importNode($this->structMap->get_as_DOM(), TRUE));
+        }
+        else {
+            throw new RequiredElementException('structMap');
+        }
+        
+        if($this->isset_metsHdr()){
+            $mets->appendChild($dom->importNode($this->metsHdr->get_as_DOM(), TRUE));
+        }
+        
+        if($this->isset_dmdSec()){
+            $mets->appendChild($dom->importNode($this->dmdSec->get_as_DOM(), TRUE));
+        }
+        
+        if($this->isset_amdSec()){
+            $mets->appendChild($dom->importNode($this->amdSec->get_as_DOM(), TRUE));
+        }
+        
+        if($this->isset_fileSec()){
+            $mets->appendChild($dom->importNode($this->fileSec->get_as_DOM(), TRUE));
+        }
+        
+        if($this->isset_structLink()){
+            $mets->appendChild($dom->importNode($this->structLink->get_as_DOM(), TRUE));
+        }
+        
+        if($this->isset_behaviorSec()){
+            $mets->appendChild($dom->importNode($this->behaviorSec->get_as_DOM(), TRUE));
+        }
+        
+        return $mets;
         
     }
 }

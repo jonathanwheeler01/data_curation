@@ -1,5 +1,5 @@
 <?php
-
+require_once dirname(__FILE__) . '/../../../curation_tool.inc';
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -25,7 +25,7 @@ class MetsHdr extends aMETSElement {
    *
    * @var string
    */
-  protected $id;
+  protected $ID;
   
   public function __construct() {
   }
@@ -94,12 +94,12 @@ class MetsHdr extends aMETSElement {
   }
   
   
-  public function set_id($id){
-      if($this->validate_id($id)){
-          $this->id = $id;
+  public function set_id($ID){
+      if($this->validate_id($ID)){
+          $this->ID = $ID;
       }
       else {
-          throw new InvalidIDTokenException($id);
+          throw new InvalidIDTokenException($ID);
       }
       
   }
@@ -109,7 +109,7 @@ class MetsHdr extends aMETSElement {
    * @return string
    */
   public function get_id() {
-    return $this->id;
+    return $this->ID;
   }
 
   /**
@@ -117,7 +117,7 @@ class MetsHdr extends aMETSElement {
    * @return boolean
    */
   public function isset_id() {
-    return (isset ($this->id) && !empty ($this->id));
+    return (isset ($this->ID) && !empty ($this->ID));
   }  
   
   public function get_as_DOM($prefix = NULL){
@@ -128,7 +128,7 @@ class MetsHdr extends aMETSElement {
     // Ensure that the required ID attribute is set and add it if it is. Throw
     // an exception otherwise.
     if($this->isset_id()) {
-      $metsHdr->setAttribute('ID', $this->id);
+       $metsHdr->setAttribute('ID', $this->ID);
     }
     else {
       throw new RequiredElementException('ID');
@@ -149,7 +149,7 @@ class MetsHdr extends aMETSElement {
         $metsHdr->appendChild($dom->importNode($this->metsDocumentID->get_as_DOM(), TRUE));
     }
     
-    return metsHdr;
+    return $metsHdr;
   }
 
 }
