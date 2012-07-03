@@ -128,7 +128,7 @@ class MetsHdr extends aMETSElement {
     // Ensure that the required ID attribute is set and add it if it is. Throw
     // an exception otherwise.
     if($this->isset_id()) {
-      $packageHeader->setAttribute('ID', $this->id);
+      $metsHdr->setAttribute('ID', $this->id);
     }
     else {
       throw new RequiredElementException('ID');
