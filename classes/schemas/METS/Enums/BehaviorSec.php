@@ -39,6 +39,30 @@ class BehaviorSec extends aMETSElement {
         $this->behaviorSecs[] = $behaviorSec;
     }
     
+    
+  /**
+   *
+   * @return array<BehaviorSec>
+   */
+  public function get_behaviorSecs() {
+    return $this->behaviorSecs;
+  }
+  
+  /**
+   * 
+   */
+  public function unset_behaviorSecs() {
+    $this->behaviorSecs = array();
+  }
+
+  /**
+   *
+   * @return boolean
+   */
+  public function isset_behaviorSecs() {
+    return (isset($this->behaviorSecs) && !empty($this->behaviorSecs));
+  }
+    
     /*
      * @param string $ID
      */

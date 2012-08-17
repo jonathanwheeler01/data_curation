@@ -1,10 +1,9 @@
 <?php
-
+require_once dirname(__FILE__).'/../../../curation_tool.php';
 /*
  * @author Jon Wheeler
  */
 
-require_once dirname(__FILE__).'/../../../curation_tool.php';
 
 class METS extends aMETSElement {
     /*
