@@ -157,7 +157,7 @@ class BehaviorSec extends aMETSElement {
         
         if($prefix !== NULL) {
             $behaviorSec = $dom->createElement($prefix.':'.$this->first_to_lower(get_class($this)));
-            $behaviorSec = $dom->createElementNS('http://www.loc.gov/METS/', $prefix.':dmdSec');
+            $behaviorSec = $dom->createElementNS('http://www.loc.gov/METS/', $prefix.':behaviorSec');
         }
         else {
             $behaviorSec = $dom->createElementNS('http://www.loc.gov/METS/', 'mets:'.$this->first_to_lower(get_class($this)));

@@ -154,5 +154,28 @@ class FileGrp extends aMETSElement {
     public function isset_USE() {
         return (isset($this->USE) && !empty($this->USE));
     }
+    
+    /*
+     * @param File $file
+     */
+    public function set_file($file){
+        $this->file = $file;
+    }
+    
+    /*
+     * @return string
+     */
+    public function get_file() {
+        return $this->file;
+    }
+    
+    /*
+     * @return boolean
+     */
+    public function isset_file() {
+        return (isset($this->file) && !empty($this->file));
+    }
+    
+    
 }
 ?>
