@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * and open the template in the editor.
  */
 
-Class DmdSec extends aMETSElement {
+class DmdSec extends aMETSElement {
     
     /*
      * @var string
