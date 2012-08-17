@@ -32,7 +32,7 @@ class AmdSec extends aMETSElement {
      */
     protected $digiprovMD;
     
-    protected function __construct() {
+    public function __construct() {
         $this->amdSec = array();
     }
     

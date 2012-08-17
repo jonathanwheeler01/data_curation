@@ -43,7 +43,7 @@ class DmdSec extends aMETSElement {
      */
     protected $mdWrap;
     
-    protected function __construct() {
+    public function __construct() {
         $this->dmdSec = array();
     }
     
@@ -77,7 +77,12 @@ class DmdSec extends aMETSElement {
      * @param string $GROUPID
      */
     public function set_GROUPID($GROUPID){
-        $this->GROUPID = $GROUPID;
+        if($this->validate_id($GROUPID)){
+            $this->GROUPID = $GROUPID;
+        }
+        else {
+            throw new InvalidIDTokenException($GROUPID);
+        }
     }
     
     /*
@@ -98,7 +103,12 @@ class DmdSec extends aMETSElement {
      * @param string $ADMID
      */
     public function set_ADMID($ADMID){
-        $this->ADMID = $ADMID;
+        if($this->validate_id($ADMID)){
+            $this->ADMID = $ADMID;
+        }
+        else {
+            throw new InvalidIDTokenException($ADMID);
+        }
     }
     
     /*
