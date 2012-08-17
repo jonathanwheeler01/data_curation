@@ -176,6 +176,40 @@ class FileGrp extends aMETSElement {
         return (isset($this->file) && !empty($this->file));
     }
     
+    public function get_as_DOM($prefix = NULL) {
+        $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
+        
+        if($prefix !== NULL) {
+            $fileGrp = $dom->createElement($prefix.':'.$this->first_to_lower(get_class($this)));
+            $fileGrp = $dom->createElementNS('http://www.loc.gov/METS/', $prefix.':fileGrp');
+        }
+        else {
+            $fileGrp = $dom->createElementNS('http://www.loc.gov/METS/', 'mets:'.$this->first_to_lower(get_class($this)));
+        }
+        
+        // handle attributes
+        if($this->isset_ID()) {$fileGrp->setAttribute('ID', $this->ID);}
+        
+        if($this->isset_VERSDATE()) {$fileGrp->setAttribute('VERSDATE', $this->VERSDATE);}
+        
+        if($this->isset_ADMID()) {$fileGrp->setAttribute('ADMID', $this->ADMID);}
+        
+        if($this->isset_USE()) {$fileGrp->setAttribute('USE', $this->USE);}
+        
+        if($this->isset_file()){
+            $fileGrp->appendChild($dom->importNode($this->file->get_as_DOM()));
+        }
+        
+        $childFileGrpSec = new FileGrp();
+        if($this->isset_fileGrps()) {
+            foreach($this->fileGrpSecs as $childFileGrpSec) {
+                $fileGrp->appendChild($dom->importNode($childFileGrpSec->get_as_DOM($prefix)));
+            }
+        
+        return $fileGrp;
     
+        }
+        
+    }
 }
 ?>
