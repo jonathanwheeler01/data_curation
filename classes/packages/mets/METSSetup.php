@@ -70,6 +70,13 @@ class METSSetup {
    * also bypassing extension properties for now
    */
   
+  /**
+   * Descriptive metadata to be included in with every file in the data
+   * set. The data, should be high level and applicable to all files and 
+   * directories.
+   * @var mixed  
+   */
+  public $descriptiveMetadata;
   
 }
 ?>
