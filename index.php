@@ -1,7 +1,7 @@
 <?php
 require_once 'curation_tool.inc';
 //$dom = new DOMDocument('1.0', 'UTF-8');
-$settings = new XFDUSetup();
+$settings = new METSSetup();
 //$settings = new METSSetup();
 $settings->root = 'c:/repo/';
 
@@ -46,6 +46,6 @@ $settings->descriptiveMetadata = $xmlData->set_any($xpath->query($query, $dc));
 
 
 
-$dirProc = new DirectoryProcessor($settings);
+$dirProc = new metsDirectoryProcessor($settings);
 $dirProc->process_dataset();
 ?>
