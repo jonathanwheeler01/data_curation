@@ -9,11 +9,11 @@
  */
 
 
-class DirectoryProcessor {
+class metsDirectoryProcessor {
   
   /**
    *
-   * @var XFDUBuilder 
+   * @var METSBuilder 
    */
   protected $builder;
   
@@ -21,7 +21,7 @@ class DirectoryProcessor {
    * Settings for directory processing. This includes any extension, volume info
    * or metadata to be included across all objects.This would typically include
    * dublin core descriptive metadata.
-   * @var XFDUSetup
+   * @var METSSetup
    */
   protected $settings;
   
@@ -36,31 +36,31 @@ class DirectoryProcessor {
    * The number of content units created for the project.
    * @var integer 
    */
-  protected $contentUnitCount;
+  //protected $contentUnitCount;
   
   /**
    * The number of data objects in the data set.
    * @var integer 
    */
-  protected $dataObjectCount;
+  //protected $dataObjectCount;
   
-  protected $metadataObjectCount;
+  //protected $metadataObjectCount;
   
   /**
    *
    * @param XFDUSetup $settings 
    */
 
-  public function  __construct(XFDUSetup $settings) {
-    $this->builder = new XFDUBuilder();
+  public function  __construct(METSetup $settings) {
+    $this->builder = new METSBuilder();
     
     $this->settings = $settings;
 
     $this->exclude = array('.', '..', 'meta');
     
-    $this->contentUnitCount = 0;
-    $this->dataObjectCount = 0;
-    $this->metadataObjectCount = 0;
+    //$this->contentUnitCount = 0;
+    //$this->dataObjectCount = 0;
+    //$this->metadataObjectCount = 0;
   }
   
   public function get_repository() {
