@@ -34,7 +34,7 @@ class XFDUPackage {
     $this->xfdu->save($filename);
   }
   
-  public function read($file) {
+  public function read($filename) {
     $dom = new DOMDocument('1.0', 'UTF-8');
     $this->xfdu = $dom->load($filename);
   }
