@@ -45,7 +45,6 @@ $query = '/dcwrapper/*';
 $settings->descriptiveMetadata = $xmlData->set_any($xpath->query($query, $dc));
 
 
-
 $dirProc = new metsDirectoryProcessor($settings);
 $dirProc->process_dataset();
 ?>

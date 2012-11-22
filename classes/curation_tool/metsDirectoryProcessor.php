@@ -134,28 +134,28 @@ class metsDirectoryProcessor {
     
     // Sets up the basic XFDU package. If extension or anyXML are 
     // sent with setup they are also handled here.
-    $package = new XFDUPackage($this->settings);
+    $package = new METSPackage($this->settings);
     $parsedPath = explode(DIRECTORY_SEPARATOR, $path);
     
     // For all content units but the first, there should be a backlink to the
     // previous directory's XFDU file.
     if($path != $this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root) {
       
-      $xfduPointerBackLink = new XFDUPointer();
-      $xfduPointerBackLink->set_locatorType('URL');
-      $xfduPointerBackLink->set_href(
+      $metsPointerBackLink = new metsPointer();
+      $metsPointerBackLink->set_locatorType('URL');
+      $metsPointerBackLink->set_href(
               implode(DIRECTORY_SEPARATOR, array_slice($parsedPath, 0, -1)).
               DIRECTORY_SEPARATOR.'meta'.
-              DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath)-2].'_xfdu.xml');
-      $xfduPointerBackLink->set_textInfo($parsedPath[sizeof($parsedPath) - 2]);
+              DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath)-2].'_mets.xml');
+      $metsPointerBackLink->set_textInfo($parsedPath[sizeof($parsedPath) - 2]);
       
-      $backLinkCU = $this->
+      $backLink = $this->
                    builder->
-                    build_contentUnit($xfduPointerBackLink, 
+                    build_contentUnit($metsPointerBackLink, 
                                        'backlink', 
                                         'backlink', 
                                         $parsedPath[sizeof($parsedPath) - 2]);
-      $package->add($backLinkCU);
+      $package->add($backLink);
       
     }
     
