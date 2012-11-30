@@ -1,7 +1,7 @@
 <?php
 /**
  * Description of Processes a data directy inserting a meta directory into each 
- * folder and creating xfdu files for each directory.
+ * folder and creating mets files for each directory.
  *
  *
  * @author Jon Wheeler
@@ -48,10 +48,32 @@ class metsDirectoryProcessor {
   
   /**
    *
-   * @param XFDUSetup $settings 
+   * @param METSSetup $settings 
+   */
+  
+  /*
+   * comments to be removed at some point, purely for Jon's
+   * php understanding
+   * 
+   * The following constructor initializes the metsDirectoryProcessor
+   * object created at the end of index.php.
+   * 
+   * The constructor has a required argument, which is a
+   * METSSetup object. All the methods (?) and properties
+   * of the METSSetup object are passed in the metsDP object
+   * via this argument. These properties have already been
+   * defined as the '$settings' object created at the
+   * beginning of index.php.
+   * 
+   * So... the protected property above called 'settings'
+   * is intended to reference an existing object and the
+   * properties of that object. Heavy.
+   * 
+   * Additionally, the metsDP object is initialized with a
+   * METSBuilder object. No arguments.
    */
 
-  public function  __construct(METSetup $settings) {
+  public function  __construct(METSSetup $settings) {
     $this->builder = new METSBuilder();
     
     $this->settings = $settings;
@@ -132,26 +154,26 @@ class metsDirectoryProcessor {
       mkdir($path.DIRECTORY_SEPARATOR.'meta');
     }
     
-    // Sets up the basic XFDU package. If extension or anyXML are 
+    // Sets up the basic METS package. If extension or anyXML are 
     // sent with setup they are also handled here.
-    $package = new XFDUPackage($this->settings);
+    $package = new METSPackage($this->settings);
     $parsedPath = explode(DIRECTORY_SEPARATOR, $path);
     
     // For all content units but the first, there should be a backlink to the
-    // previous directory's XFDU file.
+    // previous directory's METS file.
     if($path != $this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root) {
       
-      $xfduPointerBackLink = new XFDUPointer();
-      $xfduPointerBackLink->set_locatorType('URL');
-      $xfduPointerBackLink->set_href(
+      $metsPointerBackLink = new METSPointer();
+      $metsPointerBackLink->set_locatorType('URL');
+      $metsPointerBackLink->set_href(
               implode(DIRECTORY_SEPARATOR, array_slice($parsedPath, 0, -1)).
               DIRECTORY_SEPARATOR.'meta'.
-              DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath)-2].'_xfdu.xml');
-      $xfduPointerBackLink->set_textInfo($parsedPath[sizeof($parsedPath) - 2]);
+              DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath)-2].'_mets.xml');
+      $metsPointerBackLink->set_textInfo($parsedPath[sizeof($parsedPath) - 2]);
       
       $backLinkCU = $this->
                    builder->
-                    build_contentUnit($xfduPointerBackLink, 
+                    build_contentUnit($metsPointerBackLink, 
                                        'backlink', 
                                         'backlink', 
                                         $parsedPath[sizeof($parsedPath) - 2]);
@@ -173,9 +195,9 @@ class metsDirectoryProcessor {
     $contents = array_diff($contents, $this->exclude);
     
     // If the content item is a file, create a content unit containing a 
-    // data object pointer that refers to a dataObject within this xfdu document. 
-    // If its a directory create a contentUnit containing an XFDUPointer that
-    // refers to the appropriate xfdu document in another subdirectory.
+    // data object pointer that refers to a dataObject within this mets document. 
+    // If its a directory create a contentUnit containing an METSPointer that
+    // refers to the appropriate mets document in another subdirectory.
     foreach($contents as $item) {
       $this->contentUnitCount++;  
       if(is_file($path.DIRECTORY_SEPARATOR.$item)) {        
@@ -188,17 +210,17 @@ class metsDirectoryProcessor {
     }
     
     // Write the package.
-    $package->write($path.DIRECTORY_SEPARATOR.'meta'.DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath) - 1].'_xfdu.xml');
+    $package->write($path.DIRECTORY_SEPARATOR.'meta'.DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath) - 1].'_mets.xml');
   }
 
 /**
  *
  * @param string $path path to the directory containing the file
  * @param string $file file name
- * @param XFDUPackage $package the package passed by reference
+ * @param METSPackage $package the package passed by reference
  * @param string $parent ID of the parent contentUnit
  */
-  protected function handle_file($path, $item, XFDUPackage &$package, $parent) {
+  protected function handle_file($path, $item, METSPackage &$package, $parent) {
         $dataObjectID = 'do'.$this->dataObjectCount;
         $contentUnitID = 'cu'.  $this->contentUnitCount;
         
@@ -248,20 +270,20 @@ class metsDirectoryProcessor {
   /**
    *
    * @param string $path Path to the directy to be handled.
-   * @param XFDUPackage $package th epackage passed by reference.
+   * @param METSPackage $package th epackage passed by reference.
    */
-  protected function handle_directory($path, XFDUPackage &$package) {
+  protected function handle_directory($path, METSPackage &$package) {
     $contentUnitID = 'cu'.  $this->contentUnitCount;
     
     $parsedPath = explode('/', $path);
-    $xfduPointer = $this->builder->build_XFDUPointer(
+    $metsPointer = $this->builder->build_METSPointer(
             'URL', 
-            $path.'meta'.DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath) - 1].'_xfdu.xml', 
+            $path.'meta'.DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath) - 1].'_mets.xml', 
             $parsedPath[sizeof($parsedPath) - 1]
             );
     
     $contentUnit = $this->builder->build_contentUnit(
-                                          $xfduPointer, 
+                                          $metsPointer, 
                                           $contentUnitID, 
                                           'directory', 
                                           $parsedPath[sizeof($parsedPath) - 1]);
