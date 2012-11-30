@@ -165,7 +165,11 @@ class metsDirectoryProcessor {
     // previous directory's METS file.
     if($path != $this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root) {
       
+<<<<<<< HEAD
       $metsPointerBackLink = new METSPointer();
+=======
+      $metsPointerBackLink = new metsPointer();
+>>>>>>> 8be7dfc629269069a904c5330084fca8b878cea2
       $metsPointerBackLink->set_locatorType('URL');
       $metsPointerBackLink->set_href(
               implode(DIRECTORY_SEPARATOR, array_slice($parsedPath, 0, -1)).
@@ -173,13 +177,13 @@ class metsDirectoryProcessor {
               DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath)-2].'_mets.xml');
       $metsPointerBackLink->set_textInfo($parsedPath[sizeof($parsedPath) - 2]);
       
-      $backLinkCU = $this->
+      $backLink = $this->
                    builder->
                     build_contentUnit($metsPointerBackLink, 
                                        'backlink', 
                                         'backlink', 
                                         $parsedPath[sizeof($parsedPath) - 2]);
-      $package->add($backLinkCU);
+      $package->add($backLink);
       
     }
     
