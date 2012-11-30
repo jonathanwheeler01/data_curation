@@ -67,7 +67,9 @@ class metsDirectoryProcessor {
    * 
    * So... the protected property above called 'settings'
    * is intended to reference an existing object and the
-   * properties of that object. Heavy.
+   * properties of that object. Heavy. So this object now
+   * inherits (maybe not as the term is officially used)
+   * the properties of an existing object.
    * 
    * Additionally, the metsDP object is initialized with a
    * METSBuilder object. No arguments.
