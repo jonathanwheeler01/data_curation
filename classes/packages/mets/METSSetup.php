@@ -19,7 +19,7 @@
  *    along with data_curation.  If not, see <http://www.apache.org/licenses/LICENSE-2.0.html>.
  */
 /**
- * Description of XFDUSetup
+ * Description of METSSetup
  *
  * @author Jon Wheeler
  * 

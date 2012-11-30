@@ -4,7 +4,7 @@
  * folder and creating xfdu files for each directory.
  *
  *
- * @author Rob Olendorf
+ * @author Jon Wheeler
  * 
  */
 
