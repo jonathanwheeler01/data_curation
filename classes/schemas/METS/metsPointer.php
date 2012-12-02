@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob
  */
-class METSPointer extends Reference{  
+class metsPointer extends Reference{  
   /**
    *
    * @param type $prefix 
