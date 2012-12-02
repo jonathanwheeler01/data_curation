@@ -165,11 +165,7 @@ class metsDirectoryProcessor {
     // previous directory's METS file.
     if($path != $this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root) {
       
-<<<<<<< HEAD
-      $metsPointerBackLink = new METSPointer();
-=======
       $metsPointerBackLink = new metsPointer();
->>>>>>> 8be7dfc629269069a904c5330084fca8b878cea2
       $metsPointerBackLink->set_locatorType('URL');
       $metsPointerBackLink->set_href(
               implode(DIRECTORY_SEPARATOR, array_slice($parsedPath, 0, -1)).
