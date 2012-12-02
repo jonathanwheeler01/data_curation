@@ -7,9 +7,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  * @author Rob
  */
 
-class METSPointer extends Reference{  
-
-
+class metsPointer extends Reference{  
   /**
    *
    * @param type $prefix 
@@ -19,10 +17,10 @@ class METSPointer extends Reference{
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
 
-    $METSPointer = $dom->createElement(get_class($this));
-    $this->set_DOM_attributes($METSPointer);
+    $metsPointer = $dom->createElement(get_class($this));
+    $this->set_DOM_attributes($metsPointer);
     
-    return $METSPointer;
+    return $metsPointer;
   }
 }
 
