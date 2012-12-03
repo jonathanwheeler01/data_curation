@@ -6,6 +6,7 @@ require_once dirname(__FILE__) . '/../../../curation_tool.inc';
  *
  * @author Rob
  */
+
 class metsPointer extends Reference{  
   /**
    *
@@ -15,9 +16,12 @@ class metsPointer extends Reference{
   public function get_as_DOM($prefix = NULL) {
     $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
     
+
     $metsPointer = $dom->createElement(get_class($this));
     $this->set_DOM_attributes($metsPointer);
     
     return $metsPointer;
   }
 }
+
+?>

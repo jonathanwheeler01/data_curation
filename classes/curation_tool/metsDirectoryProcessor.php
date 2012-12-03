@@ -150,13 +150,13 @@ class metsDirectoryProcessor {
               DIRECTORY_SEPARATOR.$parsedPath[sizeof($parsedPath)-2].'_mets.xml');
       $metsPointerBackLink->set_textInfo($parsedPath[sizeof($parsedPath) - 2]);
       
-      $backLinkCU = $this->
+      $backLink = $this->
                    builder->
                     build_contentUnit($metsPointerBackLink, 
                                        'backlink', 
                                         'backlink', 
                                         $parsedPath[sizeof($parsedPath) - 2]);
-      $package->add($backLinkCU);
+      $package->add($backLink);
       
     }
     
