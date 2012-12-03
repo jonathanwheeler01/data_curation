@@ -51,29 +51,6 @@ class metsDirectoryProcessor {
    * @param METSSetup $settings 
    */
   
-  /*
-   * comments to be removed at some point, purely for Jon's
-   * php understanding
-   * 
-   * The following constructor initializes the metsDirectoryProcessor
-   * object created at the end of index.php.
-   * 
-   * The constructor has a required argument, which is a
-   * METSSetup object. All the methods (?) and properties
-   * of the METSSetup object are passed in the metsDP object
-   * via this argument. These properties have already been
-   * defined as the '$settings' object created at the
-   * beginning of index.php.
-   * 
-   * So... the protected property above called 'settings'
-   * is intended to reference an existing object and the
-   * properties of that object. Heavy. So this object now
-   * inherits (maybe not as the term is officially used)
-   * the properties of an existing object.
-   * 
-   * Additionally, the metsDP object is initialized with a
-   * METSBuilder object. No arguments.
-   */
 
   public function  __construct(METSSetup $settings) {
     $this->builder = new METSBuilder();
