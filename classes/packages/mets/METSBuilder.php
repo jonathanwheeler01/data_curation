@@ -31,5 +31,39 @@ class METSBuilder {
         
         return $mets;
     }
+
+/**
+ *
+ * @param aMETSElement $content
+ * @param string $id
+ * @param string $unitType
+ * @param string $textInfo
+ * @return ContentUnit
+ * @throws InvalidArgumentException
+ */
+public function build_structLink(aMETSElement $content = NULL, $ID = NULL) {
+
+	if($content != NULL) {
+		if(get_class($content) != 'metsPointer') {
+			$message = 'Invalid content type. Expected a metsPointer. '.
+					'Encountered: '.get_class($content);
+			$code = 0;
+			$previous = NULL;
+			throw new InvalidArgumentException($message, $code,$previous);
+		}
+	}
+
+	$structLink = new StructLink();
+	if(get_class($content) == 'metsPointer') {
+		$structLink->set_smLink($content);
+	}
+	if($ID) {
+		$contentUnit->set_ID($ID);
+	}
+
+	return $structLink;
 }
+
+}
+
 ?>

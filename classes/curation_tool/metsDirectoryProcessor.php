@@ -33,10 +33,10 @@ class metsDirectoryProcessor {
   protected $exclude;  
   
   /**
-   * The number of content units created for the project.
+   * The number of METS structural links created for the project.
    * @var integer 
    */
-  //protected $contentUnitCount;
+  protected $structLinkCount;
   
   /**
    * The number of data objects in the data set.
@@ -59,7 +59,7 @@ class metsDirectoryProcessor {
 
     $this->exclude = array('.', '..', 'meta');
     
-    //$this->contentUnitCount = 0;
+    $this->structLinkCount = 0;
     //$this->dataObjectCount = 0;
     //$this->metadataObjectCount = 0;
   }
@@ -138,7 +138,7 @@ class metsDirectoryProcessor {
     $package = new METSPackage($this->settings);
     $parsedPath = explode(DIRECTORY_SEPARATOR, $path);
     
-    // For all content units but the first, there should be a backlink to the
+    // For all structural links but the first, there should be a backlink to the
     // previous directory's METS file.
     if($path != $this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root) {
       
@@ -152,10 +152,8 @@ class metsDirectoryProcessor {
       
       $backLink = $this->
                    builder->
-                    build_contentUnit($metsPointerBackLink, 
-                                       'backlink', 
-                                        'backlink', 
-                                        $parsedPath[sizeof($parsedPath) - 2]);
+                    build_structLink($metsPointerBackLink, 
+                                       'backlink');
       $package->add($backLink);
       
     }
