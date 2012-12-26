@@ -35,10 +35,8 @@ class METSBuilder {
 /**
  *
  * @param aMETSElement $content
- * @param string $id
- * @param string $unitType
- * @param string $textInfo
- * @return ContentUnit
+ * @param string $ID
+ * @return structLink
  * @throws InvalidArgumentException
  */
 public function build_structLink(aMETSElement $content = NULL, $ID = NULL) {
