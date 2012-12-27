@@ -29,32 +29,32 @@ class File extends aMETSElement {
     
     /*
      * @var string
-    */
+     */
     protected $CHECKSUMTYPE;
     
     /*
      * @var string
-    */
+     */
     protected $CREATED;
     
     /*
      * @var string
-    */
+     */
     protected $DMDID;
     
     /*
      * @var string
-    */
+     */
     protected $END;
     
     /*
      * @var string
-    */
+     */
     protected $GROUPID;
     
     /*
      * @var string
-    */
+     */
     protected $ID;
     
     /*
@@ -64,23 +64,43 @@ class File extends aMETSElement {
     
     /*
      * @var string
-    */
+     */
     protected $OWNERID;
     
     /*
      * @var string
-    */
+     */
     protected $SEQ;
     
     /*
      * @var string
-    */
+     */
     protected $SIZE;
     
     /*
      * @var string
-    */
+     */
     protected $USE;
+    
+    /*
+     * @var FLocat
+     */
+    protected $FLocat;
+    
+    /*
+     * @var FContent
+     */
+    protected $FContent;
+    
+    /*
+     * @var stream
+     */
+    protected $stream;
+    
+    /*
+     * @var transformFile
+     */
+    protected $transformFile;
     
     
     /*
@@ -158,42 +178,42 @@ class File extends aMETSElement {
     
     /*
      * @param string $BETYPE
-    */
+     */
     public function set_BETYPE($BETYPE){
     	$this->BETYPE = $BETYPE;
     }
     
     /*
      * @return string
-    */
+     */
     public function get_BETYPE() {
     	return $this->BETYPE;
     }
     
     /*
      * @return boolean
-    */
+     */
     public function isset_BETYPE() {
     	return (isset($this->BETYPE) && !empty($this->BETYPE));
     }
     
     /*
      * @param string $CHECKSUM
-    */
+     */
     public function set_CHECKSUM($CHECKSUM){
     	$this->CHECKSUM = $CHECKSUM;
     }
     
     /*
      * @return string
-    */
+     */
     public function get_CHECKSUM() {
     	return $this->CHECKSUM;
     }
     
     /*
      * @return boolean
-    */
+     */
     public function isset_CHECKSUM() {
     	return (isset($this->CHECKSUM) && !empty($this->CHECKSUM));
     }

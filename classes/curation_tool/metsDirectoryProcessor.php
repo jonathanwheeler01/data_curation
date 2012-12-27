@@ -204,8 +204,8 @@ class metsDirectoryProcessor {
                 ->set_href($path.DIRECTORY_SEPARATOR.$item)
                 ->set_textInfo($item);
         
-        $dataObject = new DataObject();
-        $dataObject->add_bytstream(
+        $fileObject = new File();
+        $fileObject->add_bytstream(
                 $this->builder->build_byteStream_from_fileLocation(
                         $fileLocation, 
                         $path.DIRECTORY_SEPARATOR.$item
