@@ -478,5 +478,4 @@ class File extends aMETSElement {
         }
         
     }
-}
 ?>
