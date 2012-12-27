@@ -40,7 +40,7 @@ class FileGrp extends aMETSElement {
     
     /**
      *
-     * @return array<BehaviorSec>
+     * @return array<fileGrps>
      */
     public function get_fileGrps() {
       return $this->fileGrps;

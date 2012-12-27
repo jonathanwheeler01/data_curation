@@ -103,6 +103,42 @@ class File extends aMETSElement {
     protected $transformFile;
     
     
+    public function __construct() {
+    	$this->file = array();
+    }
+    
+    
+    /*
+     * @param File $files
+    */
+    public function addfile(File $file) {
+    	$this->files[] = $file;
+    }
+    
+    /**
+     *
+     * @return array<file>
+     */
+    public function get_files() {
+    	return $this->files;
+    }
+    
+    /**
+     *
+     */
+    public function unset_files() {
+    	$this->files = array();
+    }
+    
+    /**
+     *
+     * @return boolean
+     */
+    public function isset_file() {
+    	return (isset($this->file) && !empty($this->file));
+    }
+    
+    
     /*
      * @param string $ID
      */
@@ -428,6 +464,89 @@ class File extends aMETSElement {
         return (isset($this->USE) && !empty($this->USE));
     }
     
+    /*
+     * @param FLocat $FLocat
+    */
+    public function set_FLocat(FLocat $FLocat){
+    	$this->FLocat = $FLocat;
+    }
+    
+    /*
+     * @return FLocat
+    */
+    public function get_FLocat(){
+    	return $this->FLocat;
+    }
+    
+    /*
+     * @return boolean
+    */
+    public function isset_FLocat(){
+    	return (isset($this->FLocat) && !empty($this->FLocat));
+    }
+    
+    /*
+     * @param FContent $FContent
+    */
+    public function set_FContent(FContent $FContent){
+    	$this->FContent = $FContent;
+    }
+    
+    /*
+     * @return FContent
+    */
+    public function get_FContent(){
+    	return $this->FContent;
+    }
+    
+    /*
+     * @return boolean
+    */
+    public function isset_FContent(){
+    	return (isset($this->FContent) && !empty($this->FContent));
+    }
+    
+    /*
+     * @param stream $stream
+    */
+    public function set_stream(stream $stream){
+    	$this->stream = $stream;
+    }
+    
+    /*
+     * @return stream
+    */
+    public function get_stream(){
+    	return $this->stream;
+    }
+    
+    /*
+     * @return boolean
+    */
+    public function isset_stream(){
+    	return (isset($this->stream) && !empty($this->stream));
+    }
+    
+    /*
+     * @param transformFile $transformFile
+    */
+    public function set_transformFile(transformFile $transformFile){
+    	$this->transformFile = $transformFile;
+    }
+    
+    /*
+     * @return transformFile
+    */
+    public function get_transformFile(){
+    	return $this->transformFile;
+    }
+    
+    /*
+     * @return boolean
+    */
+    public function isset_transformFile(){
+    	return (isset($this->transformFile) && !empty($this->transformFile));
+    }
     
     public function get_as_DOM($prefix = NULL) {
         $dom = new DOMDocument($this->XMLVersion, $this->XMLEncoding);
@@ -493,9 +612,32 @@ class File extends aMETSElement {
         
         if($this->isset_USE()) {$file->setAttribute('USE', $this->USE);}
         
+        if($this->isset_FLocat()){
+        	$file->appendChild($dom->importNode($this->FLocat->get_as_DOM(), TRUE));
+        }
+        
+        if($this->isset_FContent()){
+        	$file->appendChild($dom->importNode($this->FContent->get_as_DOM(), TRUE));
+        }
+        
+        if($this->isset_stream()){
+        	$file->appendChild($dom->importNode($this->stream->get_as_DOM(), TRUE));
+        }
+        
+        if($this->isset_transformFile()){
+        	$file->appendChild($dom->importNode($this->transformFile->get_as_DOM(), TRUE));
+        }
+        
+        $childFile = new File();
+        if($this->isset_files()) {
+        	foreach($this->file as $childFile) {
+        		$file->appendChild($dom->importNode($childFile->get_as_DOM($prefix)));
+        	}
+        
         return $file;
     
         }
         
     }
+}
 ?>
