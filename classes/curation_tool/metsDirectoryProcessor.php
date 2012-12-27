@@ -60,7 +60,7 @@ class metsDirectoryProcessor {
     $this->exclude = array('.', '..', 'meta');
     
     $this->structLinkCount = 0;
-    //$this->dataObjectCount = 0;
+    $this->fileObjectCount = 0;
     //$this->metadataObjectCount = 0;
   }
   
@@ -160,23 +160,21 @@ class metsDirectoryProcessor {
     
     // Set the id for the current content unit to allow the child content units
     // to reference and create the current directory's contentUnit.
-    $currentID = 'cu'.$this->contentUnitCount;
-    $currentCU = $this->builder->build_contentUnit(NULL, 
-                                                   $currentID, 
-                                                   'directory', 
-                                                   $parsedPath[sizeof($parsedPath) -1]);
-    $package->add($currentCU);
+    $currentID = 'sl'.$this->structLinkCount;
+    $currentSL = $this->builder->build_structLink(NULL, 
+                                                   $currentID);
+    $package->add($currentSL);
 
     // Get the contents of the directory then
     $contents = scandir($path);
     $contents = array_diff($contents, $this->exclude);
     
     // If the content item is a file, create a content unit containing a 
-    // data object pointer that refers to a dataObject within this mets document. 
-    // If its a directory create a contentUnit containing an METSPointer that
+    // file object pointer that refers to a file object within this mets document. 
+    // If it's a directory create a structLink containing an METSPointer that
     // refers to the appropriate mets document in another subdirectory.
     foreach($contents as $item) {
-      $this->contentUnitCount++;  
+      $this->structLinkCount++;  
       if(is_file($path.DIRECTORY_SEPARATOR.$item)) {        
         $this->handle_file($path, $item, $package, $currentID);
       }
@@ -198,8 +196,8 @@ class metsDirectoryProcessor {
  * @param string $parent ID of the parent contentUnit
  */
   protected function handle_file($path, $item, METSPackage &$package, $parent) {
-        $dataObjectID = 'do'.$this->dataObjectCount;
-        $contentUnitID = 'cu'.  $this->contentUnitCount;
+        $fileObjectID = 'fo'.$this->fileObjectCount;
+        $structLinkID = 'sl'.  $this->structLinkCount;
         
         $fileLocation = new FileLocation();
         $fileLocation->set_locatorType('URL')
