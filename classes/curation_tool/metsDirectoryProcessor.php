@@ -61,7 +61,7 @@ class metsDirectoryProcessor {
     
     $this->structLinkCount = 0;
     $this->fileObjectCount = 0;
-    //$this->metadataObjectCount = 0;
+    $this->metadataObjectCount = 0;
   }
   
   public function get_repository() {
@@ -215,31 +215,31 @@ class metsDirectoryProcessor {
         
         $package->add($fileObject);
         
-        $dataObjectPointer = new DataObjectPointer();
-        $dataObjectPointer->set_dataObjectID($dataObjectID);
+        $metsPointer = new metstPointer();
+        $metsPointer->set_id($fileObjectID);
         
-        $contentUnit = $this->builder->build_contentUnit(
-                $dataObjectPointer, 
-                $contentUnitID, 'directory', $item);
+        $structLink = $this->builder->build_structLink(
+                $metsPointer, 
+                $metsPointer->get_id());
         
         // Add high level descriptive metadata if it exists
         if($this->settings->descriptiveMetadata != NULL) {
-          $id = 'dmd'.$this->metadataObjectCount;
+          $id = 'DMDID'.$this->metadataObjectCount;
           $metadataObject = $this->builder->build_metadataObject(
                   $this->settings->descriptiveMetadata, 
                   $id, 
-                  'DMD', 
+                  'DMDID', 
                   'DESCRIPTION');
           
           $package->add($metadataObject);
           
-          $contentUnit->set_dmdID($id);
+          $fileObject->set_DMD_ID($id);
           $this->metadataObjectCount++;
         }
         
-        $package->add($contentUnit, $parent);
+        $package->add($structLink, $parent);
         
-        $this->dataObjectCount++;      
+        $this->fileObjectCount++;      
   }
 
   /**
