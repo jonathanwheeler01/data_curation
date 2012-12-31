@@ -61,7 +61,7 @@ class metsDirectoryProcessor {
     
     $this->structLinkCount = 0;
     $this->fileObjectCount = 0;
-    $this->metadataObjectCount = 0;
+    //$this->metadataObjectCount = 0;
   }
   
   public function get_repository() {
@@ -223,7 +223,7 @@ class metsDirectoryProcessor {
                 $metsPointer->get_id());
         
         // Add high level descriptive metadata if it exists
-        if($this->settings->descriptiveMetadata != NULL) {
+        /*if($this->settings->descriptiveMetadata != NULL) {
           $id = 'DMDID'.$this->metadataObjectCount;
           $metadataObject = $this->builder->build_metadataObject(
                   $this->settings->descriptiveMetadata, 
@@ -235,7 +235,7 @@ class metsDirectoryProcessor {
           
           $fileObject->set_DMD_ID($id);
           $this->metadataObjectCount++;
-        }
+        }*/
         
         $package->add($structLink, $parent);
         
@@ -248,7 +248,7 @@ class metsDirectoryProcessor {
    * @param METSPackage $package th epackage passed by reference.
    */
   protected function handle_directory($path, METSPackage &$package) {
-    $contentUnitID = 'cu'.  $this->contentUnitCount;
+    $fileObjectID = 'fo'.  $this->fileObjectCount;
     
     $parsedPath = explode('/', $path);
     $metsPointer = $this->builder->build_METSPointer(
@@ -264,7 +264,7 @@ class metsDirectoryProcessor {
                                           $parsedPath[sizeof($parsedPath) - 1]);
         
     // Add high level descriptive metadata if it exists
-    if($this->settings->descriptiveMetadata != NULL) {
+    /*if($this->settings->descriptiveMetadata != NULL) {
       $id = 'dmd'.$this->metadataObjectCount;
       $metadataObject = $this->builder->build_metadataObject(
               $this->settings->descriptiveMetadata, 
@@ -276,7 +276,7 @@ class metsDirectoryProcessor {
 
       $contentUnit->set_dmdID($id);
       $this->metadataObjectCount++;
-    }
+    }*/
     
     $package->add($contentUnit);
   }
