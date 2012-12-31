@@ -62,6 +62,27 @@ public function build_structLink(aMETSElement $content = NULL, $ID = NULL) {
 	return $structLink;
 }
 
+/**
+ *
+ * @param FLocat $href
+ * @param string $file
+ * @param type $id
+ * @return ByteStream
+ */
+public function build_stream_from_fileLocation(FLocat $href, $file ,$id = NULL, $checksumName = 'SHA1') {
+	$fileStream = new File();
+
+	$finfo = new finfo(FILEINFO_MIME_TYPE);
+	$fileStream->set_MIMETYPE($finfo->file($file))
+	->set_SIZE(filesize($file));
+	//->set_CHECKSUM($this->build_checksumInformation($file, $checksumName));
+	if($id){
+		$fileStream->set_ID($id);
+	}
+
+	return $fileStream;
+}
+
 }
 
 ?>

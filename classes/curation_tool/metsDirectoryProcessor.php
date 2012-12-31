@@ -199,21 +199,21 @@ class metsDirectoryProcessor {
         $fileObjectID = 'fo'.$this->fileObjectCount;
         $structLinkID = 'sl'.  $this->structLinkCount;
         
-        $fileLocation = new FileLocation();
-        $fileLocation->set_locatorType('URL')
+        $fileLocation = new FLocat();
+        $fileLocation->set_LOCTYPE('URL')
                 ->set_href($path.DIRECTORY_SEPARATOR.$item)
-                ->set_textInfo($item);
+                ->set_title($item);
         
         $fileObject = new File();
-        $fileObject->add_bytstream(
-                $this->builder->build_byteStream_from_fileLocation(
+        $fileObject->addfile(
+                $this->builder->build_stream_from_fileLocation(
                         $fileLocation, 
                         $path.DIRECTORY_SEPARATOR.$item
                         )
                 )
-                ->set_id($dataObjectID);
+                ->set_ID($fileObjectID);
         
-        $package->add($dataObject);
+        $package->add($fileObject);
         
         $dataObjectPointer = new DataObjectPointer();
         $dataObjectPointer->set_dataObjectID($dataObjectID);
