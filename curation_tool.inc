@@ -37,7 +37,7 @@ class CurationAutoLoad {
 
     @include_once 'classes'.DIRECTORY_SEPARATOR.
                   'schemas'.DIRECTORY_SEPARATOR.
-                  'xfdu'.DIRECTORY_SEPARATOR.
+                  'mets'.DIRECTORY_SEPARATOR.
                   $className.'.php';
 
     @include_once 'classes'.DIRECTORY_SEPARATOR.
@@ -53,7 +53,7 @@ class CurationAutoLoad {
     
     @include_once 'classes'.DIRECTORY_SEPARATOR.
                   'schemas'.DIRECTORY_SEPARATOR.
-                  'xfdu'.DIRECTORY_SEPARATOR.
+                  'mets'.DIRECTORY_SEPARATOR.
                   'enums'.DIRECTORY_SEPARATOR.
                   $className.'.php';
     
@@ -63,7 +63,7 @@ class CurationAutoLoad {
 
     @include_once 'classes'.DIRECTORY_SEPARATOR.
                   'packages'.DIRECTORY_SEPARATOR.
-                  'xfdu'.DIRECTORY_SEPARATOR.
+                  'mets'.DIRECTORY_SEPARATOR.
                   $className.'.php';
 
     @include_once 'classes'.DIRECTORY_SEPARATOR.
