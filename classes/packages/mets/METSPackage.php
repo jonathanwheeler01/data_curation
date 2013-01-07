@@ -25,7 +25,6 @@ class METSPackage {
    */
   public function __construct(METSSetup $settings) {
     $this->builder = new METSBuilder();
-    
     $this->mets = new DOMDocument($settings->xmlVersion, $settings->xmlEncoding);
     $this->mets->appendChild($this->mets->importNode($this->builder->build_mets($settings)->get_as_DOM(), TRUE));
   }

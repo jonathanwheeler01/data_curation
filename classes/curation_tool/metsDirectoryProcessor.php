@@ -117,6 +117,7 @@ class metsDirectoryProcessor {
       
       print 'root = '.$this->settings->root.'====';
     }
+    
 
     $this->process_path($this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root);                                           // Start processing the data.
   }
@@ -131,17 +132,17 @@ class metsDirectoryProcessor {
     // Each directory gets meta directory.
     if(!file_exists($path.DIRECTORY_SEPARATOR.'meta')) {
       mkdir($path.DIRECTORY_SEPARATOR.'meta');
+      
     }
     
     // Sets up the basic METS package. If extension or anyXML are 
     // sent with setup they are also handled here.
     $package = new METSPackage($this->settings);
     $parsedPath = explode(DIRECTORY_SEPARATOR, $path);
-    
+
     // For all structural links but the first, there should be a backlink to the
     // previous directory's METS file.
     if($path != $this->settings->repository.DIRECTORY_SEPARATOR.$this->settings->root) {
-      
       $metsPointerBackLink = new metsPointer();
       $metsPointerBackLink->set_locatorType('URL');
       $metsPointerBackLink->set_href(

@@ -56,7 +56,7 @@ public function build_structLink(aMETSElement $content = NULL, $ID = NULL) {
 		$structLink->set_smLink($content);
 	}
 	if($ID) {
-		$contentUnit->set_ID($ID);
+		$structLink->set_ID($ID);
 	}
 
 	return $structLink;

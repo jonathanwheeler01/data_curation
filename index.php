@@ -2,7 +2,7 @@
 require_once 'curation_tool.inc';
 
 $settings = new METSSetup();
-$settings->root = 'c:\\repo';
+$settings->root = '..\..\..\..\..\..\repo';
 
 $xmlData = new XMLData();
 
@@ -28,9 +28,7 @@ $xpath->registerNamespace('dcterms', 'http://purl.org/dc/terms/');
 $query = '/dcwrapper/*';
 $settings->descriptiveMetadata = $xmlData->set_any($xpath->query($query, $dc));
 
-
 $dirProc = new metsDirectoryProcessor($settings);
 $dirProc->process_dataset();
-echo 'echo echo echo';
 
 ?>
